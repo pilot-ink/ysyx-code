@@ -30,6 +30,7 @@ include $(NVBOARD_HOME)/scripts/nvboard.mk
 # rules for verilator
 INCFLAGS = $(addprefix -I, $(INC_PATH))
 CXXFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
+LDFLAGS += -lSDL2 -lSDL2_image
 
 $(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
 	@rm -rf $(OBJ_DIR) wave.vcd
