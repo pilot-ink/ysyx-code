@@ -5,6 +5,10 @@
 #include "verilated.h"
 //用来生成.vcd文件
 #include <verilated_vcd_c.h>
+#include <nvboard.h>
+
+nvboard_bind_all_pins(&dut);
+nvboard.init();
 
 int main(int argc, char** argv)
 {
@@ -29,9 +33,11 @@ int main(int argc, char** argv)
 		contextp->timeInc(1);			//dump wave
 
 		assert(top->f == (a ^ b));
+		nvboard_update();
 	}
 	delete top;
 	tfp->close();
 	delete contextp;
+	nvboard_quit();
 	return 0;
 }
