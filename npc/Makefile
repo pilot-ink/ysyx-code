@@ -3,8 +3,8 @@ NXDC_FILES = constr/top.nxdc
 INC_PATH ?=
 
 VERILATOR = verilator
-VERILATOR_CFLAGS += -MMD --build -cc  \
-				-O3 --x-assign fast --x-initial fast --noassert -lSDL2 -lSDL2_image
+VERILATOR_CFLAGS += -MMD --build --trace -cc  \
+				-O3 --x-assign fast --x-initial fast --noassert
 
 BUILD_DIR = ./build
 OBJ_DIR = $(BUILD_DIR)/obj_dir
@@ -31,6 +31,12 @@ include $(NVBOARD_HOME)/scripts/nvboard.mk
 INCFLAGS = $(addprefix -I, $(INC_PATH))
 CXXFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
 
+$(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
+	@rm -rf $(OBJ_DIR) wave.vcd
+	$(VERILATOR) $(VERILATOR_CFLAGS) \
+		--top-module $(TOPNAME) $^ \
+		$(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
+		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
 
 
 all:default
@@ -40,8 +46,8 @@ sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@echo "Write this Makefile by your self."
 	$(BIN)
-		@$^
+	./build/top +trace
 
-clean:rm -rf $(BUILD_DIR)
+clean:rm -rf $(BUILD_DIR) wave.vcd
 
 include ../Makefile
