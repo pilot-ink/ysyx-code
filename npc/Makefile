@@ -32,8 +32,9 @@ INCFLAGS = $(addprefix -I, $(INC_PATH))
 CXXFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
 LDFLAGS += -lSDL2 -lSDL2_image
 
-$(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
-	@rm -rf $(OBJ_DIR) wave.vcd
+sim: $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
+	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
+	@rm -rf $(OBJ_DIR) 
 	$(VERILATOR) $(VERILATOR_CFLAGS) \
 		--top-module $(TOPNAME) $^ \
 		$(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
@@ -43,13 +44,8 @@ $(BIN): $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
 all:default
 	@echo "Write this Makefile by your self."
 
-sim:
-	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	@echo "Write this Makefile by your self."
-	$(BIN)
-	@$^
-	./build/top +trace
 
-clean:rm -rf $(BUILD_DIR) wave.vcd
+
+clean:rm -rf $(BUILD_DIR) 
 
 include ../Makefile
