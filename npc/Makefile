@@ -49,3 +49,5 @@ all:default
 clean:rm -rf $(BUILD_DIR) 
 
 include ../Makefile
+ 
+.PHONY: default all clean run
