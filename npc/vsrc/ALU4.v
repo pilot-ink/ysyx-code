@@ -19,7 +19,7 @@ module ALU4(
 			3'b000:begin {carry, result} = a + b + cin; overflow = (a[3] == b[3])&&(outs[3] != a[3]);end
 			3'b001:begin t_no_Cin = {n{ Cin }}^B; {carry, result} = a + b + cin; overflow = (a[3] == b[3])&&(outs[3] != a[3]);end
 			3'b010: result = ~a;
-			3'b011: reslut = a & b;
+			3'b011: result = a & b;
 			3'b100: result = a | b;
 			3'b101: result = a ^ b;
 			3'b110: begin
