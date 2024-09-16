@@ -22,7 +22,7 @@ module ALU4(
 			3'b100: result = a | b;
 			3'b101: result = a ^ b;
 			3'b110: begin
-				t_no_Cin = {4{cin }^b; {carry, result} = a + t_no_Cin + {3'b000, cin}; overflow = (a[3] == b[3])&&(result[3] != a[3]);zero = ~(|result);
+				t_no_Cin = {4{cin}}^b; {carry, result} = a + t_no_Cin + {3'b000, cin}; overflow = (a[3] == b[3])&&(result[3] != a[3]);zero = ~(|result);
 				if(overflow) size = ~result_wire[3];
 				else	size = result_wire[3];
 			end
