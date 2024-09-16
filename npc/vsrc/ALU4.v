@@ -8,12 +8,8 @@ module ALU4(
 
 
 
-	wire result_wire, size_wire;
 	wire [3:0] t_no_cin;
 	assign t_no_cin = {4{cin}}^b;
-
-	assign result_wire = result;
-	assign size_wire = zero;
 	
 	always @(*)begin
 		case(c)
@@ -25,8 +21,8 @@ module ALU4(
 			3'b101: result = a ^ b;
 			3'b110: begin
 				{carry, result} = a + t_no_cin + {3'b000, cin}; overflow = (a[3] == b[3])&&(result[3] != a[3]);zero = ~(|result);
-				if(overflow) size = ~result_wire[3];
-				else	size = result_wire[3];
+				if(overflow) size = ~result[3];
+				else	size = result[3];
 			end
 			3'b111: begin 
 				{carry, result} = a + t_no_cin + {3'b000, cin}; overflow = (a[3] == b[3])&&(result[3] != a[3]);zero = ~(|result);
