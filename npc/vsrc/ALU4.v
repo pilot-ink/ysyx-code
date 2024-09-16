@@ -19,11 +19,11 @@ module ALU4(
 			3'b100: result = a | b;
 			3'b101: result = a ^ b;
 			3'b110: begin
-				sub4 s1 (.a(a), .b(b), .cin(cin), .result(result), .overflow(overflow), .carry(carry) ,.zero(zero));
+				sub4 s2 (.a(a), .b(b), .cin(cin), .result(result), .overflow(overflow), .carry(carry) ,.zero(zero));
 				if(overflow) size = ~result_wire[3];
 				else	size = result_wire[3];
 			end
-			3'b111: begin sub4 s1 (.a(a), .b(b), .cin(cin), .result(result), .overflow(overflow), .carry(carry) ,.zero(zero)); size = size_wire;end
+			3'b111: begin sub4 s3 (.a(a), .b(b), .cin(cin), .result(result), .overflow(overflow), .carry(carry) ,.zero(zero)); size = size_wire;end
 		endcase
 	end
 
@@ -59,7 +59,7 @@ module sub4(
 
      assign result_wire = result;
 	assign t_no_Cin = {n{ Cin }}^B;
-	assign add4 a1 (.a(a), .b(t_no_Cin), .cin(cin), .result(result), .overflow(overflow);
+	assign add4 a2 (.a(a), .b(t_no_Cin), .cin(cin), .result(result), .overflow(overflow);
 	assign zero = ~(|result_wire);
 
 endmodule
