@@ -33,11 +33,11 @@ endmodule
 
 
 module add4(
-	input [3:0] a, b;
-	output [3:0] result;		//运算结果
-	input cin;				//进位
-	output carry;	  		//进位位
-	output overflow;
+	input [3:0] a, b,
+	output [3:0] result,		//运算结果
+	input cin,				//进位
+	output carry,	  		//进位位
+	output overflow
 );
 	
 	assign {carry, result} = a + b + cin;
@@ -47,12 +47,12 @@ endmodule
 
 
 module sub4(
-	input [3:0] a, b;
-	output [3:0] result;          //运算结果
-	input cin;                    //进位
-	output carry;            //进位位
-	output overflow;
-	output zero;
+	input [3:0] a, b,
+	output [3:0] result,          //运算结果
+	input cin,                    //进位
+	output carry,           //进位位
+	output overflow,
+	output zero
 );
 	
 	wire result_wire, t_no_Cin;
