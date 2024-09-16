@@ -59,7 +59,7 @@ module sub4(
 );
 	
 	wire result_wire, t_no_Cin;
-	add4 a2 (.a(a), .b(t_no_Cin), .cin(cin), .result(result), .overflow(overflow);
+	add4 a2 (.a(a), .b(t_no_Cin), .cin(cin), .result(result), .overflow(overflow));
      assign result_wire = result;
 	assign t_no_Cin = {n{ Cin }}^B;
 	assign a2;
