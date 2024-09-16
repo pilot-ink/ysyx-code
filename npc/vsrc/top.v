@@ -8,6 +8,6 @@ module top(
 );
 	
 	
-	ALU4(.a(a), .b(b), .c(c), .cin(cin), .result(result), ,zero(zero),.overflow(overflow), .carry(carry), .size(size));
+	ALU4 a1 (.a(a), .b(b), .c(c), .cin(cin), .result(result), ,zero(zero),.overflow(overflow), .carry(carry), .size(size));
 
 endmodule
