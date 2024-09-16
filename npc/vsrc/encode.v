@@ -1,7 +1,7 @@
 module encode42(x,en,y);
   input  [3:0] x;
   input  en;
-  output reg [1:0]y;
+  output reg [1:0] y;
   integer i;
   always @(x or en) begin
     if (en) begin
