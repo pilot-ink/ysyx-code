@@ -22,12 +22,12 @@ module ALU4(
 			3'b100: result = a | b;
 			3'b101: result = a ^ b;
 			3'b110: begin
-				t_no_Cin = {4{ cin }}^b; {carry, result} = a + b + cin; overflow = (a[3] == b[3])&&(result[3] != a[3]);zero = ~(|result_wire);
+				t_no_Cin = {4{ cin }}^b; {carry, result} = a + b + cin; overflow = (a[3] == b[3])&&(result[3] != a[3]);zero = ~(|result);
 				if(overflow) size = ~result_wire[3];
 				else	size = result_wire[3];
 			end
 			3'b111: begin 
-				t_no_Cin = {4{ cin }}^b; {carry, result} = a + b + cin; overflow = (a[3] == b[3])&&(result[3] != a[3]);zero = ~(|result_wire);
+				t_no_Cin = {4{ cin }}^b; {carry, result} = a + b + cin; overflow = (a[3] == b[3])&&(result[3] != a[3]);zero = ~(|result);
 				size = zero;
 				end
 		endcase
