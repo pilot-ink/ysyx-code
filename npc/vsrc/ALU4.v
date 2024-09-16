@@ -6,14 +6,17 @@ module ALU4(
 	output reg zero, overflow, carry, size,	//比较大小时，size=1,a>b;size=0,a<b;判断相等时,size=1,a=b;size=0,a不等于b;
 );
 
+	add4 a1 (.a(a), .b(b), .cin(cin), .result(result), .overflow(overflow), .carry(carry)));
+	sub4 s1 (.a(a), .b(b), .cin(cin), .result(result), .overflow(overflow), .carry(carry) ,.zero(zero));
+
 	wire result_wire, size_wire;
 
 	assign result_wire = result;
 	assign size_wire = zero;
 	always @(*)begin
 		case(c)
-			3'b000: add4 a1 (.a(a), .b(b), .cin(cin), .result(result), .overflow(overflow), .carry(carry));
-			3'b001: sub4 s1 (.a(a), .b(b), .cin(cin), .result(result), .overflow(overflow), .carry(carry) ,.zero(zero));
+			3'b000: a1;
+			3'b001: s1;
 			3'b010: result = ~a;
 			3'b011: reslut = a & b;
 			3'b100: result = a | b;
