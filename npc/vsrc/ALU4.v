@@ -18,13 +18,13 @@ module ALU4(
 	always @(*)begin
 		case(c)
 			3'b000:begin {carry, result} = a + b + cin; overflow = (a[3] == b[3])&&(result[3] != a[3]);end
-			3'b001:begin {carry, result} = a + t_no_Cin + {3'b000, cin}; overflow = (a[3] == b[3])&&(result[3] != a[3]);end
+			3'b001:begin {carry, result} = a + t_no_cin + {3'b000, cin}; overflow = (a[3] == b[3])&&(result[3] != a[3]);end
 			3'b010: result = ~a;
 			3'b011: result = a & b;
 			3'b100: result = a | b;
 			3'b101: result = a ^ b;
 			3'b110: begin
-				{carry, result} = a + t_no_Cin + {3'b000, cin}; overflow = (a[3] == b[3])&&(result[3] != a[3]);zero = ~(|result);
+				{carry, result} = a + t_no_cin + {3'b000, cin}; overflow = (a[3] == b[3])&&(result[3] != a[3]);zero = ~(|result);
 				if(overflow) size = ~result_wire[3];
 				else	size = result_wire[3];
 			end
