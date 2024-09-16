@@ -29,7 +29,7 @@ module ALU4(
 				else	size = result_wire[3];
 			end
 			3'b111: begin 
-				{carry, result} = a + t_no_Cin + {3'b000, cin}; overflow = (a[3] == b[3])&&(result[3] != a[3]);zero = ~(|result);
+				{carry, result} = a + t_no_cin + {3'b000, cin}; overflow = (a[3] == b[3])&&(result[3] != a[3]);zero = ~(|result);
 				size = zero;
 				end
 		endcase
