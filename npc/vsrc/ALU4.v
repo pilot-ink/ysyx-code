@@ -6,7 +6,7 @@ module ALU4(
 	output reg zero, overflow, carry, size,	//比较大小时，size=1,a>b;size=0,a<b;判断相等时,size=1,a=b;size=0,a不等于b;
 );
 
-	add4 a1 (.a(a), .b(b), .cin(cin), .result(result), .overflow(overflow), .carry(carry)));
+	add4 a1 (.a(a), .b(b), .cin(cin), .result(result), .overflow(overflow), .carry(carry));
 	sub4 s1 (.a(a), .b(b), .cin(cin), .result(result), .overflow(overflow), .carry(carry) ,.zero(zero));
 
 	wire result_wire, size_wire;
@@ -59,10 +59,10 @@ module sub4(
 );
 	
 	wire result_wire, t_no_Cin;
-
+	add4 a2 (.a(a), .b(t_no_Cin), .cin(cin), .result(result), .overflow(overflow);
      assign result_wire = result;
 	assign t_no_Cin = {n{ Cin }}^B;
-	assign add4 a1 (.a(a), .b(t_no_Cin), .cin(cin), .result(result), .overflow(overflow);
+	assign a2;
 	assign zero = ~(|result_wire);
 
 endmodule
