@@ -9,7 +9,7 @@ module ALU4(
 	add4 a1 (.a(a), .b(b), .cin(cin), .result(result), .overflow(overflow), .carry(carry));
 	sub4 s1 (.a(a), .b(b), .cin(cin), .result(result), .overflow(overflow), .carry(carry) ,.zero(zero));
 
-	wire result_wire, size_wire;
+	wire result_wire, size_wire,t_no_Cin;
 
 	assign result_wire = result;
 	assign size_wire = zero;
