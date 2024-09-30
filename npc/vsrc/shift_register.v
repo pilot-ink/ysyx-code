@@ -20,6 +20,8 @@ module LFSR(
 	input clock,
 	output [7:0] result
 );
+	initial
+		result = 8'b0;
 	wire in;
 	assign in = result[4] ^ result[3] ^ result[2] ^ result[0];
 	
