@@ -7,7 +7,7 @@ module sr(
 		q = 8'b0;
 	
 
-	always @(clock)  begin
+	always @(*)  begin
 		q <= {in,q[7:1]};
 	end
 
