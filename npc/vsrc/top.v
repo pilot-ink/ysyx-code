@@ -1,13 +1,13 @@
 module top(
-	input [3:0] a, b,
-       input [2:0] c,      //功能选择
-       input reg cin,     //进位
-       output reg [3:0] result,
-       output reg zero, overflow, carry, size //比较大小时，size=1,a>b;size=0,a<b;判断相等时,size=1,a=b;size=0,a不等于b;
-
+	input in
+       input clock,     
+       output [7:0] result,
+       output [3:0] h1, h2
 );
 	
 	
-	ALU4 a1 (.a(a), .b(b), .c(c), .cin(cin), .result(result), .zero(zero), .overflow(overflow), .carry(carry), .size(size));
+	LFSR a1 (.in(in), .clock(clock), .result(result));
+	bcd7se b1(.b(result[3:0]), .h(h1));
+	bcd7se b2(.b(result[7:4]), .h(h2));
 
 endmodule
