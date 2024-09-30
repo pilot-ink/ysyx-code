@@ -1,12 +1,11 @@
 module sr(
 	input reg in,
-	input clock,
 	output reg [7:0] q 
 );
 	
 	
 
-	always @(clock)  begin
+	always @(in) begin
 		q <= {in,q[7:1]};
 	end
 
@@ -22,7 +21,7 @@ module LFSR(
 	wire in;
 	assign in = result[4] ^ result[3] ^ result[2] ^ result[0];
 	
-	sr s1(.in(in), .clock(clock), .q(result));
-
+	sr s1(.in(in), .q(result));
+	
 
 endmodule
