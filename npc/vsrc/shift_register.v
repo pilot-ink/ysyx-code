@@ -21,7 +21,7 @@ module LFSR(
 );
 		
 	reg in;
-
+	sr s1(.in(in), .q(result));
 	
 	always @(clock) begin
 		in = result[4] ^ result[3] ^ result[2] ^ result[0];
