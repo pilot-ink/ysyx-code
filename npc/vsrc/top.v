@@ -1,7 +1,7 @@
 module top(
        input clock,     
        output [7:0] result,
-       output [7:0] h1, h2
+       output [6:0] h1, h2
 );
 	
 	
