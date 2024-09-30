@@ -20,7 +20,7 @@ module LFSR(
 	output [7:0] result
 );
 		
-	wire in;
+	reg in;
 	sr s1(.in(in), .q(result));
 	
 	if(clock == 1)
