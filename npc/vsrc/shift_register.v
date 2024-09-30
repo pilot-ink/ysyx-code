@@ -24,7 +24,7 @@ module LFSR(
 	sr s1(.in(in), .q(result));
 	
 	if(clock == 1)
-		in = result[4] ^ result[3] ^ result[2] ^ result[0];
+		in <= result[4] ^ result[3] ^ result[2] ^ result[0];
 	
 
 endmodule
