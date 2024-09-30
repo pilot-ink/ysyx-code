@@ -6,7 +6,7 @@ module top(
 	
 	
 	LFSR a1 (.clock(clock), .result(result));
-	bcd7se b1(.b(result[3:0]), .h(h1));
-	bcd7se b2(.b(result[7:4]), .h(h2));
+	bcd7seg b1(.b(result[3:0]), .h(h1));
+	bcd7seg b2(.b(result[7:4]), .h(h2));
 
 endmodule
