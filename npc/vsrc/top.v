@@ -1,5 +1,5 @@
 module top(
-	input in
+	input in,
        input clock,     
        output [7:0] result,
        output [3:0] h1, h2
