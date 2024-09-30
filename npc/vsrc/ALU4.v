@@ -76,9 +76,9 @@ endmodule
 
 
 module chose_xor(
-	input [3:0] b;
-	input [2:0] c;
-	output reg [3:0] B;
+	input [3:0] b,
+	input [2:0] c,
+	output reg [3:0] B
 );
 
 	reg [3:0] temp = b ^ 4'b1111;
