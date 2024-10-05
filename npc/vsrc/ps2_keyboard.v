@@ -39,14 +39,14 @@ module ps2_keyboard(clk,clrn,ps2_clk,ps2_data,data,
 						(^buffer[9:1])) begin
 						fifo[w_ptr] <= buffer[8:1];
 						w_ptr <= w_ptr + 3'b1;
-						read <= 1b'1;
+						read <= 1'b1;
 						overflow <= overflow | (r_ptr == (w_ptr + 3'b1));
 					end
-				end
 					count <= 0;
+				end	
 				else begin
 					buffer[count] <= ps2_data;
-					count <= count + 3b'1;
+					count <= count + 3'b1;
 				end
 			end
 		end
