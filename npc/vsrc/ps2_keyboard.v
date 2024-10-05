@@ -1,5 +1,5 @@
 module ps2_keyboard(clk,clrn,ps2_clk,ps2_data,data,
-				read,nextdata_n,overflow);
+				ready,nextdata_n,overflow);
 
 	input clk,clrn,ps2_clk,ps2_data;
 	input nextdata_n;
@@ -29,7 +29,7 @@ module ps2_keyboard(clk,clrn,ps2_clk,ps2_data,data,
 				if(nextdata_n == 1'b0) begin
 					r_ptr <= r_ptr + 3'b1;
 					if(w_ptr == (r_ptr + 3'b1))
-						read <= 1'b0;
+						ready <= 1'b0;
 				end
 			end
 			if(sampling) begin
@@ -39,7 +39,7 @@ module ps2_keyboard(clk,clrn,ps2_clk,ps2_data,data,
 						(^buffer[9:1])) begin
 						fifo[w_ptr] <= buffer[8:1];
 						w_ptr <= w_ptr + 3'b1;
-						read <= 1'b1;
+						ready <= 1'b1;
 						overflow <= overflow | (r_ptr == (w_ptr + 3'b1));
 					end
 					count <= 0;
