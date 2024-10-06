@@ -23,7 +23,7 @@ module top(clk,rst,ps2_clk,ps2_data,
 	bcd7seg b3(.b(data_p[11:8]), .h(hex2));
 	bcd7seg b4(.b(data_p[15:12]), .h(hex3));
 	bcd7seg b5(.b(data_p[19:16]), .h(hex4));
-	bcd7seg b6(.b(data_p[24:20]), .h(hex5));
+	bcd7seg b6(.b(data_p[23:20]), .h(hex5));
 	always @(posedge clk) begin
 		if(ready) begin
 		data_p <= {data_p[15:0],data};
