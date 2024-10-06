@@ -3,23 +3,9 @@ module top(
      input nextdata_n,  
      output [7:0] data,
      output reg ready,
-	output reg overflow,
-	output [6:0] h1,h2
+     output reg overflow,
+     output [6:0] h1,h2
 );
-	
-	parameter [31:0] clock_period = 10;
-	
-	
-	initial begin /* clock driver */
-    	clk = 0;
-    	forever
-        	#(clock_period/2) clk = ~clk;
-	end
-	
-	initial begin
-		clrn = 1'b0; #20;
-		clrn = 1'b1; #20;
-	end
 	
 	wire [7:0] data1;
 	assign data1 = data;
