@@ -2,7 +2,6 @@ module top(clk, clrn, ps2_clk, ps2_data,flag, flag2,hex0,ready);
 
 	input clk,clrn,ps2_clk,ps2_data;
 	wire [7:0] data_code;
-	wire ready;
 	wire overflow;
 	reg nextdata_n2;
 	output ready;
