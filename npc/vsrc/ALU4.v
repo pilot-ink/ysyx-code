@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module ALU4(
   input  wire [3:0] A,
   input  wire [3:0] b,

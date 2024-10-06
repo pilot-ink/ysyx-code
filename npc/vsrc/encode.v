@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module encode42(x,en,y);
   input  [3:0] x;
   input  en;

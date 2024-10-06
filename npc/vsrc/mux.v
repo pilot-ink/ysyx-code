@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module MuxKeyInternal #(NR_KEY = 2, KEY_LEN = 1, DATA_LEN = 1, HAS_DEFAULT = 0) (
   output reg [DATA_LEN-1:0] out,
   input [KEY_LEN-1:0] key,
