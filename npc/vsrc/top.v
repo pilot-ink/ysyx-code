@@ -1,10 +1,11 @@
-module top(clk, clrn, ps2_clk, ps2_data,flag, flag2,hex0);
+module top(clk, clrn, ps2_clk, ps2_data,flag, flag2,hex0,ready);
 
 	input clk,clrn,ps2_clk,ps2_data;
 	wire [7:0] data_code;
 	wire ready;
 	wire overflow;
 	reg nextdata_n2;
+	output ready;
 	
 	reg [7:0] data_p;
 	reg [7:0] count = 0; // an le duoshao ci
