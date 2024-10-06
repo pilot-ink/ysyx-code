@@ -7,7 +7,7 @@ module top(
      output overflow,
      output [6:0] h1,h2,
      output sampling,
-     output ps2cl;
+     output ps2cl
 );
 	/* parameter */
 	parameter [31:0] clock_period = 10;
