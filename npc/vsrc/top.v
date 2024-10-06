@@ -21,7 +21,7 @@ module top(
 	initial begin /* clock driver */
     		clk = 0;
     		forever
-        	#(clock_period/2) clk = ~clk;
+        		#(clock_period/2) clk = ~clk;
 	end
 
 endmodule
