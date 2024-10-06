@@ -11,7 +11,7 @@ module top(clk,rst,ps2_clk,ps2_data,
 	reg nextdata_n;
 	
 	
-	ps2_keyboard inst(.clk(clk), .clrn(rst), .ps2_clk(ps2_clk), .ps2_data(ps2_data), .nextdata_n(nextdata_n),.ready(ready), .overflow(overflow));
+	ps2_keyboard inst(.clk(clk), .clrn(rst), .ps2_clk(ps2_clk), .ps2_data(ps2_data), .data(data),.nextdata_n(nextdata_n),.ready(ready), .overflow(overflow));
 	
 	bcd7seg b1(.b(data_p[3:0]), .h(hex0));
 	always @(*) begin
