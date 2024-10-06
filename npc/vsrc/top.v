@@ -10,7 +10,7 @@ wire [7:0] data;
 wire ready,overflow;
 wire kbd_clk, kbd_data;
 reg nextdata_n;
-wire data1;
+wire [7:0] data1;
 assign data1 = data;
 
 ps2_keyboard_model model(
