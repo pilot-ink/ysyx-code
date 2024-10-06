@@ -1,4 +1,4 @@
-
+`timescale 1ns / 1ps
 module top(
      input clrn,ps2_clk,ps2_data,
      input nextdata_n,  
