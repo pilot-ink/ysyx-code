@@ -1,5 +1,5 @@
 module top(clk,rst,ps2_clk,ps2_data,
-	data,ready,overflow,hex0,hex1
+	data,ready,overflow,hex0,hex1,hex2,hex3,hex4,hex5
 );
 	input clk,rst,ps2_clk,ps2_data;
 	output [7:0] data;
@@ -7,6 +7,10 @@ module top(clk,rst,ps2_clk,ps2_data,
 	output overflow;
 	output [6:0] hex0;
 	output [6:0] hex1;
+	output [6:0] hex2;
+	output [6:0] hex3;
+	output [6:0] hex4;
+	output [6:0] hex5;
 	
 	reg [23:0] data_p;
 	reg nextdata_n;
