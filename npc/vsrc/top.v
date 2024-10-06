@@ -8,7 +8,7 @@ module top(clk,rst,ps2_clk,ps2_data,
 	output [6:0] hex0;
 	output [6:0] hex1;
 	
-	reg [7:0] data_p;
+	reg [23:0] data_p;
 	reg nextdata_n;
 	
 	
@@ -16,9 +16,13 @@ module top(clk,rst,ps2_clk,ps2_data,
 	
 	bcd7seg b1(.b(data_p[3:0]), .h(hex0));
 	bcd7seg b2(.b(data_p[7:4]), .h(hex1));
+	bcd7seg b3(.b(data_p[11:8]), .h(hex2));
+	bcd7seg b4(.b(data_p[15:12]), .h(hex3));
+	bcd7seg b5(.b(data_p[19:16]), .h(hex4));
+	bcd7seg b6(.b(data_p[24:20]), .h(hex5));
 	always @(posedge clk) begin
 		if(ready) begin
-		data_p <= data;
+		data_p <= {data_p[15:0],data};
 		nextdata_n <= 0;
 		end
 		else begin
