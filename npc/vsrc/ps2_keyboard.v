@@ -60,8 +60,8 @@ endmodule
 
 
 module read(
-	input ready,
-	output nextdata
+	input reg ready,
+	output reg nextdata
 );
 	always @(*) begin
 		if(ready) begin
