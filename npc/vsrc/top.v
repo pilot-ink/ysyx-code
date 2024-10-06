@@ -3,9 +3,10 @@ module top(
      input clrn,ps2_clk,ps2_data,
      input nextdata_n,  
      output [7:0] data,
-     output reg ready,
-     output reg overflow,
-     output [6:0] h1,h2
+     output ready,
+     output overflow,
+     output [6:0] h1,h2,
+     output sampling
 );
 	/* parameter */
 	parameter [31:0] clock_period = 10;
@@ -17,7 +18,7 @@ module top(
 	assign ready1 = ready;
 	assign data1 = data;
 	
-	ps2_keyboard inst(.clk(clk), .clrn(clrn), .ps2_clk(ps2_clk), .ps2_data(ps2_data), .nextdata_n(nextdata_n), .data(data), .ready(ready), .overflow(overflow));
+	ps2_keyboard inst(.clk(clk), .clrn(clrn), .ps2_clk(ps2_clk), .ps2_data(ps2_data), .nextdata_n(nextdata_n), .data(data), .ready(ready), .overflow(overflow), .sampling_indictor(sampling));
 	
 	read r1(.ready(ready1), .nextdata(nextdata));
 
