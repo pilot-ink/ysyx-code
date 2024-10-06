@@ -6,14 +6,15 @@ module top(
      output ready,
      output overflow,
      output [6:0] h1,h2,
-     output sampling
+     output sampling,
+     output ps2cl;
 );
 	/* parameter */
 	parameter [31:0] clock_period = 10;
 	reg clk;
 	wire [7:0] data1;
 	wire nextdata,ready1;
-	wire ps2cl;
+	
 	
 	assign ps2cl = ps2_clk;
 	
