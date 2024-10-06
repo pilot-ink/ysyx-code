@@ -13,6 +13,9 @@ module top(
 	reg clk;
 	wire [7:0] data1;
 	wire nextdata,ready1;
+	reg ps2clk;
+	
+	assign ps2clk = ps2_clk;
 	
 	assign nextdata = nextdata_n;
 	assign ready1 = ready;
