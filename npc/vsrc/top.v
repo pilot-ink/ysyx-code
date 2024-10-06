@@ -26,7 +26,7 @@ module top(clk,rst,ps2_clk,ps2_data,
 	bcd7seg b6(.b(data_p[23:20]), .h(hex5));
 	always @(posedge clk) begin
 		if(ready) begin
-		data_p <= {data_p[15:0],data};
+		data_p <= {data_p[15:8],data_p[7:0],data};
 		nextdata_n <= 0;
 		end
 		else begin
