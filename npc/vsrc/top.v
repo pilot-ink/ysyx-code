@@ -5,9 +5,9 @@ module top(clk,rst,ps2_clk,ps2_data,
 	output [7:0] data;
 	output ready;
 	output overflow;
-	output hex0;
+	output [6:0] hex0;
 	
-	reg [6:0] data_p;
+	reg [7:0] data_p;
 	reg nextdata_n;
 	
 	
