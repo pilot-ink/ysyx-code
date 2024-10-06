@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 module top(
-	output [7:0] h1,h2
+	output [6:0] h1,h2
 );
 	/* parameter */
 parameter [31:0] clock_period = 10;
