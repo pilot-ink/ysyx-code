@@ -61,7 +61,7 @@ endmodule
 
 module read(
 	input ready,
-	output nextdata,
+	output nextdata
 );
 	always @(*) begin
 		if(ready) begin

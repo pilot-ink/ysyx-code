@@ -12,6 +12,7 @@ module top(
 	reg clk;
 	wire [7:0] data1;
 	wire nextdata,ready1;
+	
 	assign nextdata = nextdata_n;
 	assign ready1 = ready;
 	assign data1 = data;
