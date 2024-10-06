@@ -55,3 +55,23 @@ module ps2_keyboard(clk,clrn,ps2_clk,ps2_data,data,
 
 
 endmodule
+
+
+
+
+module read(
+	input ready,
+	output nextdata,
+);
+	always @(*) begin
+		if(ready) begin
+			nextdata = 1'b0;
+			#20;
+			nextdata = 1'b1;	
+		end
+	end
+
+	
+
+
+endmodule

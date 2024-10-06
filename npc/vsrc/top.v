@@ -11,10 +11,14 @@ module top(
 	parameter [31:0] clock_period = 10;
 	reg clk;
 	wire [7:0] data1;
+	wire nextdata,ready1;
+	assign nextdata = nextdata_n;
+	assign ready1 = ready;
 	assign data1 = data;
 	
 	ps2_keyboard inst(.clk(clk), .clrn(clrn), .ps2_clk(ps2_clk), .ps2_data(ps2_data), .nextdata_n(nextdata_n), .data(data), .ready(ready), .overflow(overflow));
-		
+	
+	read r1(.ready(ready1), .nextdata(nextdata));
 
 	bcd7seg b1(.b(data1[3:0]), .h(h1));
 	bcd7seg b2(.b(data1[7:4]), .h(h2));
