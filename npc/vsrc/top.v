@@ -1,5 +1,5 @@
 module top(clk,rst,ps2_clk,ps2_data,
-	data,ready,overflow
+	data,ready,overflow,hex0
 );
 	input clk,rst,ps2_clk,ps2_data;
 	output [7:0] data;
