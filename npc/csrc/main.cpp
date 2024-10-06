@@ -28,6 +28,7 @@ int main(int argc, char** argv) {
     top->rst = 1;
     while (n-- > 0){top->clk = !top->clk;top->eval();}
     top->rst = 0;
+    m_trace->dump(contextp->time()); // 记录波形
     // ----原reset函数----end
     while (!contextp->gotFinish()) {
 		nvboard_update();
