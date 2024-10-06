@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module water_lamp(  // 这里名字要与Makefile中的TOPNAME和cpp文件中的#include "Vtop.h"相同
   input clk,
   input rst,
