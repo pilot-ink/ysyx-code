@@ -69,7 +69,7 @@ static int cms_scan_mem(char *args){
   if(args == NULL) return -1;
   char *data = strtok(args, " ");
   char *address = strtok(NULL, " ");
-  address += 2;
+  address += 1;
   uint32_t addr = 0;//用来保存字符串转换成数字
   uint32_t y = 0;//用来保存十进制地址的值
   uint32_t x = 8, product = 1;
