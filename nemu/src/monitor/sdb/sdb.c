@@ -72,7 +72,7 @@ static int cms_scan_mem(char *args){
   address += 2;
   uint32_t addr = 0;//用来保存字符串转换成数字
   uint32_t y = 0;//用来保存十进制地址的值
-  uint32_t x = 8, product = 1;
+  uint32_t x = 16, product = 1;
   addr = (uint32_t)atoi(address);
   
   //转换为10进制
