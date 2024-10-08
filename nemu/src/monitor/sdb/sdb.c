@@ -77,10 +77,9 @@ static int cms_scan_mem(char *args){
   //转换为10进制
   while(addr!=0){
 		y=y+(addr%10)*product;
-		x=addr/10;
+		addr=addr/10;
 		product=product*x;
 	}
-
   for(int i = 0; i < atoi(data); i++,y+=4)
   {
 
