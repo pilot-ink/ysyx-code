@@ -74,13 +74,14 @@ static int cms_scan_mem(char *args){
   uint32_t y = 0;//用来保存十进制地址的值
   uint32_t x = 8, product = 1;
   addr = atoi(address);
+  printf("%d\n",addr);
   //转换为10进制
   while(addr!=0){
 		y=y+(addr%10)*product;
 		addr=addr/10;
 		product=product*x;
 	}
-  printf("%x\n",y);
+  
   for(int i = 0; i < atoi(data); i++,y+=4)
   {
 
