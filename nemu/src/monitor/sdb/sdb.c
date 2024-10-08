@@ -85,7 +85,7 @@ static int cms_scan_mem(char *args){
   for(int i = 0; i < atoi(data); i++,y+=4)
   {
 
-    printf("0x%x\t0x%8x\n",y,paddr_read(y, 4));
+    printf("0x%x\t0x%08x\n",y,paddr_read(y, 4));
   }
 
 }
