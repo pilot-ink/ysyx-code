@@ -69,9 +69,22 @@ static int cms_scan_mem(char *args){
   if(args == NULL) return -1;
   char *data = strtok(args, " ");
   char *address = strtok(NULL, " ");
-  for(int i = 0; i < atoi(data); i++,address++)
+  address += 2;
+  uint32_t addr = 0;//用来保存字符串转换成数字
+  uint32_t y = 0;//用来保存十进制地址的值
+  uint32_t x = 8, product = 1;
+  addr = atoi(address);
+  //转换为10进制
+  while(addr!=0){
+		y=y+(addr%10)*product;
+		x=addr/10;
+		product=product*x;
+	}
+
+  for(int i = 0; i < atoi(data); i++,y+=4)
   {
-    printf("0x%x\t%d\n",address,paddr_read(address, 4));
+
+    printf("0x%x\t%d\n",y,paddr_read(y, 4));
   }
 
 }
