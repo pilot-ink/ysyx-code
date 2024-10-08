@@ -53,9 +53,15 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_help(char *args);
+
 static int cmd_si(char *args){
   if(args == NULL) cpu_exec(1);
   else cpu_exec(atoi(args));
+  return 0;
+}
+
+static int cms_info(char *args){
+  isa_reg_display();
   return 0;
 }
 
@@ -68,6 +74,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si" , "continue the execution N instruction of the program", cmd_si},
+  { "info", "print program's state" ,cms_info},
 
   /* TODO: Add more commands */
 
