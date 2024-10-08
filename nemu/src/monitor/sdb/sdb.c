@@ -65,6 +65,17 @@ static int cms_info(char *args){
   return 0;
 }
 
+static int cms_scan_mem(char *args){
+  if(args == NULL) return -1;
+  char *data = strtok(args, " ");
+  char *address = strtok(NULL, " ");
+  for(int i = 0; i < atoi(data); i++,address++)
+  {
+    printf("0x%x\t%d\n",address,paddr_read(address, 4));
+  }
+
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -74,7 +85,8 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si" , "continue the execution N instruction of the program", cmd_si},
-  { "info", "print program's state" ,cms_info},
+  { "info" , "print program's state" ,cms_info},
+  { "x" , "print value in the address of mem" , cms_scan_mem},
 
   /* TODO: Add more commands */
 
