@@ -80,7 +80,7 @@ static int cms_scan_mem(char *args){
 		addr=addr/10;
 		product=product*x;
 	}
-  printf("%d",y);
+  printf("%x\n",y);
   for(int i = 0; i < atoi(data); i++,y+=4)
   {
 
