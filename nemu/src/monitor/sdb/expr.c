@@ -44,16 +44,7 @@ static struct rule {
   {"/", '/'},            //除
   {"\\(", '('},
   {"\\)", '('},
-  {"\d+", NUM},
-  {"2", NUM},
-  {"3", NUM},
-  {"4", NUM},
-  {"5", NUM},
-  {"6", NUM},
-  {"7", NUM},
-  {"8", NUM},
-  {"9", NUM},
-  {"0", NUM},
+  {"[0-9]+", NUM},
 };
 
 #define NR_REGEX ARRLEN(rules)
