@@ -102,17 +102,13 @@ static bool make_token(char *e) {
          */
 printf("1\n"); 
         switch (rules[i].token_type) {
-          case(TK_NOTYPE): 
-            printf("WRONG TYPE\n");
+          case(TK_NOTYPE): ;
           case(COMPUTE): 
             tokens[pos].type = rules[i].token_type;
-            tokens[pos].str[0] = position;
-            printf("WRONG TYPE\n");
+            memcpy(tokens[pos].str, substr_start, substr_len);
           case(NUM):  
             tokens[pos].type = rules[i].token_type;
-              //for(int j = 0; j < substr_len; i++) 
-                //tokens[pos].str[j] = substr_start[j];
-            printf("WRONG TYPE\n");
+            memcpy(tokens[pos].str, substr_start, substr_len);
           default: printf("WRONG TYPE\n");
         }
         pos++;
@@ -137,10 +133,10 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
   int i = 0;
-  while(tokens[i].str != NULL){
-    printf("str:%s\ttype:%d",tokens[i].str,tokens[i].type);
-    i++;
-  }
+  //while(tokens[i].str != NULL){
+    //printf("str:%s\ttype:%d",tokens[i].str,tokens[i].type);
+    //i++;
+  //}
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
 
