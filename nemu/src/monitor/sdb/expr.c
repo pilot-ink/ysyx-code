@@ -37,13 +37,13 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
+  {"\\+", COMPUTE},         // plus
   {"==", TK_EQ},        // equal
-  {"\\*", '*'},         //乘
-  {"-", '-'},            //减
-  {"/", '/'},            //除
-  {"\\(", '('},
-  {"\\)", '('},
+  {"\\*", COMPUTE},         //乘
+  {"-", COMPUTE},            //减
+  {"/", COMPUTE},            //除
+  {"\\(", COMPUTE},
+  {"\\)", COMPUTE},
   {"[0-9]+", NUM},
 };
 
@@ -100,17 +100,21 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
-        tokens[pos].type = rules[i].token_type;
-        for(int j = 0; j < substr_len; i++)
-          tokens[pos].str[j] = substr_start[j];
-        pos++;
-        
 
         switch (rules[i].token_type) {
+          case(TK_NOTYPE): continue;
+          case(COMPUTE): 
+            tokens[pos].type = rules[i].token_type;
+            tokens[pos].str[0] = position;
+          case(NUM):  
+            tokens[pos].type = rules[i].token_type;
+              for(int j = 0; j < substr_len; i++) 
+                tokens[pos].str[j] = substr_start[j];
           default: ;
         }
+        pos++;
 
-        break;
+        //break;
       }
     }
 
