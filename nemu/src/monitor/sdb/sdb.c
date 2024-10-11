@@ -94,7 +94,7 @@ static int cmd_scan_mem(char *args){
 
 static int cmd_p(char *args)
 {
-  bool *success;
+  bool *success=false;
   return expr(args,success);
 }
 
