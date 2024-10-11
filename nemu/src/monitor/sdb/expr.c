@@ -110,7 +110,7 @@ printf("1\n");
             tokens[pos].type = rules[i].token_type;
               for(int j = 0; j < substr_len; i++) 
                 tokens[pos].str[j] = substr_start[j];
-          default: ;
+          default: printf("WRONG TYPE\n");
         }
         pos++;
 printf("2\n");
