@@ -83,6 +83,8 @@ static bool make_token(char *e) {
   int pos=0;
 
   nr_token = 0;
+  for(int j = 0; j < 32; j++)
+    memset(tokens[j].str,'\0' , 32);
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
@@ -101,25 +103,23 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
         
-printf("1\n"); 
         switch (rules[i].token_type) {
           case(TK_NOTYPE): break;
           case(COMPUTE): 
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
-            tokens[pos].str[substr_len] = '\0';
+            //tokens[pos].str[substr_len] = '\0';
             printf("index:%d\tsubstr%s\ttok%s\n",pos,substr_start,tokens[pos].str);
             break;
           case(NUM):  
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
-            tokens[pos].str[substr_len] = '\0';
+            //tokens[pos].str[substr_len] = '\0';
             printf("index:%d\tsubstr%s\ttok%s\n",pos,substr_start,tokens[pos].str);
             break;
           default: printf("WRONG TYPE%s\n",substr_start);
         }
         pos++;
-printf("2\n");
         break;
       }
     }
