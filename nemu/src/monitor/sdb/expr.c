@@ -21,7 +21,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,
+  TK_NOTYPE = 256, TK_EQ, NUM,
 
   /* TODO: Add more token types */
 
@@ -39,6 +39,21 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
+  {"\\*", '*'},         //乘
+  {"-", '-'},            //减
+  {"/", '/'},            //除
+  {"(", '('},
+  {")", '('},
+  {"\b+", NUM},
+  {"2", NUM},
+  {"3", NUM},
+  {"4", NUM},
+  {"5", NUM},
+  {"6", NUM},
+  {"7", NUM},
+  {"8", NUM},
+  {"9", NUM},
+  {"0", NUM},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -74,6 +89,7 @@ static bool make_token(char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
+  int pos=0;
 
   nr_token = 0;
 
@@ -93,6 +109,10 @@ static bool make_token(char *e) {
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
+        tokens[pos].type = rules[i].token_type;
+        for(int j = 0; j < substr_len; i++)
+          tokens[pos].str[j] = substr_start[j];
+        pos++;
 
         switch (rules[i].token_type) {
           default: TODO();
@@ -117,7 +137,11 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-
+  int i = 0;
+  while(tokens[i].str != NULL){
+    printf("str:%s\ttype:%d",tokens[i].str,tokens[i].type);
+    i++;
+  }
   /* TODO: Insert codes to evaluate the expression. */
   TODO();
 

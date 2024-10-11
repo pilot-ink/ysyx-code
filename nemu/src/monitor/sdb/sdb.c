@@ -62,12 +62,12 @@ static int cmd_si(char *args){
   return 0;
 }
 
-static int cms_info(char *args){
+static int cmd_info(char *args){
   isa_reg_display();
   return 0;
 }
 
-static int cms_scan_mem(char *args){
+static int cmd_scan_mem(char *args){
   if(args == NULL) return -1;
   char *data = strtok(args, " ");
   char *address = strtok(NULL, " ");
@@ -92,6 +92,12 @@ static int cms_scan_mem(char *args){
 
 }
 
+static int cmd_p(char *args)
+{
+  bool *success;
+  return expr(args,success);
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -101,8 +107,9 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si" , "continue the execution N instruction of the program", cmd_si},
-  { "info" , "print program's state" ,cms_info},
-  { "x" , "print value in the address of mem" , cms_scan_mem},
+  { "info" , "print program's state" ,cmd_info},
+  { "x" , "print value in the address of mem" , cmd_scan_mem},
+  { "q", "compute expr" , cmd_p},
 
   /* TODO: Add more commands */
 
