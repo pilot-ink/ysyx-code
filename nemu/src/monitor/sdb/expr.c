@@ -109,7 +109,7 @@ printf("1\n");
           case(NUM):  
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
-          default: printf("WRONG TYPE\n");
+          default: printf("WRONG TYPE%s\n",substr_start);
         }
         pos++;
 printf("2\n");
