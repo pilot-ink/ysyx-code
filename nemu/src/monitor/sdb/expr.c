@@ -106,7 +106,7 @@ static bool make_token(char *e) {
         pos++;
 
         switch (rules[i].token_type) {
-          default: TODO();
+          default: ;
         }
 
         break;
