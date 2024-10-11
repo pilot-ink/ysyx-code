@@ -102,13 +102,15 @@ static bool make_token(char *e) {
          */
 printf("1\n"); 
         switch (rules[i].token_type) {
-          case(TK_NOTYPE): ;
+          case(TK_NOTYPE): break;
           case(COMPUTE): 
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
+            break;
           case(NUM):  
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
+            break;
           default: printf("WRONG TYPE%s\n",substr_start);
         }
         pos++;
