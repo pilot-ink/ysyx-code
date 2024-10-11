@@ -21,7 +21,7 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, NUM,
+  TK_NOTYPE = 256, TK_EQ, NUM, COMPUTE
 
   /* TODO: Add more token types */
 
@@ -42,8 +42,8 @@ static struct rule {
   {"\\*", '*'},         //乘
   {"-", '-'},            //减
   {"/", '/'},            //除
-  {"(", '('},
-  {")", '('},
+  {"\\(", '('},
+  {"\\)", '('},
   {"\b+", NUM},
   {"2", NUM},
   {"3", NUM},
