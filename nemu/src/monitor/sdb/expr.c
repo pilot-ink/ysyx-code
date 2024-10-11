@@ -107,12 +107,12 @@ printf("1\n");
           case(COMPUTE): 
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
-            printf("index:%d\tsubstr%s\ttok%s\n",pos,tokens[pos].str);
+            printf("index:%d\tsubstr%s\ttok%s\n",pos,substr_start,tokens[pos].str);
             break;
           case(NUM):  
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
-            printf("index:%d\tsubstr%s\ttok%s\n",pos,tokens[pos].str);
+            printf("index:%d\tsubstr%s\ttok%s\n",pos,substr_start,tokens[pos].str);
             break;
           default: printf("WRONG TYPE%s\n",substr_start);
         }
