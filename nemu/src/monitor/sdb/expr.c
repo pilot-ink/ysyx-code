@@ -102,14 +102,17 @@ static bool make_token(char *e) {
          */
 printf("1\n"); 
         switch (rules[i].token_type) {
-          case(TK_NOTYPE): continue;
+          case(TK_NOTYPE): 
+            printf("WRONG TYPE\n");;
           case(COMPUTE): 
             tokens[pos].type = rules[i].token_type;
             tokens[pos].str[0] = position;
+            printf("WRONG TYPE\n");
           case(NUM):  
             tokens[pos].type = rules[i].token_type;
               for(int j = 0; j < substr_len; i++) 
                 tokens[pos].str[j] = substr_start[j];
+            printf("WRONG TYPE\n");
           default: printf("WRONG TYPE\n");
         }
         pos++;
