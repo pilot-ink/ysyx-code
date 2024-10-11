@@ -109,7 +109,7 @@ static struct {
   { "si" , "continue the execution N instruction of the program", cmd_si},
   { "info" , "print program's state" ,cmd_info},
   { "x" , "print value in the address of mem" , cmd_scan_mem},
-  { "q", "compute expr" , cmd_p},
+  { "p", "compute expr" , cmd_p},
 
   /* TODO: Add more commands */
 
