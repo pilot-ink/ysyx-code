@@ -92,10 +92,16 @@ static int cmd_scan_mem(char *args){
 
 }
 
+
+
 static int cmd_p(char *args)
 {
   bool *success=false;
-  return expr(args,success);
+  expr(args,success);     //should return value
+
+
+
+  return 0;
 }
 
 static struct {
@@ -189,3 +195,5 @@ void init_sdb() {
   /* Initialize the watchpoint pool. */
   init_wp_pool();
 }
+
+
