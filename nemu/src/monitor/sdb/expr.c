@@ -232,6 +232,7 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
   int i = 0;
+  printf("1\n");
   /*check whether expr is right*/
   check_parentheses(0, nr_token);
 
