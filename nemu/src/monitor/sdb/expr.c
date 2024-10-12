@@ -77,6 +77,7 @@ static bool check_parentheses(uint32_t p, uint32_t q){
   int read = 0;
   uint32_t index = p;
   for(index = p; index <= q; index++){
+    if(read < 0) break;
     if(tokens[index].str[0] == '(')
       {chec[read] = '(';read++;}
     else if(tokens[index].str[0] == ')')
