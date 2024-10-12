@@ -117,7 +117,7 @@ static uint32_t eval(uint32_t p, uint32_t q){
     int flag[32] = {};
     int read = 0;
     uint32_t index = p;
-    for(index = p; p <= q; index++){
+    for(index = p; p < q; index++){
       if(read < 0) panic("read is wrong\n");
       if(tokens[index].str[0] == '(')
         {chec[read] = '(';flag[read] = index;read++;}
