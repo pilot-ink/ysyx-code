@@ -31,8 +31,45 @@ static char *code_format =
 "  return 0; "
 "}";
 
+int buf_loc;
+static int choose(int num){
+  return rand() % num;
+}
+static void gen_num(){
+  int num = rand();
+  char str[80];
+  sprintf(str,"%u",num);
+  for(int j = 0; ; j++){
+    if(str[j] == '\0')
+      break;
+    buf[buf_loc] = str[j];
+    buf_loc++;
+  }
+} 
+static void gen(char op){
+  switch(choose(2)){
+    case 0: buf[buf_loc] = '('; buf_loc++; break;
+    case 1: buf[buf_loc] = ')'; buf_loc++; break;
+    default: ;
+  }
+} 
+static void gen_rand_op(){
+  switch(choose(4)){
+    case 0: buf[buf_loc] = '+'; buf_loc++; break;
+    case 1: buf[buf_loc] = '-'; buf_loc++; break;
+    case 2: buf[buf_loc] = '*'; buf_loc++; break;
+    case 3: buf[buf_loc] = '/'; buf_loc++; break;
+    default: ;
+  }
+}
+
 static void gen_rand_expr() {
-  buf[0] = '\0';
+  switch (choose(3)) {
+    case 0: gen_num(); break;
+    case 1: gen('('); gen_rand_expr(); gen(')'); break;
+    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+  }
+  //buf[0] = '\0';
 }
 
 int main(int argc, char *argv[]) {
@@ -44,6 +81,7 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
+    buf_loc = 0;
     gen_rand_expr();
 
     sprintf(code_buf, code_format, buf);
