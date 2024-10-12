@@ -82,6 +82,7 @@ static bool check_parentheses(uint32_t p, uint32_t q){
     else if(tokens[index].str[0] == ')')
       {read--;}
   }
+    printf("1\n");
   if(read != 0) 
     panic("() is nor matched\n");
   else{
@@ -232,7 +233,7 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
   int i = 0;
-  printf("1\n");
+
   /*check whether expr is right*/
   check_parentheses(0, nr_token);
 
