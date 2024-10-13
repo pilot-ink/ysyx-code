@@ -240,7 +240,7 @@ word_t expr(char *e, bool *success) {
   //check_parentheses(0, nr_token);
   printf("expr:\n");
   for(i = 0; i < nr_token; i++)
-    printf("type:%d\tvalue:%s\n",tokens[i].type,tokens->str);
+    printf("type:%d\tvalue:%s\n",tokens[i].type,tokens[i].str);
   
   //printf("expr's value is %d",eval(0, nr_token));
   //while(tokens[i].str != NULL){
