@@ -83,7 +83,7 @@ static bool check_parentheses(uint32_t p, uint32_t q){
     else if(tokens[index].str[0] == ')')
       {read--;}
   }
-    printf("1\n");
+    //printf("1\n");
   if(read != 0) 
     panic("() is nor matched\n");
   else{
