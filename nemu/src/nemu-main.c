@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 
   /*run test*/
   char str[100];
-  FILE *fd = fopen("input",'r');
+  FILE *fd = fopen("/home/dhb/ysyx-workbench/nemu/tools/gen-expr/input","r");
   fscanf(fd,"%s",str);
   fclose(fd);
   bool *success=false;
