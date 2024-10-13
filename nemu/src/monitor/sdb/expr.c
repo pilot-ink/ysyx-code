@@ -209,6 +209,7 @@ static bool make_token(char *e) {
           case(NUM):  
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
+            nr_token++;
             pos++;
             //tokens[pos].str[substr_len] = '\0';
             //printf("index:%d\tsubstr%s\ttok%s\n",pos,substr_start,tokens[pos].str);
