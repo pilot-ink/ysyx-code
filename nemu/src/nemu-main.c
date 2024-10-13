@@ -32,12 +32,15 @@ int main(int argc, char *argv[]) {
   //engine_start();
 
   /*run test*/
+  bool *success=false;
   char str[100];
   FILE *fd = fopen("/home/dhb/ysyx-workbench/nemu/tools/gen-expr/input","r");
-  fscanf(fd,"%s",str);
-  fclose(fd);
-  bool *success=false;
+  while(fscanf(fd,"%s",str)==1){
   expr(str,success);     //should return value
+  }
+  fclose(fd);
+  
+ 
 
   return is_exit_status_bad();
 }
