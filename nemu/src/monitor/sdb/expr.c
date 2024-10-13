@@ -202,13 +202,14 @@ static bool make_token(char *e) {
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
             nr_token++;
+            pos++;
             //tokens[pos].str[substr_len] = '\0';
             //printf("index:%d\tsubstr%s\ttok%s\n",pos,substr_start,tokens[pos].str);
             break;
           case(NUM):  
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
-            nr_token++;
+            pos++;
             //tokens[pos].str[substr_len] = '\0';
             //printf("index:%d\tsubstr%s\ttok%s\n",pos,substr_start,tokens[pos].str);
             break;
@@ -217,7 +218,6 @@ static bool make_token(char *e) {
         break;
       }
     }
-    pos++;
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
