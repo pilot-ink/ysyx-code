@@ -237,10 +237,12 @@ word_t expr(char *e, bool *success) {
   int i = 0;
 
   /*check whether expr is right*/
-  check_parentheses(0, nr_token);
-
+  //check_parentheses(0, nr_token);
+  printf("expr:\n");
+  for(i = 0; i < nr_token; i++)
+    printf("type:%d\tvalue:%s\n",tokens[i].type,tokens->str);
   
-  printf("expr's value is %d",eval(0, nr_token));
+  //printf("expr's value is %d",eval(0, nr_token));
   //while(tokens[i].str != NULL){
     //printf("str:%s\ttype:%d",tokens[i].str,tokens[i].type);
     //i++;

@@ -31,49 +31,95 @@ static char *code_format =
 "  return 0; "
 "}";
 
-int buf_loc;
-static int choose(int num){
+int choose(int num)
+{
   return rand() % num;
 }
-static void gen_num(){
-  int num = rand();
-  char str[80];
-  sprintf(str,"%u",num);
-  for(int j = 0; ; j++){
-    if(str[j] == '\0')
-      break;
-    buf[buf_loc] = str[j];
-    buf_loc++;
-  }
-} 
-static void gen(char op){
-  switch(choose(2)){
-    case 0: buf[buf_loc] = '('; buf_loc++; break;
-    case 1: buf[buf_loc] = ')'; buf_loc++; break;
-    default: ;
-  }
-} 
-static void gen_rand_op(){
-  switch(choose(4)){
-    case 0: buf[buf_loc] = '+'; buf_loc++; break;
-    case 1: buf[buf_loc] = '-'; buf_loc++; break;
-    case 2: buf[buf_loc] = '*'; buf_loc++; break;
-    case 3: buf[buf_loc] = '/'; buf_loc++; break;
-    default: ;
-  }
+
+static char* gen_num(void) 
+{
+  int num = choose(9) + 1;  //1-9
+  char* str = (char*)malloc(11 * sizeof(char));
+  str[0] = '0' + num;
+  str[1] = '\0';
+  return str;
 }
 
-static void gen_rand_expr() {
-  switch (choose(3)) {
-    case 0: gen_num(); break;
-    case 1: gen('('); gen_rand_expr(); gen(')'); break;
-    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+// static char* gen_space(void) 
+// {
+//   int num = choose(5) + 2;  //1-5(except one space byte)
+//   char* str = (char*)malloc(num * sizeof(char));
+// 
+//   for(int i = 0; i < num - 1; i++)
+//     strcat(str, " ");
+//   str[num - 1] = '\0';
+// 
+//   return str;
+// }
+
+static char* gen(char c) 
+{
+  char* str = (char*)malloc(2 * sizeof(char));
+  str[0] = c;
+  str[1] = '\0';
+  return str;
+}
+
+static char* gen_rand_op(void) 
+{
+  char* str = (char*)malloc(2 * sizeof(char));
+
+  switch (choose(4)) 
+  {
+    case 0: str[0] = '+'; break;
+    case 1: str[0] = '-'; break;
+    case 2: str[0] = '*'; break;
+    case 3: str[0] = '/'; break;
+    default: assert(0); break;
   }
-  //buf[0] = '\0';
+  str[1] = '\0';
+
+  return str;
+}
+
+#define token_size 50  //according to the KISS principle, 从简单的情况的开始（tokens数组长度为32）
+static char* random_expr(void) 
+{
+  char* str = (char*)malloc(2 * token_size * sizeof(char));
+  char * temp;
+  str[0] = '\0';
+
+  switch (choose(3)) 
+  {
+    case 0: return gen_num(); 
+    case 1: temp = gen('(');        strcat(str, temp);  free(temp);
+            temp = random_expr();   strcat(str, temp);  free(temp);
+            temp = gen(')');        strcat(str, temp);  free(temp);
+            break;
+    case 2: temp = random_expr();   strcat(str, temp);  free(temp); 
+            temp = gen_rand_op();   strcat(str, temp);  free(temp);
+            temp = random_expr();   strcat(str, temp);  free(temp);
+            break;
+    default: assert(0); break;
+  }
+
+  //If the recursion result is too long (longer then token_size), then replace the result with "( 1 + 2)"
+  if(strlen(str) > token_size)  
+    strcpy(str, "( 1 + 2)");
+
+  return str;
+}
+
+void gen_rand_expr() 
+{
+  char* str = random_expr();
+  memcpy(buf, str, strlen(str)+1);
+  free(str);
 }
 
 int main(int argc, char *argv[]) {
-  int seed = time(0);
+  
+  int seed = time(NULL);
   srand(seed);
   int loop = 1;
   if (argc > 1) {
@@ -81,7 +127,6 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
-    buf_loc = 0;
     gen_rand_expr();
 
     sprintf(code_buf, code_format, buf);
@@ -91,7 +136,8 @@ int main(int argc, char *argv[]) {
     fputs(code_buf, fp);
     fclose(fp);
 
-    int ret = system("gcc /tmp/.code.c -o /tmp/.expr");
+    //If division_by_zero occurs, then the compilation fails and ret = -1
+    int ret = system("gcc -O2 -Wall -Werror /tmp/.code.c -o /tmp/.expr");
     if (ret != 0) continue;
 
     fp = popen("/tmp/.expr", "r");
