@@ -29,7 +29,15 @@ int main(int argc, char *argv[]) {
 #endif
 
   /* Start engine. */
-  engine_start();
+  //engine_start();
+
+  /*run test*/
+  char str[100];
+  FILE *fd = fopen("input",'r');
+  fscanf(fd,"%s",&str);
+  fclose(fd);
+  bool *success=false;
+  expr(str,success);     //should return value
 
   return is_exit_status_bad();
 }
