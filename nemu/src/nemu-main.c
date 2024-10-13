@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
   /*run test*/
   char str[100];
   FILE *fd = fopen("input",'r');
-  fscanf(fd,"%s",&str);
+  fscanf(fd,"%s",str);
   fclose(fd);
   bool *success=false;
   expr(str,success);     //should return value
