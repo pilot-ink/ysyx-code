@@ -176,7 +176,7 @@ static bool make_token(char *e) {
   int pos=0;
 
   nr_token = 0;
-  for(int j = 0; j < 32; j++)
+  for(int j = 0; j < 256; j++)
     memset(tokens[j].str,'\0' , 32);
 
   while (e[position] != '\0') {
