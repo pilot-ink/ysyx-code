@@ -91,7 +91,7 @@ static bool check_parentheses(uint32_t p, uint32_t q){
     else return false;
   }
 }
-
+//没有换成数字
 static uint32_t eval(uint32_t p, uint32_t q){
   char op;
   uint32_t val1, val2;
