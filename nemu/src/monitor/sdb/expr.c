@@ -72,6 +72,39 @@ static getOperatorPriority(char op){
      return 10;
   }
 }
+static int get_prime(int p, int q){
+    char chec[32] = {};
+    int flag[32] = {};
+    int read = 0;
+    uint32_t index = p;
+    for(index = p; index <= q; index++){
+      if(read < 0) panic("read is wrong\n");
+      if(tokens[index].str[0] == '(')
+        {chec[read] = '(';flag[read] = index;read++;}
+      else if(tokens[index].str[0] == ')')
+      {
+        while(chec[read] != '()'){
+          chec[read] = 0;
+          flag[read] = 0;
+          read--;
+        }
+        chec[read] = 0;
+        flag[read] = 0;
+        read--;
+      }
+      else if(tokens[index].str[0] == '+' 
+              || tokens[index].str[0] == '-' 
+              || tokens[index].str[0] == '*' 
+              || tokens[index].str[0] == '/')
+        {chec[read] = tokens[index].str[0];flag[read] = index;read++;}
+  }
+  int tmp = 0;
+  for(int i = 1; i <= read; i++){
+    if(getOperatorPriority(chec[i]) <= getOperatorPriority(chec[tmp]))
+      tmp = i;
+  }
+  return tmp;
+}
 
 static bool check_parentheses(uint32_t p, uint32_t q){
   char chec[100] = {};
@@ -114,31 +147,10 @@ static uint32_t eval(uint32_t p, uint32_t q){
     return eval(p + 1, q - 1);
   }
   else {
-    char chec[32] = {};
-    int flag[32] = {};
-    int read = 0;
-    uint32_t index = p;
-    for(index = p; index <= q; index++){
-      if(read < 0) panic("read is wrong\n");
-      if(tokens[index].str[0] == '(')
-        {chec[read] = '(';flag[read] = index;read++;}
-      else if(tokens[index].str[0] == ')')
-        {read -= 2;}
-      else if(tokens[index].str[0] == '+' 
-              || tokens[index].str[0] == '-' 
-              || tokens[index].str[0] == '*' 
-              || tokens[index].str[0] == '/')
-        {chec[read] = tokens[index].str[0];flag[read] = index;read++;}
-  }
-  int tmp = 0;
-  for(int i = 1; i <= read; i++){
-    if(getOperatorPriority(chec[i]) <= getOperatorPriority(chec[tmp]))
-      tmp = i;
-  }
     /* We should do more things here. */
-    op =  tokens[flag[tmp]].str[0];         //x           //the position of 主运算符 in the token expression;
-    val1 = eval(p, tmp-1);
-    val2 = eval(tmp+1, q);
+    op =  get_prime(p,1);         //x           //the position of 主运算符 in the token expression;
+    val1 = eval(p, op-1);
+    val2 = eval(op+1, q);
 
     switch (op) {
       case '+': return val1 + val2;
