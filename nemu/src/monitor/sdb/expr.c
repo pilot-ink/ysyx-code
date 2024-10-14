@@ -107,32 +107,32 @@ static int get_prime(int p, int q){
 }
 /*
 *   func：判断表达式是否被一对匹配的括号包围着
-*   如果括号不匹配，说明表达式格式不正确返回false
-*   如果匹配1.第一个是（说明被一对匹配的括号包围着返回return
-*   2.说明需要分裂成两个expr返回false
+*   描述：
+*     如果进入panic则说明expr括号格式是错误的
+*     如果read==0&index=q则说明是被一对匹配的括号包围着
 */
 static bool check_parentheses(uint32_t p, uint32_t q){
-  char chec[100] = {};
+  
   int read = 0;
-  int flag = 0;
   uint32_t index = p;
+
   for(index = p; index <= q; index++){
     if(read < 0) break;
     if(tokens[index].str[0] == '(')
     {
-      chec[read] = '(';read++;
+     read++;
     }
     else if(tokens[index].str[0] == ')')
     {
       if(read > 0) read--;
-      else if((read == 0) && (index == q))
+      else if((read == 0) && (index == q))  //the first "(" and the last ")"
         return true;
       else return false;
     }
   }
     //printf("1\n");
   if(read != 0) 
-    panic("() is nor matched\n");
+    panic("() is not matched\n");
 }
 //没有换成数字
 static uint32_t eval(uint32_t p, uint32_t q){
