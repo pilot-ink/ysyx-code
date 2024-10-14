@@ -262,7 +262,8 @@ word_t expr(char *e, bool *success) {
   printf("expr:\n");
   printf("info:total:%d\n",nr_token-1);
   for(i = 1; i < nr_token; i++)
-    printf("value:%s",tokens[i].type,i,tokens[i].str);
+    printf("value:%s",tokens[i].str);
+  printf("\n");
   printf("result:%s\tresult:%u\n",tokens[0].str,eval(1,nr_token-1));
   //printf("result:%d\n",check_parentheses(1, nr_token));
   
