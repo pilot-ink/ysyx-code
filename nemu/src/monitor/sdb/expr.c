@@ -111,28 +111,25 @@ static int get_prime(int p, int q){
 *     如果进入panic则说明expr括号格式是错误的
 *     如果read==0&index=q则说明是被一对匹配的括号包围着
 */
-static bool check_parentheses(uint32_t p, uint32_t q){
+static bool check_parentheses(uint32_t start, uint32_t end){
   
-  int read = 0;
-  uint32_t index = p;
-
-  for(index = p; index <= q; index++){
-    if(read < 0) break;
-    if(tokens[index].str[0] == '(')
+  int num_Lparentheses = 1;   //The amount of "(" by now
+  if((strcmp(tokens[start].str, "(") != 0) || (strcmp(tokens[end].str, ")") != 0))
+    return false;
+   for(int i = start + 1; i <= end; i++)
+  {
+    if((strcmp(tokens[i].str, "(") == 0))   //encounter a "("
+      num_Lparentheses++;
+    else if((strcmp(tokens[i].str, ")") == 0)) //when encountering a ")", eliminate a "("
     {
-     read++;
-    }
-    else if(tokens[index].str[0] == ')')
-    {
-      if(read > 1) read--;
-      else if((read == 1) && (index == q))  //the first "(" and the last ")"
+      if(num_Lparentheses > 1)    //the first "(" is not eliminated yet
+        num_Lparentheses--;
+      else if((num_Lparentheses == 1) && (i == end))  //the first "(" and the last ")"
         return true;
-      else read--;
+      else
+        return false;
     }
   }
-    //printf("1\n");
-  if(read != 0) 
-    panic("() is not matched\n");
   return false;
 }
 //没有换成数字
