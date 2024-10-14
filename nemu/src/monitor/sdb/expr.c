@@ -73,7 +73,7 @@ static getOperatorPriority(char op){
 }
 
 static bool check_parentheses(uint32_t p, uint32_t q){
-  char chec[10] = {};
+  char chec[100] = {};
   int read = 0;
   uint32_t index = p;
   for(index = p; index <= q; index++){
