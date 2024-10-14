@@ -105,7 +105,7 @@ static uint32_t eval(uint32_t p, uint32_t q){
      * For now this token should be a number.
      * Return the value of the number.
      */
-    return atoi(p);
+    return atoi(tokens[p].str);
   }
   else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
