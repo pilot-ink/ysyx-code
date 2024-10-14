@@ -114,19 +114,29 @@ static int get_prime(int p, int q){
 static bool check_parentheses(uint32_t p, uint32_t q){
   char chec[100] = {};
   int read = 0;
+  int flag = 0;
   uint32_t index = p;
   for(index = p; index <= q; index++){
     if(read < 0) break;
     if(tokens[index].str[0] == '(')
-      {chec[read] = '(';read++;}
+    {
+      chec[read] = '(';read++;
+    }
     else if(tokens[index].str[0] == ')')
-      {read--;}
+    {
+      read--;
+      if(read == 0) flag = 1;
+    }
   }
     //printf("1\n");
   if(read != 0) 
     panic("() is nor matched\n");
   else{
-    if(tokens[p].str[0] == '(')  return true;
+    if(tokens[p].str[0] == '(')  
+    {
+      if(flag = 1) return false;
+      else return true;
+    }
     else return false;
   }
 }
