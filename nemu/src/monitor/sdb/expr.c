@@ -84,13 +84,14 @@ static int get_prime(int p, int q){
       else if(tokens[index].str[0] == ')')
       {
         while(chec[read] != '('){
+          read--;
           chec[read] = 0;
           flag[read] = 0;
-          read--;
         }
+        read--;
         chec[read] = 0;
         flag[read] = 0;
-        read--;
+        
       }
       else if(tokens[index].str[0] == '+' 
               || tokens[index].str[0] == '-' 
