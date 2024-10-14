@@ -59,7 +59,7 @@ typedef struct token {
 
 static Token tokens[256] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
-
+//判断运算符优先级
 static getOperatorPriority(char op){
   switch(op){
     case '+':
@@ -109,8 +109,8 @@ static int get_prime(int p, int q){
 /*
 *   func：判断表达式是否被一对匹配的括号包围着
 *   描述：
-*     如果进入panic则说明expr括号格式是错误的
-*     如果read==0&index=q则说明是被一对匹配的括号包围着
+*     先检查第一个和最后一个符号
+*     然后再判断是否是被一对匹配的括号包围着
 */
 static bool check_parentheses(uint32_t start, uint32_t end){
   
@@ -133,7 +133,7 @@ static bool check_parentheses(uint32_t start, uint32_t end){
   }
   return false;
 }
-//没有换成数字
+
 static uint32_t eval(uint32_t p, uint32_t q){
   char op;
   uint32_t val1, val2;
@@ -207,8 +207,8 @@ static bool make_token(char *e) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
-        Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
-            i, rules[i].regex, position, substr_len, substr_len, substr_start);
+        //Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
+          //  i, rules[i].regex, position, substr_len, substr_len, substr_start);
         
         position += substr_len;
 
@@ -262,7 +262,7 @@ word_t expr(char *e, bool *success) {
   printf("expr:\n");
   printf("info:total:%d\n",nr_token-1);
   for(i = 1; i < nr_token; i++)
-    printf("type:%d\tloc:%d\tvalue:%s\n",tokens[i].type,i,tokens[i].str);
+    printf("value:%s",tokens[i].type,i,tokens[i].str);
   printf("result:%s\tresult:%u\n",tokens[0].str,eval(1,nr_token-1));
   //printf("result:%d\n",check_parentheses(1, nr_token));
   
