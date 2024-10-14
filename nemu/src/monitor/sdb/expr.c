@@ -124,21 +124,15 @@ static bool check_parentheses(uint32_t p, uint32_t q){
     }
     else if(tokens[index].str[0] == ')')
     {
-      read--;
-      if(read == 0) flag = 1;
+      if(read > 0) read--;
+      else if((read == 0) && (index == q))
+        return true;
+      else return false;
     }
   }
     //printf("1\n");
   if(read != 0) 
     panic("() is nor matched\n");
-  else{
-    if(tokens[p].str[0] == '(')  
-    {
-      if(flag = 1) return false;
-      else return true;
-    }
-    else return false;
-  }
 }
 //没有换成数字
 static uint32_t eval(uint32_t p, uint32_t q){
