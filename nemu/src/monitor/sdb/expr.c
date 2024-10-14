@@ -38,7 +38,7 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
-  {"\n", TK_NOTYPE},    // spaces
+  {"\n", TK_NOTYPE},    // \n
   {"\\+", COMPUTE},         // plus
   {"==", TK_EQ},        // equal
   {"\\*", COMPUTE},         //乘
@@ -255,7 +255,7 @@ word_t expr(char *e, bool *success) {
   printf("expr:\n");
   printf("info:total:%d\n",nr_token-1);
   for(i = 1; i < nr_token; i++)
-    printf("type:%d\tvalue:%s\n",tokens[i].type,tokens[i].str);
+    printf("type:%d\tloc:%d\tvalue:%s\n",tokens[i].type,i,tokens[i].str);
   printf("result:%d\n",eval(1,nr_token-1));
   //printf("result:%d\n",check_parentheses(1, nr_token));
   
