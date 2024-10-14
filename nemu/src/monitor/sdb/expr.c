@@ -105,7 +105,12 @@ static int get_prime(int p, int q){
   }
   return flag[tmp];
 }
-
+/*
+*   func：判断表达式是否被一对匹配的括号包围着
+*   如果括号不匹配，说明表达式格式不正确返回false
+*   如果匹配1.第一个是（说明被一对匹配的括号包围着返回return
+*   2.说明需要分裂成两个expr返回false
+*/
 static bool check_parentheses(uint32_t p, uint32_t q){
   char chec[100] = {};
   int read = 0;
@@ -119,8 +124,7 @@ static bool check_parentheses(uint32_t p, uint32_t q){
   }
     //printf("1\n");
   if(read != 0) 
-    //panic("() is nor matched\n");
-    return false;
+    panic("() is nor matched\n");
   else{
     if(tokens[p].str[0] == '(')  return true;
     else return false;
