@@ -148,7 +148,7 @@ static uint32_t eval(uint32_t p, uint32_t q){
   }
   else {
     /* We should do more things here. */
-    op =  get_prime(p,1);         //x           //the position of 主运算符 in the token expression;
+    op =  get_prime(p,q);         //x           //the position of 主运算符 in the token expression;
     val1 = eval(p, op-1);
     val2 = eval(op+1, q);
 
