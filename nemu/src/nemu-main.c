@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
   
   while(fgets(str,1000,fd) != NULL){
     token = strtok(str, " ");
-    token = strtok(str, " ");
+    token = strtok(NULL, " ");
     printf("%s\n",token);
     //expr(str,success);     //should return value
   }
