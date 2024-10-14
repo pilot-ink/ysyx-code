@@ -103,7 +103,7 @@ static int get_prime(int p, int q){
     if(getOperatorPriority(chec[i]) <= getOperatorPriority(chec[tmp]))
       tmp = i;
   }
-  return tmp;
+  return flag[tmp];
 }
 
 static bool check_parentheses(uint32_t p, uint32_t q){
