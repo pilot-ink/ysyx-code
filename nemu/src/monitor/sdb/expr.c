@@ -83,7 +83,7 @@ static int get_prime(int p, int q){
         {chec[read] = '(';flag[read] = index;read++;}
       else if(tokens[index].str[0] == ')')
       {
-        while(chec[read] != '()'){
+        while(chec[read] != '('){
           chec[read] = 0;
           flag[read] = 0;
           read--;
