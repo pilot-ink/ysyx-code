@@ -33,16 +33,13 @@ int main(int argc, char *argv[]) {
 
   /*run test*/
   bool *success=false;
-  char str[100];
-  char str_num[100];
-  char *token;
+  char str[1000];
   FILE *fd = fopen("/home/dhb/ysyx-workbench/nemu/tools/gen-expr/input","r");
   
   while(fgets(str,1000,fd) != NULL){
-    token = strtok(str, " ");
-    token = strtok(NULL, " ");
-    printf("%s\n",token);
-    //expr(str,success);     //should return value
+    
+    
+    expr(str,success);     //should return value
   }
   fclose(fd);
   
