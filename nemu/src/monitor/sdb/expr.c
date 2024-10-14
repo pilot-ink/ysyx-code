@@ -38,6 +38,7 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
+  {"\n", TK_NOTYPE},    // spaces
   {"\\+", COMPUTE},         // plus
   {"==", TK_EQ},        // equal
   {"\\*", COMPUTE},         //乘
