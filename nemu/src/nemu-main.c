@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
   char str_num[100];
   FILE *fd = fopen("/home/dhb/ysyx-workbench/nemu/tools/gen-expr/input","r");
   
-  while(fscanf(fd,"%s %s",str_num,str)==2){
+  while(fgets(str,1000,fd) != NULL){
   expr(str,success);     //should return value
   }
   fclose(fd);
