@@ -152,7 +152,7 @@ static uint32_t eval(uint32_t p, uint32_t q){
     val1 = eval(p, op-1);
     val2 = eval(op+1, q);
 
-    switch (op) {
+    switch (tokens[op].str[0]) {
       case '+': return val1 + val2;
       case '-': return val1 - val2;
       case '*': return val1 * val2;
