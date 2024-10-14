@@ -125,14 +125,14 @@ static bool check_parentheses(uint32_t p, uint32_t q){
     else if(tokens[index].str[0] == ')')
     {
       if(read > 0) read--;
-      else if((read == 0) && (index == q))  //the first "(" and the last ")"
-        return true;
-      else return false;
+      else if((read == 1) && (index == q))  //the first "(" and the last ")"
+        {read--;return true;}
     }
   }
     //printf("1\n");
   if(read != 0) 
     panic("() is not matched\n");
+  return false;
 }
 //没有换成数字
 static uint32_t eval(uint32_t p, uint32_t q){
