@@ -124,9 +124,10 @@ static bool check_parentheses(uint32_t p, uint32_t q){
     }
     else if(tokens[index].str[0] == ')')
     {
-      if(read > 0) read--;
+      if(read > 1) read--;
       else if((read == 1) && (index == q))  //the first "(" and the last ")"
-        {read--;return true;}
+        return true;
+      else read--;
     }
   }
     //printf("1\n");
