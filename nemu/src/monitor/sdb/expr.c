@@ -27,7 +27,7 @@ enum {
   NUM, HEX_NUM,      //
   DEREF, NEGATIVE,    //*-
   TK_TIMES, TK_DIVISION,TK_PLUS,TK_MINUS,     //+-*/
-  TK_EQ, TK_NEQ, 
+  TK_EQ, TK_NEQ, TK_AND,
   TK_REG, TK_REG_NAME,               //reg
   /* TODO: Add more token types */
 };
@@ -56,7 +56,7 @@ static struct rule {
   {"[0-9]+", NUM},          //识别十进制整数
   {"==", TK_EQ},        // equal
   {"!=", TK_NEQ},
-  //{"\\$", TK_REG},
+  {"(&)+", TK_AND},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -213,11 +213,14 @@ static uint32_t eval(uint32_t p, uint32_t q){
     val1 = eval(p, op-1);
     val2 = eval(op+1, q);
 
-    switch (tokens[op].str[0]) {
-      case '+': return val1 + val2;
-      case '-': return val1 - val2;
-      case '*': return val1 * val2;
-      case '/': return val1 / val2;
+    switch (tokens[op].type) {
+      case TK_PLUS: return val1 + val2;
+      case TK_MINUS: return val1 - val2;
+      case TK_TIMES: return val1 * val2;
+      case TK_DIVISION: return val1 / val2;
+      case TK_EQ: return val1 == val2;
+      case TK_NEQ: return val1 != val2;
+      case TK_AND: return val1 && val2;
 			default: assert(0);
     }
   }
@@ -284,6 +287,7 @@ static bool make_token(char *e) {
           case(TK_REG_NAME):
           case(TK_EQ): 
           case(TK_NEQ): 
+          case(TK_AND): 
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
             nr_token++;

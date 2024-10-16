@@ -63,7 +63,10 @@ static int cmd_si(char *args){
 }
 
 static int cmd_info(char *args){
-  isa_reg_display();
+  if(!strcmp(args, "r"))
+    isa_reg_display();
+  else if(!strcmp(args, "w"))
+    watchpoint_print();
   return 0;
 }
 
@@ -92,18 +95,21 @@ static int cmd_scan_mem(char *args){
 
 }
 
-
-
 static int cmd_p(char *args)
 {
   bool *success=false;
   printf("%u\n",expr(args,success));     //should return value
-
-
-
   return 0;
 }
 
+static int cmd_w(char *args){
+  new_up(args);
+  return 0;
+}
+
+static int cmd_d(char *args){
+  
+}
 static struct {
   const char *name;
   const char *description;
@@ -116,6 +122,8 @@ static struct {
   { "info" , "print program's state" ,cmd_info},
   { "x" , "print value in the address of mem" , cmd_scan_mem},
   { "p", "compute expr" , cmd_p},
+  { "", "set watchpoint", cmd_w},
+  { "", "delete watchpoint" ,cmd_d},
 
   /* TODO: Add more commands */
 
