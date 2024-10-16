@@ -45,17 +45,17 @@ static char* gen_num(void)
   return str;
 }
 
-// static char* gen_space(void) 
-// {
-//   int num = choose(5) + 2;  //1-5(except one space byte)
-//   char* str = (char*)malloc(num * sizeof(char));
-// 
-//   for(int i = 0; i < num - 1; i++)
-//     strcat(str, " ");
-//   str[num - 1] = '\0';
-// 
-//   return str;
-// }
+ static char* gen_space(void) 
+ {
+   int num = choose(5) + 2;  //1-5(except one space byte)
+   char* str = (char*)malloc(num * sizeof(char));
+
+   for(int i = 0; i < num - 1; i++)
+     strcat(str, " ");
+   str[num - 1] = '\0';
+ 
+   return str;
+ }
 
 static char* gen(char c) 
 {
@@ -69,7 +69,7 @@ static char* gen_rand_op(void)
 {
   char* str = (char*)malloc(2 * sizeof(char));
 
-  switch (choose(4)) 
+  switch (choose(3)) 
   {
     case 0: str[0] = '+'; break;
     case 1: str[0] = '-'; break;

@@ -21,8 +21,10 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, NUM, COMPUTE
-
+  TK_NOTYPE = 256,  NUM,  LEFT, RIGHT,
+  DEREF, NEGATIVE,
+  TK_TIMES, TK_DIVISION,TK_PLUS,TK_MINUS,
+  TK_EQ,
   /* TODO: Add more token types */
 
 };
@@ -39,13 +41,13 @@ static struct rule {
 
   {" +", TK_NOTYPE},    // spaces
   {"\n", TK_NOTYPE},    // \n
-  {"\\+", COMPUTE},         // plus
+  {"\\+", TK_PLUS},         // plus
   {"==", TK_EQ},        // equal
-  {"\\*", COMPUTE},         //乘
-  {"-", COMPUTE},            //减
-  {"/", COMPUTE},            //除
-  {"\\(", COMPUTE},         //(
-  {"\\)", COMPUTE},         //)
+  {"\\*", TK_TIMES},         //乘
+  {"-", TK_MINUS},            //减
+  {"/", TK_DIVISION},            //除
+  {"\\(", LEFT},         //(
+  {"\\)", RIGHT},         //)
   {"[0-9]+", NUM},          //识别十进制整数
 };
 
@@ -60,14 +62,17 @@ typedef struct token {
 static Token tokens[256] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 //判断运算符优先级
-static getOperatorPriority(char op){
+static int getOperatorPriority(int op){
   switch(op){
-    case '+':
-    case '-':
-      return 1;
-    case '*':
-    case '/':
+    case DEREF:
+    case NEGATIVE:
       return 2;
+    case TK_PLUS:
+    case TK_MINUS:
+      return 3;
+    case TK_TIMES:
+    case TK_DIVISION:
+      return 4;
     default:
      return 10;
   }
@@ -101,7 +106,7 @@ static int get_prime(int p, int q){
   }
   int tmp = 0;
   for(int i = 1; i <= read; i++){
-    if(getOperatorPriority(chec[i]) <= getOperatorPriority(chec[tmp]))
+    if(getOperatorPriority(tokens[flag[i]].type) <= getOperatorPriority(tokens[flag[tmp]].type))
       tmp = i;
   }
   return flag[tmp];
@@ -165,10 +170,9 @@ static uint32_t eval(uint32_t p, uint32_t q){
       case '-': return val1 - val2;
       case '*': return val1 * val2;
       case '/': return val1 / val2;
-      default: assert(0);
+			default: assert(0);
     }
   }
-
 }
 
 /* Rules are used for many times.
@@ -219,7 +223,12 @@ static bool make_token(char *e) {
         
         switch (rules[i].token_type) {
           case(TK_NOTYPE): break;
-          case(COMPUTE): 
+          case(TK_DIVISION): 
+          case(TK_TIMES): 
+          case(TK_PLUS): 
+          case(TK_MINUS): 
+          case(DEREF): 
+          case(NEGATIVE): 
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
             nr_token++;
@@ -255,8 +264,20 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  int i = 0;
-  
+	/*指针解引用的识别*/ 
+	int i = 0;
+  for(i = 0; i < nr_token; i++){
+	if(tokens[i].str[0] == '*' && (i == 0 || tokens[i - 1].type == NUM)){
+		tokens[i].type = DEREF;
+  } 
+  }
+  for(i = 0; i < nr_token; i++){
+	if(tokens[i].str[0] == '-' && (i == 0 || tokens[i - 1].type == NUM)){
+		tokens[i].type = NEGATIVE;
+  } 
+  }
+
+
   /*check whether expr is right*/
   //check_parentheses(0, nr_token);
   if(atoi(tokens[0].str) != eval(1,nr_token-1)){
