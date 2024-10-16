@@ -114,8 +114,8 @@ void watchpoint_print(){
 	int i = 1;
 	printf("NUM\texpr\t\n");
 	while(tmp != NULL){
-		tmp = tmp->next;
 		printf("%d\t%s\n",i,tmp->str);
 		i++;
 	}
+	tmp = tmp->next;
 }
