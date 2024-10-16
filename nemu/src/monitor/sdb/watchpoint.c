@@ -94,7 +94,6 @@ bool watchpoint_check(){
 	uint32_t value_1 = 0;
 	WP *tmp = head;
 	while(tmp != NULL){
-		tmp = tmp->next;
 		value_1 = expr(tmp->str, success);
 		if(tmp->value == value_1)
 		{
@@ -104,6 +103,7 @@ bool watchpoint_check(){
 			printf("watchpoint :%s\n",tmp->str);
 			printf("old value:%d\tnew value:%d\n",tmp->old_value,tmp->value);
 		}
+		tmp = tmp->next;
 	}
 	if(flag == 1) return true;
 	else return false;
