@@ -21,12 +21,14 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256,  NUM,  LEFT, RIGHT,
-  DEREF, NEGATIVE,
-  TK_TIMES, TK_DIVISION,TK_PLUS,TK_MINUS,
-  TK_EQ,
+  TK_NOTYPE = 256, 
+  LEFT, RIGHT,      //()
+  NUM, HEX_NUM,      //
+  DEREF, NEGATIVE,    //*-
+  TK_TIMES, TK_DIVISION,TK_PLUS,TK_MINUS,     //+-*/
+  TK_EQ, TK_NEQ, 
+  TK_REG,                 //reg
   /* TODO: Add more token types */
-
 };
 
 
@@ -42,13 +44,16 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\n", TK_NOTYPE},    // \n
   {"\\+", TK_PLUS},         // plus
-  {"==", TK_EQ},        // equal
   {"\\*", TK_TIMES},         //乘
   {"-", TK_MINUS},            //减
   {"/", TK_DIVISION},            //除
   {"\\(", LEFT},         //(
   {"\\)", RIGHT},         //)
   {"[0-9]+", NUM},          //识别十进制整数
+  {"==", TK_EQ},        // equal
+  {"!=", TK_NEQ},
+  {"[0][x][0-9]+", TK_REG},
+  {"\\$", TK_REG}
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -151,11 +156,17 @@ static uint32_t eval(uint32_t p, uint32_t q){
      * For now this token should be a number.
      * Return the value of the number.
      */
-    return atoi(tokens[p].str);
+    if(tokens[p].type == HEX_NUM){
+      return strtol(tokens[p].str, NULL, 16);
+    }
+    else if (tokens[p].type == NUM)
+    {
+      return atoi(tokens[p].str);
+    }
   }
   else if(p == (q+1)){
-    if(tokens[p].type == DEREF){
-      bool *success;
+    if(tokens[p].type == TK_REG){
+      bool *success = false;
       uint32_t num;
       num = isa_reg_str2val(tokens[q].str, success);
       if(!success) panic("reg\n");
@@ -164,6 +175,13 @@ static uint32_t eval(uint32_t p, uint32_t q){
     else if(tokens[p].type == NEGATIVE){
       return -atoi(tokens[q].str);
     }
+    else if (tokens[p].type == DEREF)
+    {
+      uint32_t *ptr = (uint32_t *)atoi(tokens[p].str);
+      uint32_t now = *ptr;
+      return now;
+    }
+    
   }
   else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
@@ -243,6 +261,10 @@ static bool make_token(char *e) {
           case(NEGATIVE):
           case(LEFT): 
           case(RIGHT): 
+          case(HEX_NUM): 
+          case(TK_REG): 
+          case(TK_EQ): 
+          case(TK_NEQ): 
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
             nr_token++;

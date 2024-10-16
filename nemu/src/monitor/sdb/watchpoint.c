@@ -40,4 +40,24 @@ void init_wp_pool() {
 }
 
 /* TODO: Implement the functionality of watchpoint */
+WP* new_up(){
+	if(free_ == NULL) panic("watchpoint is full\n");
+	WP *tmp = free_;
+	free_ = tmp->next;
+	return tmp;
+}
 
+void free_wp(WP *wp){
+	WP *tmp = head;
+	WP *del = head;
+	while(tmp->next != NULL){
+		del = tmp;
+		tmp = del->next;
+		if(tmp == wp){
+			del = tmp->next;
+			break;
+		}
+	}
+	tmp->next = free_->next;
+	free_->next = tmp;
+}
