@@ -27,7 +27,7 @@ enum {
   DEREF, NEGATIVE,    //*-
   TK_TIMES, TK_DIVISION,TK_PLUS,TK_MINUS,     //+-*/
   TK_EQ, TK_NEQ, 
-  TK_REG,                 //reg
+  TK_REG, TK_REG_NAME,               //reg
   /* TODO: Add more token types */
 };
 
@@ -52,7 +52,10 @@ static struct rule {
   {"[0-9]+", NUM},          //识别十进制整数
   {"==", TK_EQ},        // equal
   {"!=", TK_NEQ},
-  {"\\$", TK_REG}
+  {"\\$", TK_REG},
+  {"\\$[0]",TK_REG_NAME},
+  {"(t|a|s)[0-9]+",TK_REG_NAME},
+  {"(r|g|s|t)(a|p)",TK_REG_NAME},
 };
 
 #define NR_REGEX ARRLEN(rules)
