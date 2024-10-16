@@ -163,7 +163,7 @@ static uint32_t eval(uint32_t p, uint32_t q){
       return atoi(tokens[p].str);
     }
   }
-  else if(p == (q+1)){
+  else if(p == (q-1)){
     if(tokens[p].type == TK_REG){
       bool *success = false;
       uint32_t num;
