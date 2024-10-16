@@ -55,7 +55,7 @@ static struct rule {
   {"[0-9]+", NUM},          //识别十进制整数
   {"==", TK_EQ},        // equal
   {"!=", TK_NEQ},
-  {"\\$", TK_REG},
+  //{"\\$", TK_REG},
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -165,7 +165,7 @@ static uint32_t eval(uint32_t p, uint32_t q){
     {
       return atoi(tokens[p].str);
     }
-    else if(tokens[p].type == TK_REG){
+    else if(tokens[p].type == TK_REG_NAME){
       bool *success = false;
       uint32_t num;
       num = isa_reg_str2val(tokens[q].str, success);
