@@ -178,7 +178,7 @@ static uint32_t eval(uint32_t p, uint32_t q){
     {
       if(tokens[p+1].type == HEX_NUM){
       uint32_t *ptr = (uint32_t *)strtol(tokens[p+1].str, NULL, 16);
-      uint32_t now = *ptr;
+      uint32_t now = paddr_read(ptr, 4);
       return now;
       }
       else if (tokens[p].type == NUM){
