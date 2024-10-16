@@ -272,6 +272,7 @@ static bool make_token(char *e) {
           case(RIGHT): 
           case(HEX_NUM): 
           case(TK_REG): 
+          case(TK_REG_NAME):
           case(TK_EQ): 
           case(TK_NEQ): 
             tokens[pos].type = rules[i].token_type;
