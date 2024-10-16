@@ -122,8 +122,8 @@ static struct {
   { "info" , "print program's state" ,cmd_info},
   { "x" , "print value in the address of mem" , cmd_scan_mem},
   { "p", "compute expr" , cmd_p},
-  { "", "set watchpoint", cmd_w},
-  { "", "delete watchpoint" ,cmd_d},
+  { "w", "set watchpoint", cmd_w},
+  { "d", "delete watchpoint" ,cmd_d},
 
   /* TODO: Add more commands */
 
