@@ -30,6 +30,15 @@ void isa_reg_display() {
   }
 }
 
+int get_isa_reg_idx(char *name){
+  int i;
+  for(i = 0; i < sizeof(regs)/sizeof(char *); i++){
+    if(!strcmp(regs[i], name)) return i;
+  }
+}
+
 word_t isa_reg_str2val(const char *s, bool *success) {
-  return 0;
+  int idx = get_isa_reg_idx(s);
+  success = true;
+  return cpu.gpr[idx];
 }
