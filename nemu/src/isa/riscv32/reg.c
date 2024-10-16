@@ -39,6 +39,7 @@ int get_isa_reg_idx(char *name){
 
 word_t isa_reg_str2val(const char *s, bool *success) {
   int idx = get_isa_reg_idx(s);
-  success = true;
+  bool a = true;
+  success = &a;
   return cpu.gpr[idx];
 }

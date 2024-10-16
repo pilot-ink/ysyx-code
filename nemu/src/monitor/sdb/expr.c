@@ -176,10 +176,10 @@ static uint32_t eval(uint32_t p, uint32_t q){
   }
   else if(p == (q-1)){
     if(tokens[p].type == TK_REG){
-      bool *success = true;
+      bool *success;
       uint32_t num;
       num = isa_reg_str2val(tokens[q].str, success);
-      if(!success) panic("reg\n");
+      if(!(*success)) panic("reg\n");
       else return num; 
     }
     else if(tokens[p].type == NEGATIVE){
