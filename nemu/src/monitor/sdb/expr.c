@@ -153,6 +153,18 @@ static uint32_t eval(uint32_t p, uint32_t q){
      */
     return atoi(tokens[p].str);
   }
+  else if(p == (q+1)){
+    if(tokens[p].type == DEREF){
+      bool *success;
+      uint32_t num;
+      num = isa_reg_str2val(tokens[q].str, success);
+      if(!success) panic("reg\n");
+      else return num; 
+    }
+    else if(tokens[p].type == NEGATIVE){
+      return -atoi(tokens[q].str);
+    }
+  }
   else if (check_parentheses(p, q) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
