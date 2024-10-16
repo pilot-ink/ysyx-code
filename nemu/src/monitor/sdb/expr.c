@@ -167,7 +167,8 @@ static uint32_t eval(uint32_t p, uint32_t q){
       return atoi(tokens[p].str);
     }
     else if(tokens[p].type == TK_REG_NAME){
-      bool *success;
+      bool a = false;
+      bool *success = &a;
       uint32_t num;
       num = isa_reg_str2val(tokens[q].str, success);
       if(!(*success)) panic("reg\n");
