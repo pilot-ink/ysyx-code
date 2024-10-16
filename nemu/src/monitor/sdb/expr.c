@@ -228,7 +228,9 @@ static bool make_token(char *e) {
           case(TK_PLUS): 
           case(TK_MINUS): 
           case(DEREF): 
-          case(NEGATIVE): 
+          case(NEGATIVE):
+          case(LEFT): 
+          case(RIGHT): 
             tokens[pos].type = rules[i].token_type;
             memcpy(tokens[pos].str, substr_start, substr_len);
             nr_token++;
