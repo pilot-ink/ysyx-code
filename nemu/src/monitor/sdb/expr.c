@@ -40,7 +40,7 @@ static struct rule {
   /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
-
+  {"[0]x[0-9]+", HEX_NUM},
   {" +", TK_NOTYPE},    // spaces
   {"\n", TK_NOTYPE},    // \n
   {"\\+", TK_PLUS},         // plus
@@ -52,7 +52,6 @@ static struct rule {
   {"[0-9]+", NUM},          //识别十进制整数
   {"==", TK_EQ},        // equal
   {"!=", TK_NEQ},
-  {"[0]x[0-9]+", TK_REG},
   {"\\$", TK_REG}
 };
 
