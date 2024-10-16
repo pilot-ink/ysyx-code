@@ -103,10 +103,10 @@ static int get_prime(int p, int q){
         flag[read] = 0;
         
       }
-      else if(tokens[index].str[0] == '+' 
-              || tokens[index].str[0] == '-' 
-              || tokens[index].str[0] == '*' 
-              || tokens[index].str[0] == '/')
+      else if(tokens[index].type == TK_MINUS 
+              || tokens[index].type == TK_PLUS 
+              || tokens[index].type == TK_TIMES 
+              || tokens[index].type == TK_DIVISION)
         {chec[read] = tokens[index].str[0];flag[read] = index;read++;}
   }
   int tmp = 0;
