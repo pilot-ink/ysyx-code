@@ -51,18 +51,18 @@ WP* new_up(char *args){
 	if(free_ == NULL) panic("watchpoint is full\n");
 	WP *tmp = free_;
 	WP *sec_tmp = free_;			//指向tmp的上一个节点
-	while(tmp->next != NULL){
+	while(tmp != NULL){
 		sec_tmp = tmp;
 		tmp = tmp->next;
 	}
 	sec_tmp->next = NULL;
 	WP *join = head;
-	while(join->next != NULL){
+	while(join != NULL){
 		join = join->next;
 	}
-	join->next = tmp;
-	strcpy(tmp->str, args);
-	return tmp;
+	join = sec_tmp;
+	strcpy(sec_tmp->str, args);
+	return sec_tmp;
 }
 
 /*找到节点并删除节点，然后插入free_的尾部*/
