@@ -52,7 +52,7 @@ static struct rule {
   {"[0-9]+", NUM},          //识别十进制整数
   {"==", TK_EQ},        // equal
   {"!=", TK_NEQ},
-  {"[0][x][0-9]+", TK_REG},
+  {"[0]x[0-9]+", TK_REG},
   {"\\$", TK_REG}
 };
 
