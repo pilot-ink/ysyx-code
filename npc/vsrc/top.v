@@ -1,4 +1,4 @@
-modlue top(
+module top(
 	x,en,y,l,hex
 );
 	input [7:0]x;
