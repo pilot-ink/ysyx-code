@@ -36,7 +36,7 @@ void init_wp_pool() {
   for (i = 0; i < NR_WP; i ++) {
     wp_pool[i].NO = i;
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
-	wp_pool[i].value = 0;
+	wp_pool[i].value = NULL;
 	wp_pool[i].old_value = 0;
   }
 
@@ -98,7 +98,7 @@ bool watchpoint_check(){
 	WP *tmp = head->next;
 	while(tmp != NULL){
 		value_1 = expr(tmp->str, success);
-		if(tmp->value == value_1)
+		if(tmp->value != value_1)
 		{
 			flag = 1;
 			tmp->old_value = tmp->value;
