@@ -62,9 +62,9 @@ WP* new_up(char *args){
 	while(ptr_h->next != NULL){
 		ptr_h = ptr_h->next;
 	}
-	ptr_h->next = pre;
-	strcpy(pre->str, args);
-	return pre;
+	ptr_h->next = ptr;
+	strcpy(ptr->str, args);
+	return ptr;
 }
 
 /*找到节点并删除节点，然后插入free_的尾部*/
