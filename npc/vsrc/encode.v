@@ -18,7 +18,8 @@ module encode83(
 	input [7:0]x,
 	input en,
 	output reg [2:0]y,
-	output reg l);
+	output reg l
+);
 /* verilator lint_off CASEOVERLAP */
 	always @(x or en) begin
 		if(en) begin
