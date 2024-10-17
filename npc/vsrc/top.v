@@ -1,5 +1,5 @@
 module top(
-	x,en,y,l,hex,clk.rst
+	x,en,y,l,hex,clk,rst
 );
 	input clk,rst;
 	input [7:0]x;
