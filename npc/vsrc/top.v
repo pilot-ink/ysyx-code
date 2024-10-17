@@ -8,7 +8,7 @@ module top(
 	output [6:0] hex;
 
 	wire [3:0] h;
-	assign h = {0,y[2:0]};
+	assign h = {1'b0,y[2:0]};
 
 	encode83 e1(.x(x), .en(en), .y(y), .l(l));
 	bcd7seg  b1(.b(h), .h(hex));
