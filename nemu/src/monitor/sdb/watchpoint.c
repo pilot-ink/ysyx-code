@@ -69,25 +69,30 @@ WP* new_up(char *args){
 
 /*找到节点并删除节点，然后插入free_的尾部*/
 /*假设一直会找的wp，以后再处理找不到的情况*/
-void free_wp(WP *wp){
+void free_wp(char *args){
+	int num = atoi(args);
+	int count = 0;
 	WP *tmp = head->next;
 	WP *del = head;
 	while(tmp->next != NULL){
 		del = tmp;
 		tmp = tmp->next;
-		if(tmp == wp){
+		count++;
+		if(count == num){
 			break;
 		}
 	}
-	//delete
-	del->next = tmp->next;
-	//add free_
-	WP *last = free_->next;
-	while(last->next != NULL){
-		last = last->next;
+	if(count == num){
+		//delete
+		del->next = tmp->next;
+		//add free_
+		WP *last = free_->next;
+		while(last->next != NULL){
+			last = last->next;
+		}
+		last->next = tmp;
+		tmp->next = NULL;
 	}
-	last->next = tmp;
-	tmp->next = NULL;
 }
 
 bool watchpoint_check(){

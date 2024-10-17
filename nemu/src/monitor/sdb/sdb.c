@@ -108,7 +108,7 @@ static int cmd_w(char *args){
 }
 
 static int cmd_d(char *args){
-  free_wp();
+  free_wp(args);
   return 0;
 }
 static struct {
