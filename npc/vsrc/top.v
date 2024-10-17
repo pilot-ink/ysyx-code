@@ -11,7 +11,7 @@ module top(
 	assign h = {0,y};
 
 	encode83 e1(.x(x), .en(en), .y(y), .l(l));
-	bcd7seg  b1(.b(h), .h(hex))
+	bcd7seg  b1(.b(h), .h(hex));
 
 endmodule
 
