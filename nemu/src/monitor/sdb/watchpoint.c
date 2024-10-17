@@ -116,9 +116,9 @@ void watchpoint_print(){
 	WP *tmp = head;
 	int i = 1;
 	printf("NUM\texpr\t\n");
-	while(tmp != NULL){
+	while(tmp->next != NULL){
 		printf("%d\t%s\n",i,tmp->str);
 		i++;
+		tmp = tmp->next;
 	}
-	tmp = tmp->next;
 }
