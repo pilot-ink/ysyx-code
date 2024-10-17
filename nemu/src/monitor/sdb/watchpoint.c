@@ -30,6 +30,7 @@ typedef struct watchpoint {
 static WP wp_pool[NR_WP] = {};
 static WP *head = NULL, *free_ = NULL;
 
+/*没有释放head、free*/
 void init_wp_pool() {
   int i;
   for (i = 0; i < NR_WP; i ++) {
@@ -39,33 +40,35 @@ void init_wp_pool() {
 	wp_pool[i].old_value = 0;
   }
 
-  head = NULL;
-  free_ = wp_pool;
+  head = (WP *)malloc(sizeof(WP));
+  free_ = (WP *)malloc(sizeof(WP));
+  free_->next = wp_pool;
 }
 
 /* TODO: Implement the functionality of watchpoint */
-/*	返回监视点池最后一个节点作为空闲的监视点结构
+/*	返回监视点池最后;一个节点作为空闲的监视点结构
 *	同时插入到head中
 */
 WP* new_up(char *args){
 	if(free_ == NULL) panic("watchpoint is full\n");
-	WP *tmp = free_;
-	WP *sec_tmp = free_;			//指向tmp的上一个节点
-	while(tmp != NULL){
-		sec_tmp = tmp;
-		tmp = tmp->next;
+	WP *ptr = free_;
+	WP *pre = free_;			//指向tmp的上一个节点
+	while(ptr->next != NULL){
+		pre =ptr;
+		ptr = ptr->next;
 	}
-	sec_tmp->next = NULL;
-	WP *join = head;
-	while(join != NULL){
-		join = join->next;
+	pre->next = NULL;
+	WP *ptr_h = head;
+	while(ptr_h->next != NULL){
+		ptr_h = ptr_h->next;
 	}
-	join = sec_tmp;
-	strcpy(sec_tmp->str, args);
-	return sec_tmp;
+	ptr_h->next = pre;
+	strcpy(pre->str, args);
+	return pre;
 }
 
 /*找到节点并删除节点，然后插入free_的尾部*/
+/*假设一直会找的wp，以后再处理找不到的情况*/
 void free_wp(WP *wp){
 	WP *tmp = head;
 	WP *del = head;
