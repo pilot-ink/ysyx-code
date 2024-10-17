@@ -32,13 +32,17 @@ INCFLAGS = $(addprefix -I, $(INC_PATH))
 CXXFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
 LDFLAGS += -lSDL2 -lSDL2_image
 
-sim: $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
+#bond
+BOND = $(shell python3 ${NVBOARD_HOME}/scripts/auto_pin_bind.py ~/ysyx-workbench/npc/constr/top.nxdc ~/ysyx-workbench/npc/build/auto_bind.cpp)
+
+sim: $(BOND) $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 	@rm -rf $(OBJ_DIR) wave.vcd
 	$(VERILATOR) $(VERILATOR_CFLAGS) \
 		--top-module $(TOPNAME) $^ \
 		$(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
 		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
+	$(shell BUILD_DIR/top)
 
 
 all:default

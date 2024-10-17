@@ -2,7 +2,6 @@
 #include<stdlib.h>
 #include<assert.h>
 #include<nvboard.h>
-
 #include"Vtop.h"  // 从top.v生成
 #include"verilated.h"
 #include"verilated_vcd_c.h"
