@@ -70,7 +70,7 @@ WP* new_up(char *args){
 /*找到节点并删除节点，然后插入free_的尾部*/
 /*假设一直会找的wp，以后再处理找不到的情况*/
 void free_wp(WP *wp){
-	WP *tmp = head;
+	WP *tmp = head->next;
 	WP *del = head;
 	while(tmp->next != NULL){
 		del = tmp;
@@ -82,7 +82,7 @@ void free_wp(WP *wp){
 	//delete
 	del->next = tmp->next;
 	//add free_
-	WP *last = free_;
+	WP *last = free_->next;
 	while(last->next != NULL){
 		last = last->next;
 	}
