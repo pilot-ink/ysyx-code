@@ -42,7 +42,7 @@ sim: $(BOND) $(VSRCS) $(CSRCS) $(NVBOARD_ARCHIVE)
 		--top-module $(TOPNAME) $^ \
 		$(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
 		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
-	$(shell BUILD_DIR/top)
+	$(shell ./build/top)
 
 
 all:default
