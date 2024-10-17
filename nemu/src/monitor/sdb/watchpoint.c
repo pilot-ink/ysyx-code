@@ -96,7 +96,7 @@ bool watchpoint_check(){
 	int flag = 0;
 	uint32_t value_1 = 0;
 	WP *tmp = head;
-	while(tmp != NULL){
+	while(tmp->next != NULL){
 		value_1 = expr(tmp->str, success);
 		if(tmp->value == value_1)
 		{
