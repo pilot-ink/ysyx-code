@@ -12,7 +12,7 @@ module top(
 );
 
 	wire [3:0] h;
-	assign h = reslut;
+	assign h = result;
 
 	ALU4 a1(.A(A), .b(b), .option(option), .carry(carry), .overflow(overflow), .zero(zero), .result(result));
 	bcd7seg b1(.b(h), .h(hex));
