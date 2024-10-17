@@ -8,7 +8,7 @@ module top(
 );
 	wire [3:0] h,h1;
 	assign h = result[3:0];
-	assign h1 = result[7:0];
+	assign h1 = result[7:4];
 
 	LSDR l1(.clock(clock), .result(result));
 	bcd7seg b1(.b(h), .h(hex));
