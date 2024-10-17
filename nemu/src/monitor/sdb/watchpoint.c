@@ -75,12 +75,12 @@ void free_wp(char *args){
 	WP *tmp = head->next;
 	WP *del = head;
 	while(tmp->next != NULL){
-		del = tmp;
-		tmp = tmp->next;
 		count++;
 		if(count == num){
 			break;
 		}
+		del = tmp;
+		tmp = tmp->next;
 	}
 	if(count == num){
 		//delete
