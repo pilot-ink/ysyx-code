@@ -7,7 +7,7 @@ module top(
 	output reg l;
 	output [6:0] hex;
 
-	wire [3:0] hex;
+	wire [3:0] h;
 	assign h = {0,y};
 
 	encode83 e1(.x(x), .en(en), .y(y), .l(l));
