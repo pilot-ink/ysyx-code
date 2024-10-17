@@ -113,10 +113,10 @@ bool watchpoint_check(){
 }
 
 void watchpoint_print(){
-	WP *tmp = head;
+	WP *tmp = head->next;
 	int i = 1;
 	printf("NUM\texpr\t\n");
-	while(tmp->next != NULL){
+	while(tmp != NULL){
 		printf("%d\t%s\n",i,tmp->str);
 		i++;
 		tmp = tmp->next;
