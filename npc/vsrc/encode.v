@@ -24,14 +24,14 @@ module encode83(
 	always @(x or en) begin
 		if(en) begin
 		casez(x)
-			8'bzzzz_zzz1:begin  y = 3'b000; l = 1;end
-			8'bzzzz_zz1z:begin  y = 3'b001; l = 1;end
-			8'bzzzz_z1zz:begin  y = 3'b010; l = 1;end
-			8'bzzzz_1zzz:begin  y = 3'b011; l = 1;end
-			8'bzzz1_zzzz:begin  y = 3'b100; l = 1;end
-			8'bzz1z_zzzz:begin  y = 3'b101; l = 1;end
-			8'bz1zz_zzzz:begin  y = 3'b110; l = 1;end
 			8'b1zzz_zzzz:begin  y = 3'b111; l = 1;end
+			8'bz1zz_zzzz:begin  y = 3'b110; l = 1;end
+			8'bzz1z_zzzz:begin  y = 3'b101; l = 1;end
+			8'bzzz1_zzzz:begin  y = 3'b100; l = 1;end
+			8'bzzzz_1zzz:begin  y = 3'b011; l = 1;end
+			8'bzzzz_z1zz:begin  y = 3'b010; l = 1;end
+			8'bzzzz_zz1z:begin  y = 3'b001; l = 1;end
+			8'bzzzz_zzz1:begin  y = 3'b000; l = 1;end
 			default:begin y = 3'b000; l = 0; end
 		endcase
 	end
