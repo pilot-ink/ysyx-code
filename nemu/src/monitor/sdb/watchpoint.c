@@ -74,7 +74,7 @@ void free_wp(char *args){
 	int count = 0;
 	WP *tmp = head->next;
 	WP *del = head;
-	while(tmp->next != NULL){
+	while(tmp != NULL){
 		count++;
 		if(count == num){
 			break;
