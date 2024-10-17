@@ -10,7 +10,7 @@ module top(
 	assign h = result[3:0];
 	assign h1 = result[7:4];
 
-	LSDR l1(.clock(clock), .result(result));
+	LFSR l1(.clock(clock), .result(result));
 	bcd7seg b1(.b(h), .h(hex));
 	bcd7seg b2(.b(h1), .h(hex1));
 
