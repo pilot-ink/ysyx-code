@@ -78,6 +78,7 @@ module top(clk,rst,ps2_clk,ps2_data,
 	reg [23:0] data_p;
 	reg nextdata_n;
 	wire [7:0] asc_out;
+	reg [7:0] count;
 	
 	
 	ps2_keyboard inst(	.clk(clk), 
@@ -97,11 +98,15 @@ module top(clk,rst,ps2_clk,ps2_data,
 	bcd7seg b4(.b(asc_out[7:4]), .h(hex3));
 	//bcd7seg b3(.b(data_p[11:8]), .h(hex2));
 	//bcd7seg b4(.b(data_p[15:12]), .h(hex3));
-	bcd7seg b5(.b(data_p[19:16]), .h(hex4));
-	bcd7seg b6(.b(data_p[23:20]), .h(hex5));
+	bcd7seg b5(.b(count[3:0]), .h(hex4));
+	bcd7seg b6(.b(count[7:4]), .h(hex5));
 	always @(posedge clk) begin
 		if(ready) begin
 		data_p = {data_p[15:8],data_p[7:0],data[7:0]};
+			if(data == 8'hf0) begin
+			end else begin
+				count = count + 8'd1; 
+			end
 		nextdata_n = 0;
 		end
 		else begin
