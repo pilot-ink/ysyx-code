@@ -79,8 +79,7 @@ module top(clk,rst,ps2_clk,ps2_data,
 	reg nextdata_n;
 	wire [7:0] asc_out;
 	reg [7:0] count;
-	output reg flag = 1;   
-	output reg flag2 = 1;
+
 	
 	
 	ps2_keyboard inst(	.clk(clk), 
