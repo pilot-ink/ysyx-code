@@ -45,6 +45,7 @@ static struct rule {
   {"\\$[0]",TK_REG_NAME},
   {"(t|a|s)[0-9]+",TK_REG_NAME},
   {"(r|g|s|t|p)(a|p|c)",TK_REG_NAME},
+  {"(pc)",TK_REG_NAME},
   {" +", TK_NOTYPE},    // spaces
   {"\n", TK_NOTYPE},    // \n
   {"\\+", TK_PLUS},         // plus
