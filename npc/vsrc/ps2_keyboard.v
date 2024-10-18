@@ -63,7 +63,7 @@ module keycode_to_ascii(
     
     
     initial begin
-        $readmemh("data/kta.txt", rom, 0, 255);
+        $readmemh("./data/kta.txt", rom, 0, 255);
     end
     
     assign ascii = rom[keycode];
