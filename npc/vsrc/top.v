@@ -79,6 +79,8 @@ module top(clk,rst,ps2_clk,ps2_data,
 	reg nextdata_n;
 	wire [7:0] asc_out;
 	reg [7:0] count;
+	output reg flag = 1;   
+	output reg flag2 = 1;
 	
 	
 	ps2_keyboard inst(	.clk(clk), 
@@ -105,7 +107,7 @@ module top(clk,rst,ps2_clk,ps2_data,
 	always @(posedge clk) begin
 		if(ready) begin
 		data_p = {data_p[15:8],data_p[7:0],data[7:0]};
-			if(data == 8'hf0) begin
+		if(data[7:0] == 8'hf0) begin
 			end else begin
 				count = count + 8'd1; 
 			end
@@ -117,5 +119,3 @@ module top(clk,rst,ps2_clk,ps2_data,
 	end 
 
 endmodule
-
-
