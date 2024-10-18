@@ -39,8 +39,8 @@ int get_isa_reg_idx(char *name){
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
+  *success = true;
   if(!strcmp(s,"pc")) return cpu.pc;
   int idx = get_isa_reg_idx(s);
-  *success = true;
   return cpu.gpr[idx];
 }
