@@ -63,7 +63,7 @@ module keycode_to_ascii(
     
     
     initial begin
-        $readmemh("kta.txt", rom, 0, 255);
+        $readmemh("~/ysyx-workbench/npc/csrc/data/kta.txt", rom, 0, 255);
     end
     
     assign ascii = rom[keycode];
