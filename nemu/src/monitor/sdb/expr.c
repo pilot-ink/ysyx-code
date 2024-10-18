@@ -44,8 +44,7 @@ static struct rule {
   {"[0]x[0-9]+", HEX_NUM},
   {"\\$[0]",TK_REG_NAME},
   {"(t|a|s)[0-9]+",TK_REG_NAME},
-  {"(r|g|s|t|p)(a|p|c)",TK_REG_NAME},
-  {"(pc)",TK_REG_NAME},
+  {"(r|g|s|t)(a|p)",TK_REG_NAME},
   {" +", TK_NOTYPE},    // spaces
   {"\n", TK_NOTYPE},    // \n
   {"\\+", TK_PLUS},         // plus
@@ -110,14 +109,11 @@ static int get_prime(int p, int q){
       else if(tokens[index].type == TK_MINUS 
               || tokens[index].type == TK_PLUS 
               || tokens[index].type == TK_TIMES 
-              || tokens[index].type == TK_DIVISION
-              || tokens[index].type == TK_EQ
-              || tokens[index].type == TK_AND
-              || tokens[index].type == TK_NEQ)
+              || tokens[index].type == TK_DIVISION)
         {chec[read] = tokens[index].str[0];flag[read] = index;read++;}
   }
   int tmp = 0;
-  for(int i = 1; i < read; i++){
+  for(int i = 1; i <= read; i++){
     if(getOperatorPriority(tokens[flag[i]].type) <= getOperatorPriority(tokens[flag[tmp]].type))
       tmp = i;
   }
@@ -343,11 +339,11 @@ word_t expr(char *e, bool *success) {
   /*check whether expr is right*/
   //check_parentheses(0, nr_token);
   // if(atoi(tokens[0].str) != eval(1,nr_token-1)){
-  printf("expr:\n");
-  printf("info:total:%d\n",nr_token-1);
-  for(i = 1; i < nr_token; i++)
-    printf("%s",tokens[i].str);
-  printf("\n");
+  // printf("expr:\n");
+  // printf("info:total:%d\n",nr_token-1);
+  // for(i = 1; i < nr_token; i++)
+  //   printf("%s",tokens[i].str);
+  // printf("\n");
   // printf("result:%s\tresult:%u\n",tokens[0].str,eval(1,nr_token-1));
   // }
   //printf("result:%d\n",check_parentheses(1, nr_token));
