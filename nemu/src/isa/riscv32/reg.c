@@ -24,6 +24,7 @@ const char *regs[] = {
 };
 
 void isa_reg_display() {
+  printf("%s\t%p\t%u\n","pc",&cpu.pc, cpu.pc);
   for(int i = 0; i < sizeof(regs)/sizeof(char *); i++)
   {
     printf("%s\t%p\t%u\n",regs[i],&cpu.gpr[i], cpu.gpr[i]);
@@ -38,6 +39,7 @@ int get_isa_reg_idx(char *name){
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
+  if(!strcmp(s,"pc")) return cpu.pc;
   int idx = get_isa_reg_idx(s);
   *success = true;
   return cpu.gpr[idx];
