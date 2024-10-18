@@ -93,9 +93,10 @@ module top(clk,rst,ps2_clk,ps2_data,
 	bcd7seg b1(.b(data_p[3:0]), .h(hex0));
 	bcd7seg b2(.b(data_p[7:4]), .h(hex1));
 	
-	bcd7seg b3(.b(asc_out[3:0]), .h(hex2));
-	bcd7seg b4(.b(asc_out[7:4]), .h(hex3));
-	
+	//bcd7seg b3(.b(asc_out[3:0]), .h(hex2));
+	//bcd7seg b4(.b(asc_out[7:4]), .h(hex3));
+	bcd7seg b3(.b(data_p[11:8]), .h(hex2));
+	bcd7seg b4(.b(data_p[15:12]), .h(hex3));
 	bcd7seg b5(.b(data_p[19:16]), .h(hex4));
 	bcd7seg b6(.b(data_p[23:20]), .h(hex5));
 	always @(posedge clk) begin
