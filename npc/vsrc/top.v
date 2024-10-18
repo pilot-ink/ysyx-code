@@ -113,7 +113,7 @@ module top(clk,rst,ps2_clk,ps2_data,
 		nextdata_n <= 0;
 		end
 		else begin
-		nextdata_n = 1;
+		nextdata_n <= 1;
 		end
 	end 
 
