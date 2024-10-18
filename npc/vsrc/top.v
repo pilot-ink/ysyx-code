@@ -89,7 +89,9 @@ module top(clk,rst,ps2_clk,ps2_data,
 						.nextdata_n(nextdata_n),
 						.ready(ready), 
 						.overflow(overflow));
-	keycode_to_ascii k1(.keycode(data), .ascii(asc_out));
+	wire [7:0] data_1;
+	assign data_1 = data_p[7:0];
+	keycode_to_ascii k1(.keycode(data_1), .ascii(asc_out));
 	
 	bcd7seg b1(.b(data_p[3:0]), .h(hex0));
 	bcd7seg b2(.b(data_p[7:4]), .h(hex1));
