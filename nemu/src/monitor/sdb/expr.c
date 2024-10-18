@@ -117,7 +117,7 @@ static int get_prime(int p, int q){
         {chec[read] = tokens[index].str[0];flag[read] = index;read++;}
   }
   int tmp = 0;
-  for(int i = 1; i <= read; i++){
+  for(int i = 1; i < read; i++){
     if(getOperatorPriority(tokens[flag[i]].type) <= getOperatorPriority(tokens[flag[tmp]].type))
       tmp = i;
   }
