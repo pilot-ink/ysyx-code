@@ -110,7 +110,10 @@ static int get_prime(int p, int q){
       else if(tokens[index].type == TK_MINUS 
               || tokens[index].type == TK_PLUS 
               || tokens[index].type == TK_TIMES 
-              || tokens[index].type == TK_DIVISION)
+              || tokens[index].type == TK_DIVISION
+              || tokens[index].type == TK_EQ
+              || tokens[index].type == TK_AND
+              || tokens[index].type == TK_NEQ)
         {chec[read] = tokens[index].str[0];flag[read] = index;read++;}
   }
   int tmp = 0;
