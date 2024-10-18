@@ -4,9 +4,9 @@ module top(
 	input clk,rst,
   input [3:0] data[1:0],
   input [1:0] choose,
-	output [7:0] result
+	output [1:0] result
 );
-	MuxKey #(4, 2, 2) i0 (data , choose, {
+	MuxKey #(4, 2, 2) i0 (result , choose, {
     2'b00, data[0],
     2'b01, data[1],
     2'b10, data[2],
