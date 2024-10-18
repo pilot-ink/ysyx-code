@@ -53,3 +53,18 @@ module ps2_keyboard(clk,clrn,ps2_clk,ps2_data,data,
     assign data = fifo[r_ptr]; //always set output data
 
 endmodule
+
+
+module keycode_to_ascii(
+    input [7:0] keycode,
+    output [7:0] ascii
+);
+    reg [7:0] rom [0:255];
+    
+    
+    initial begin
+        $readmemh("../data/kta.txt", rom, 0, 255);
+    end
+    
+    assign ascii = rom[keycode];
+endmodule
