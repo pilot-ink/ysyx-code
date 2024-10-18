@@ -105,15 +105,15 @@ module top(clk,rst,ps2_clk,ps2_data,
 	bcd7seg b6(.b(count[7:4]), .h(hex5));
 	always @(posedge clk) begin
 		if(ready) begin
-		data_p <= {data_p[15:8],data_p[7:0],data[7:0]};
+		data_p = {data_p[15:8],data_p[7:0],data[7:0]};
 		if(data[7:0] == 8'hf0) begin
 			end else begin
 				count = count + 8'd1; 
 			end
-		nextdata_n <= 0;
+		nextdata_n = 0;
 		end
 		else begin
-		nextdata_n <= 1;
+		nextdata_n = 1;
 		end
 	end 
 
