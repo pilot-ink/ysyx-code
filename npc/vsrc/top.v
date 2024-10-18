@@ -110,7 +110,7 @@ module top(clk,rst,ps2_clk,ps2_data,
 			end else begin
 				count = count + 8'd1; 
 			end
-		nextdata_n = 0;
+		nextdata_n <= 0;
 		end
 		else begin
 		nextdata_n = 1;
