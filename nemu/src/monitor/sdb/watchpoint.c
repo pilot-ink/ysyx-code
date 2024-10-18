@@ -37,7 +37,7 @@ void init_wp_pool() {
     wp_pool[i].NO = i;
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
 	wp_pool[i].value = NULL;
-	wp_pool[i].old_value = 0;
+	wp_pool[i].old_value = NULL;
   }
 
   head = (WP *)malloc(sizeof(WP));
