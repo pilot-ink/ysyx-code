@@ -43,9 +43,9 @@ static struct rule {
    */
   {"[0]x[0-9]+", HEX_NUM},
   {"\\$[0]",TK_REG_NAME},
-  {"(t|a|s)[0-9]+",TK_REG_NAME},
-  {"(r|g|s|t|p)(a|p|c)",TK_REG_NAME},
-  {"(pc)",TK_REG_NAME},
+  {"$(t|a|s)[0-9]+",TK_REG_NAME},
+  {"$(r|g|s|t|p)(a|p|c)",TK_REG_NAME},
+  {"$(pc)",TK_REG_NAME},
   {" +", TK_NOTYPE},    // spaces
   {"\n", TK_NOTYPE},    // \n
   {"\\+", TK_PLUS},         // plus
@@ -343,11 +343,11 @@ word_t expr(char *e, bool *success) {
   /*check whether expr is right*/
   //check_parentheses(0, nr_token);
   // if(atoi(tokens[0].str) != eval(1,nr_token-1)){
-  // printf("expr:\n");
-  // printf("info:total:%d\n",nr_token-1);
-  // for(i = 1; i < nr_token; i++)
-  //   printf("%s",tokens[i].str);
-  // printf("\n");
+  printf("expr:\n");
+  printf("info:total:%d\n",nr_token-1);
+  for(i = 1; i < nr_token; i++)
+    printf("%s",tokens[i].str);
+  printf("\n");
   // printf("result:%s\tresult:%u\n",tokens[0].str,eval(1,nr_token-1));
   // }
   //printf("result:%d\n",check_parentheses(1, nr_token));
