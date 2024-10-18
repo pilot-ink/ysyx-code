@@ -2,12 +2,19 @@
 /*线性反馈移位寄存器*/
 module top(
 	input clk,rst,
-	output [15:0] led
+	input clock,
+	output [7:0] result,
+	output [6:0] hex0,hex1
 );
-	water_lamp w1(.clk(clk), .rst(rst), .led(led));
+	wire [3:0] h,h1;
+	assign h = result[3:0];
+	assign h1 = result[7:4];
+
+	LFSR l1(.clock(clock), .result(result));
+	bcd7seg b1(.b(h), .h(hex));
+	bcd7seg b2(.b(h1), .h(hex1));
 
 endmodule
-
 
 
 
