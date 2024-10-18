@@ -2,17 +2,16 @@
 /*线性反馈移位寄存器*/
 module top(
 	input clk,rst,
-	input clock,
-	output [7:0] result,
-	output [6:0] hex0,hex1
+  input [3:0] data[1:0],
+  input [1:0] choose,
+	output [7:0] result
 );
-	wire [3:0] h,h1;
-	assign h = result[3:0];
-	assign h1 = result[7:4];
-
-	LFSR l1(.clock(clock), .result(result));
-	bcd7seg b1(.b(h), .h(hex0));
-	bcd7seg b2(.b(h1), .h(hex1));
+	MuxKey #(4, 2, 2) i0 (data , choose, {
+    2'b00, data[0],
+    2'b01, data[1],
+    2'b10, data[2],
+    2'b11, data[3]
+  });
 
 endmodule
 
