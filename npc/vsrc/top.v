@@ -2,7 +2,7 @@
 /*线性反馈移位寄存器*/
 module top(
 	input clk,rst,
-  input [3:0] data[1:0],
+  input [1:0] data[3:0],
   input [1:0] choose,
 	output [1:0] result
 );
