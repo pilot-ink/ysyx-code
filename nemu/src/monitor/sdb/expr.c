@@ -328,12 +328,12 @@ word_t expr(char *e, bool *success) {
   }
 	/*指针解引用的识别*/ 
 	int i = 0;
-  for(i = 0; i < nr_token; i++){
+  for(i = 1; i < nr_token; i++){
 	if(tokens[i].str[0] == '*' && (i == 0 || tokens[i - 1].type != NUM)){
 		tokens[i].type = DEREF;
   } 
   }
-  for(i = 0; i < nr_token; i++){
+  for(i = 1; i < nr_token; i++){
 	if(tokens[i].str[0] == '-' && (i == 0 || tokens[i - 1].type != NUM)){
 		tokens[i].type = NEGATIVE;
   } 
@@ -354,7 +354,7 @@ word_t expr(char *e, bool *success) {
   
   // printf("expr's value is %d",eval(0, nr_token));
   // while(tokens[i].str != NULL){q
-  
+
   //   printf("str:%s\ttype:%d",tokens[i].str,tokens[i].type);
   //   i++;
   // }
