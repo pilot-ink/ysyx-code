@@ -353,7 +353,8 @@ word_t expr(char *e, bool *success) {
   //printf("result:%d\n",check_parentheses(1, nr_token));
   
   // printf("expr's value is %d",eval(0, nr_token));
-  // while(tokens[i].str != NULL){
+  // while(tokens[i].str != NULL){q
+  
   //   printf("str:%s\ttype:%d",tokens[i].str,tokens[i].type);
   //   i++;
   // }
