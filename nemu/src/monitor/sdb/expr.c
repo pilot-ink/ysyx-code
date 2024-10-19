@@ -334,7 +334,7 @@ word_t expr(char *e, bool *success) {
   } 
   }
   for(i = 0; i < nr_token; i++){
-	if(tokens[i].str[0] == '-' && (i == 0 || tokens[i - 1].type == NUM)){
+	if(tokens[i].str[0] == '-' && (i == 0 || tokens[i - 1].type != NUM)){
 		tokens[i].type = NEGATIVE;
   } 
   }
