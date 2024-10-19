@@ -37,7 +37,7 @@ void init_wp_pool() {
     wp_pool[i].NO = i;
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
 	wp_pool[i].value = NULL;
-	wp_pool[i].old_value = 0;
+	wp_pool[i].old_value = NULL;
   }
 
   head = (WP *)malloc(sizeof(WP));
@@ -50,7 +50,7 @@ void init_wp_pool() {
 *	同时插入到head中
 */
 WP* new_up(char *args){
-	if(free_ == NULL) panic("watchpoint is full\n");
+	if(free_->next == NULL) panic("watchpoint is full\n");
 	WP *ptr = free_;
 	WP *pre = free_;			//指向tmp的上一个节点
 	while(ptr->next != NULL){

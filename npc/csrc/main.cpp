@@ -24,9 +24,9 @@ int main(int argc, char** argv) {
     top->clk = 0;  // clk初始化
     // ----原reset函数----start
     int n = 10;
-    top->rst = 0;
-    while (n-- > 0){top->clk = !top->clk;top->eval();}
     top->rst = 1;
+    while (n-- > 0){top->clk = !top->clk;top->eval();}
+    top->rst = 0;
     m_trace->dump(contextp->time()); // 记录波形
     // ----原reset函数----end
     while (!contextp->gotFinish()) {
