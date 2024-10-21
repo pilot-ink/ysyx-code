@@ -348,7 +348,7 @@ word_t expr(char *e, bool *success) {
   for(i = 1; i < nr_token; i++)
     printf("%s",tokens[i].str);
   printf("\n");
-  // printf("result:%s\tresult:%u\n",tokens[0].str,eval(1,nr_token-1));
+  printf("result:%s\tresult:%u\n",tokens[0].str,eval(1,nr_token-1));
   // }
   //printf("result:%d\n",check_parentheses(1, nr_token));
   
@@ -360,5 +360,6 @@ word_t expr(char *e, bool *success) {
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
 
-  return eval(0,nr_token-1);
+  //return eval(0,nr_token-1);
+  return 0;
 }
