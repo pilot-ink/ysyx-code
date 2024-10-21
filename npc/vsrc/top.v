@@ -1,12 +1,11 @@
 module top(
 	input clk,rst,
-  output [15:0] led
+  input a,
+  input b,
+  output f
 );
-	water_lamp w1 (.clk(clk), .rst(rst), .led(led));
-
+  assign f = a ^ b;
 endmodule
-
-
 
 
 
