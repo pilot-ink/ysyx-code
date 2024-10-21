@@ -50,7 +50,7 @@ void init_wp_pool() {
 *	同时插入到head中
 */
 WP* new_up(char *args){
-	if(free_->next == NULL) panic("watchpoint is full\n");
+	if(free_ == NULL) panic("watchpoint is full\n");
 	WP *ptr = free_;
 	WP *pre = free_;			//指向tmp的上一个节点
 	while(ptr->next != NULL){
