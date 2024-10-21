@@ -7,7 +7,7 @@ module top(
   output reg        carry,
   output reg        overflow,
   output reg        zero,
-  output reg  [3:0] result,
+  output reg  [3:0] result
 );
 
 
