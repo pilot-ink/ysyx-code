@@ -1,13 +1,17 @@
 module top(
 	input clk,rst,
-  input a,
-  input b,
-  output f
+  input [1:0] data[3:0],
+  input [1:0] choose,
+	output [1:0] result
 );
-  assign f = a ^ b;
+	MuxKey #(4, 2, 2) i0 (result , choose, {
+    2'b00, data[0],
+    2'b01, data[1],
+    2'b10, data[2],
+    2'b11, data[3]
+  });
+
 endmodule
-
-
 
 
 

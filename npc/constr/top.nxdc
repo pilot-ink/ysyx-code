@@ -1,19 +1,19 @@
 top=top
 
 
-f LD0
-a SW0
-b SW1
+#f LD0
+#a SW0
+#b SW1
 
 #led (LD15, LD14, LD13, LD12, LD11, LD10, LD9, LD8, LD7, LD6, LD5, LD4, LD3, LD2, LD1, LD0)
 
 /*选择器*/
-#choose (SW1, SW0)
-#data[0] (SW3, SW2)
-#data[1] (SW5, SW4)
-#data[2] (SW7, SW6)
-#data[3] (SW9, SW8)
-#result (LD1, LD0)
+choose (SW1, SW0)
+data[0] (SW3, SW2)
+data[1] (SW5, SW4)
+data[2] (SW7, SW6)
+data[3] (SW9, SW8)
+result (LD1, LD0)
 
 /*线性反馈移位寄存器*/
 #hex0 (SEG0G, SEG0F, SEG0E, SEG0D, SEG0C, SEG0B, SEG0A)
