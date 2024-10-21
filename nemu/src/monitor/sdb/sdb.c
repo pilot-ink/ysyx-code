@@ -98,7 +98,7 @@ static int cmd_scan_mem(char *args){
 static int cmd_p(char *args)
 {
   bool *success=false;
-  printf("%u\n",expr(args,success));     //should return value
+  printf("%d\n",expr(args,success));     //should return value
   return 0;
 }
 
