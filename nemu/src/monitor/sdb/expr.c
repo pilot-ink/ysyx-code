@@ -328,11 +328,11 @@ word_t expr(char *e, bool *success) {
   }
 	/*指针解引用的识别*/ 
 	int i = 0;
-  // for(i = 0; i < nr_token; i++){
-	// if(tokens[i].str[0] == '*' && (i == 0 || tokens[i - 1].type != NUM)){
-	// 	tokens[i].type = DEREF;
-  // } 
-  // }
+  for(i = 0; i < nr_token; i++){
+	if(tokens[i].str[0] == '*' && (i == 0 || tokens[i - 1].type != NUM)){
+		tokens[i].type = DEREF;
+  } 
+  }
   // for(i = 0; i < nr_token; i++){
 	// if(tokens[i].str[0] == '-' && (i == 0 || tokens[i - 1].type == NUM)){
 	// 	tokens[i].type = NEGATIVE;
