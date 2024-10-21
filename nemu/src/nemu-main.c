@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   /* Start engine. */
   engine_start();
 
-  /*expr test*/
+  /*run test*/
   // bool *success=false;
   // char str[1000];
   // FILE *fd = fopen("/home/dhb/ysyx-workbench/nemu/tools/gen-expr/input","r");

@@ -1,17 +1,19 @@
+/*ALU*/
 module top(
-	input clk,rst,
-  input [1:0] data[3:0],
-  input [1:0] choose,
-	output [1:0] result
+  input clk,rst,
+  input  wire [3:0] A,
+  input  wire [3:0] b,
+  input  wire [2:0] option,
+  output reg        carry,
+  output reg        overflow,
+  output reg        zero,
+  output reg  [3:0] result,
 );
-	MuxKey #(4, 2, 2) i0 (result , choose, {
-    2'b00, data[0],
-    2'b01, data[1],
-    2'b10, data[2],
-    2'b11, data[3]
-  });
+
+
+
+	ALU4 a1(.A(A), .b(b), .option(option), .carry(carry), .overflow(overflow), .zero(zero), .result(result));
 
 endmodule
-
 
 
