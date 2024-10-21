@@ -329,12 +329,12 @@ word_t expr(char *e, bool *success) {
 	/*指针解引用的识别*/ 
 	int i = 0;
   for(i = 0; i < nr_token; i++){
-	if(tokens[i].str[0] == '*' && (i == 0 || tokens[i - 1].type != NUM)){
+	if(tokens[i].str[0] == '*' && (i == 0 || (tokens[i - 1].type != NUM) && tokens[i - 1].type != RIGHT)){
 		tokens[i].type = DEREF;
   } 
   }
   for(i = 0; i < nr_token; i++){
-	if(tokens[i].str[0] == '-' && (i == 0 || tokens[i - 1].type == NUM)){
+	if(tokens[i].str[0] == '-' && (i == 0 || (tokens[i - 1].type != NUM) && tokens[i - 1].type != RIGHT)){
 		tokens[i].type = NEGATIVE;
   } 
   }
@@ -343,12 +343,12 @@ word_t expr(char *e, bool *success) {
   /*check whether expr is right*/
   //check_parentheses(0, nr_token);
   // if(atoi(tokens[0].str) != eval(1,nr_token-1)){
-  printf("expr:\n");
-  printf("info:total:%d\n",nr_token-1);
-  for(i = 1; i < nr_token; i++)
-    printf("%s",tokens[i].str);
-  printf("\n");
-  printf("result:%s\tresult:%u\n",tokens[0].str,eval(1,nr_token-1));
+  // printf("expr:\n");
+  // printf("info:total:%d\n",nr_token-1);
+  // for(i = 1; i < nr_token; i++)
+  //   printf("%s",tokens[i].str);
+  // printf("\n");
+  // printf("result:%s\tresult:%u\n",tokens[0].str,eval(1,nr_token-1));
   // }
   //printf("result:%d\n",check_parentheses(1, nr_token));
   
