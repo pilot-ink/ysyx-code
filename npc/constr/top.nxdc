@@ -9,19 +9,11 @@ top=top
 
 
 /*线性反馈移位寄存器*/
-#hex0 (SEG0G, SEG0F, SEG0E, SEG0D, SEG0C, SEG0B, SEG0A)
-#hex1 (SEG1G, SEG1F, SEG1E, SEG1D, SEG1C, SEG1B, SEG1A)
-#clock SW0
-#result (LD7, LD6, LD5, LD4, LD3, LD2, LD1, LD0)
+hex0 (SEG0G, SEG0F, SEG0E, SEG0D, SEG0C, SEG0B, SEG0A)
+hex1 (SEG1G, SEG1F, SEG1E, SEG1D, SEG1C, SEG1B, SEG1A)
+clock SW0
+result (LD7, LD6, LD5, LD4, LD3, LD2, LD1, LD0)
 
-/*ALU*/
-A (SW3, SW2, SW1, SW0)
-b (SW7, SW6, SW5, SW4)
-option (SW11, SW10, SW9)
-carry   (LD7)
-overflow (LD6)
-zero    (LD5)
-result (LD3, LD2, LD1, LD0)
 
 
 #ps2_clk PS2_CLK
