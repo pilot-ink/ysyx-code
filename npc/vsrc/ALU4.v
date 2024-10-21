@@ -24,8 +24,8 @@ module ALU4(
   //carry
   always @(*) begin
     case (option)
-      3'b000: carry = a_cin;  //加法
-      3'b001: carry = a_cin;  //减法
+      3'b000: carry = 1'b0;  //加法
+      3'b001: carry = 1'b0;  //减法
       3'b010: carry = 1'b0;   //取反
       3'b011: carry = 1'b0;   //与
       3'b100: carry = 1'b0;   //或
