@@ -44,6 +44,7 @@ module top(clk,rst,ps2_clk,ps2_data,
 		if(ready) begin
 		data_p = {data_p[15:8],data_p[7:0],data[7:0]};
 		if(data[7:0] == 8'hf0) begin
+			
 			end else begin
 				if(data_p[15:8] == 8'hf0) begin
 					count = count + 8'd1; 
