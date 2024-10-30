@@ -35,10 +35,11 @@ enum {
 #define immJ() do { *imm = (SEXT(BITS(i, 31, 31) << 20, 21)) | (BITS(i, 20, 20) << 11) | (BITS(i, 19, 12) << 12) | (BITS(i, 30, 21) << 1); } while(0)
 #define immB() do { *imm = (SEXT((BITS(i, 31, 31) << 12), 13)) | (BITS(i, 30, 25) << 5) | (BITS(i, 7, 7) << 11) | (BITS(i, 11, 8) << 1); } while(0)
 
-static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_t *imm, int type) {
+static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_t *imm,  word_t *shamt, int type) {
   uint32_t i = s->isa.inst.val;
   int rs1 = BITS(i, 19, 15);
   int rs2 = BITS(i, 24, 20);
+  *shamt  = BITS(i, 25, 20);
   *rd     = BITS(i, 11, 7);
   switch (type) {
     case TYPE_I: src1R();          immI(); break;
@@ -52,12 +53,12 @@ static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_
 
 static int decode_exec(Decode *s) {
   int rd = 0;
-  word_t src1 = 0, src2 = 0, imm = 0;
+  word_t src1 = 0, src2 = 0, imm = 0, shamt = 0;
   s->dnpc = s->snpc;
 
 #define INSTPAT_INST(s) ((s)->isa.inst.val)
 #define INSTPAT_MATCH(s, name, type, ... /* execute body */ ) { \
-  decode_operand(s, &rd, &src1, &src2, &imm, concat(TYPE_, type)); \
+  decode_operand(s, &rd, &src1, &src2, &imm, &shamt,concat(TYPE_, type)); \
   __VA_ARGS__ ; \
 }
 
@@ -71,9 +72,9 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? 100 ????? 00100 11", xori   , I, R(rd) = src1 ^ imm); 
   INSTPAT("??????? ????? ????? 110 ????? 00100 11", ori    , I, R(rd) = src1 | imm); 
   INSTPAT("??????? ????? ????? 111 ????? 00100 11", andi   , I, R(rd) = src1 & imm); 
-  INSTPAT("0000000 ????? ????? 001 ????? 00100 11", slli   , I, R(rd) = src1 << (SEXT(31, 6) & imm)); //maybe
-  INSTPAT("0000000 ????? ????? 101 ????? 00100 11", srli   , I, R(rd) = src1 >> (SEXT(31, 6) & imm)); //maybe
-  INSTPAT("0100000 ????? ????? 101 ????? 00100 11", srai   , I, R(rd) = (int)src1 >> (SEXT(31, 6) & imm)); //maybe
+  INSTPAT("0000000 ????? ????? 001 ????? 00100 11", slli   , I, R(rd) = src1 << shamt); //maybe
+  INSTPAT("0000000 ????? ????? 101 ????? 00100 11", srli   , I, R(rd) = src1 >> shamt); //maybe
+  INSTPAT("0100000 ????? ????? 101 ????? 00100 11", srai   , I, R(rd) = (int)src1 >> shamt); //maybe
   INSTPAT("??????? ????? ????? 010 ????? 00100 11", slti   , I, R(rd) = ((int)src1 < (int)imm)?1:0); 
   INSTPAT("??????? ????? ????? 011 ????? 00100 11", sltiu  , I, R(rd) = ((int)src1 < imm)?1:0); 
 
@@ -104,7 +105,7 @@ static int decode_exec(Decode *s) {
   INSTPAT("0000000 ????? ????? 111 ????? 01100 11", and    , R, R(rd) = src1 & src2);
   INSTPAT("0000000 ????? ????? 001 ????? 01100 11", sll    , R, R(rd) = src1 << src2);  //shift left logical
   INSTPAT("0000000 ????? ????? 101 ????? 01100 11", srl    , R, R(rd) = src1 >> src2);  //shift right logical
-  INSTPAT("0100000 ????? ????? 101 ????? 01100 11", sra    , R, R(rd) = (int)src1 >> (SEXT(31, 6) & src2));  //shift right arith
+  INSTPAT("0100000 ????? ????? 101 ????? 01100 11", sra    , R, R(rd) = (int)src1 >> (0x1f & src2));  //shift right arith
   INSTPAT("0000000 ????? ????? 010 ????? 01100 11", slt    , R, R(rd) = ((int)src1 < (int)src2)?1:0); //set less than
   INSTPAT("0000000 ????? ????? 011 ????? 01100 11", sltu   , R, R(rd) = (src1 < src2)?1:0); //set less than(U)  
 
