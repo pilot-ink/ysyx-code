@@ -9,7 +9,7 @@ module ysyx_24100027_ALU(
     output cf
 );
     wire [31:0] raddsub;
-    wire [31:0] rand;
+    wire [31:0] frand;
     wire [31:0] ror;
     wire [31:0] b2;
     assign b2 = b^{32{alucontrol[0]}};
@@ -20,7 +20,7 @@ module ysyx_24100027_ALU(
     MuxKey #(4,3,32) alumux(result,alucontrol,{
         3'b000,raddsub,
         3'b001,radsub,
-        3'b010,rand,
+        3'b010,frand,
         3'b011,ror
     });
     assign zf = ~(|result);
