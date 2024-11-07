@@ -15,7 +15,7 @@ module ysyx_24100027_ALU(
     assign b2 = b^{32{alucontrol[0]}};
     assign {cf,raddsub} = a + b2 + alucontrol[0];
     assign of = (~(a[31]^b2[31]))&(a[31]^raddsub[31]);
-    assign rand = a^b;
+    assign frand = a^b;
     assign ror = a|b;
     MuxKey #(4,3,32) alumux(result,alucontrol,{
         3'b000,raddsub,
