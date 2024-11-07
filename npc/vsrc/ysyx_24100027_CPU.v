@@ -23,6 +23,10 @@ module ysyx_24100027_CPU(
         .b(immtalu),
         .alucontrol(alucon),
         .result(WD3),
+        .of(),
+        .zf(),
+        .nf(),
+        .cf(),
     );
     ysyx_24100027_IMM i1(
         .inst(inst),
