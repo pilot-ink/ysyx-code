@@ -17,7 +17,7 @@ module ysyx_24100027_CPU(
         .rd(inst[11:7]),
         .WD3(WD3),
         .RD1(RD1),
-        .RD2(RD2),
+        .RD2(RD2)
         );
     ysyx_24100027_ALU a1(
         .a(RD1),
@@ -27,18 +27,18 @@ module ysyx_24100027_CPU(
         .of(),
         .zf(),
         .nf(),
-        .cf(),
+        .cf()
     );
     ysyx_24100027_IMM i1(
         .inst(inst),
         .immtype(immtype),
-        .immsext(immtalu),
+        .immsext(immtalu)
     );
     ysyx_24100027_IDU i2(
         .opcode(inst[6:0]),
         .funct3(inst[14:12]),
         .alucontrol(alucon),
         .Regwrite(WE3),
-        .immtype(immtype),
+        .immtype(immtype)
     );
 endmodule

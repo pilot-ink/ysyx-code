@@ -13,6 +13,6 @@ module ysyx_24100027_GPR(
         .raddr_1(rs1),
         .raddr_2(rs2),
         .rdata_1(RD1),
-        .rdata_2(RD2),
+        .rdata_2(RD2)
     );
 endmodule
