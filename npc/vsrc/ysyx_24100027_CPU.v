@@ -4,8 +4,8 @@ module ysyx_24100027_CPU(
     input [31:0] pc,
     input [31:0] inst
 );
-    wire WD3,WE3;
-    wire [31:0] RD1,RD2,immtalu;
+    wire WE3;
+    wire [31:0] RD1,RD2,immtalu,WD3;
     wire [2:0] immtype;
     wire [2:0] alucon;
 
