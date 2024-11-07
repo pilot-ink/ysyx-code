@@ -8,7 +8,7 @@ module top(
         .rst(rst),
         .clk(clk),
         .pc(pc),
-        .inst(inst),
+        .inst(inst)
     );
 
 endmodule
