@@ -15,7 +15,7 @@ module ysyx_24100027_CPU(
         .rs1(inst[19:15]),
         .rs2(inst[24:20]),
         .rd(inst[11:7]),
-        .wD3(WD3),
+        .WD3(WD3),
         .RD1(RD1),
         .RD2(RD2),
         );
