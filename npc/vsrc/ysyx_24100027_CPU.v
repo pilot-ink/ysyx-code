@@ -8,15 +8,16 @@ module ysyx_24100027_CPU(
     wire [31:0] RD1,RD2,immtalu;
     wire [2:0] immtype;
     wire [2:0] alucon;
+
     ysyx_24100027_GPR c1(
         .clk(clk),
-        .waddr(inst[11:7]),
-        .wdata(WD3),
-        .wen(WE3),
-        .raddr_1(inst[19:15]),
-        .raddr_2(inst[24:20]),
-        .rdata_1(RD1),
-        .rdata_2(RD2),
+        .WE3(WE3),
+        .rs1(inst[19:15]),
+        .rs2(inst[24:20]),
+        .rd(inst[11:7]),
+        .wD3(WD3),
+        .RD1(RD1),
+        .RD2(RD2),
         );
     ysyx_24100027_ALU a1(
         .a(RD1),
