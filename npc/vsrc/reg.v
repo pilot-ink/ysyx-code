@@ -26,6 +26,6 @@ module RegisterFile #(ADDR_WIDTH = 1, DATA_WIDTH = 1) (
   assign rdata_2 = rf[raddr_2];
   always @(posedge clk) begin
     if (wen) rf[waddr] <= wdata;
-    rf[ADDR_WIDTH'b0] = rf[ADDR_WIDTH'b0] & DATA_WIDTH'b0;
+    rf[0] = rf[0] & 0;
   end
 endmodule
