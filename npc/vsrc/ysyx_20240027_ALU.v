@@ -19,7 +19,7 @@ module ysyx_24100027_ALU(
     assign ror = a|b;
     MuxKey #(4,3,32) alumux(result,alucontrol,{
         3'b000,raddsub,
-        3'b001,radsub,
+        3'b001,raddsub,
         3'b010,frand,
         3'b011,ror
     });
