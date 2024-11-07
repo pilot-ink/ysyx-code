@@ -13,7 +13,9 @@ module ysyx_24100027_ALU(
     wire [31:0] ror;
     wire [31:0] b2;
     assign b2 = b^{32{alucontrol[0]}};
+    /* verilator lint_off WIDTHEXPAND */
     assign {cf,raddsub} = a + b2 + alucontrol[0];
+    /* verilator lint_on WIDTHEXPAND */
     assign of = (~(a[31]^b2[31]))&(a[31]^raddsub[31]);
     assign frand = a^b;
     assign ror = a|b;
