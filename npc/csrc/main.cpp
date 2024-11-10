@@ -16,7 +16,7 @@ static const uint32_t pmem[] = {
 uint32_t pmem_read(uint32_t pc)
 {
     pc -= 0x80000000;
-    return pmem[pc]
+    return pmem[pc];
 }
 
 //void nvboard_bind_all_pins(Vtop* top);
@@ -31,15 +31,15 @@ int main(int argc, char** argv) {
     // nvboard_init();
     VerilatedVcdC* m_trace = new VerilatedVcdC; // trace_object
     top->trace(m_trace, 99);  // 99表示记录最详细的信号信息
-    m_trace->open("builds/wave.vcd");  // 波形文件
+    m_trace->open("wave.vcd");  // 波形文件
     
     top->clk = 0;  // clk初始化
     // ----原reset函数----start
     int n = 10;
     top->rst = 1;
-    while (n-- > 0){top->clk = !top->clk;top->eval();}
+    while (n-- > 0){top->clk = !top->clk;top->eval();top->clk = !top->clk;top->eval();}
     top->rst = 0;
-    m_trace->dump(contextp->time()); // 记录波形
+    //m_trace->dump(contextp->time()); // 记录波形
    // ----原reset函数----end
     // while (!contextp->gotFinish()) {
 	// 	//nvboard_update();
@@ -52,12 +52,13 @@ int main(int argc, char** argv) {
 
     // }
     top->pc = 0x80000000;
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 5; i++){
         top->inst = pmem_read(top->pc);
+        top->pc += 1;
         top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
         top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
         m_trace->dump(contextp->time());
-        contextp->timeInc(1);
+        contextp->timeInc(1);  
     }
 
     m_trace->close();

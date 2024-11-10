@@ -10,6 +10,5 @@ module top(
         .pc(pc),
         .inst(inst)
     );
-
 endmodule
 
