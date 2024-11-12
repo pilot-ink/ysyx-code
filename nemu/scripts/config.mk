@@ -31,7 +31,6 @@ silent := -s
 CONF   := $(KCONFIG_PATH)/build/conf
 MCONF  := $(KCONFIG_PATH)/build/mconf
 FIXDEP := $(FIXDEP_PATH)/build/fixdep
-CONFIG_TARGET_AM ?= 
 
 $(CONF):
 	$(Q)$(MAKE) $(silent) -C $(KCONFIG_PATH) NAME=conf
