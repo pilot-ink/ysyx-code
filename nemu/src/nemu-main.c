@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
 #else
   init_monitor(argc, argv);
 #endif
-  init_sdb();
+  //init_sdb();
   /* Start engine. */
   engine_start();
 
