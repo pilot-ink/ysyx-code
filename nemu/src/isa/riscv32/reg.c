@@ -31,11 +31,12 @@ void isa_reg_display() {
   }
 }
 
-int get_isa_reg_idx(char *name){
+int get_isa_reg_idx(const char *name){
   int i;
   for(i = 0; i < sizeof(regs)/sizeof(char *); i++){
     if(!strcmp(regs[i], name)) return i;
   }
+  return -1;
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
