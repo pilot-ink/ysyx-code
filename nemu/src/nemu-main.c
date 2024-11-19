@@ -29,8 +29,11 @@ int main(int argc, char *argv[]) {
   
 #endif
   init_sdb();
+  init_iringbuf();
   /* Start engine. */
   engine_start();
+
+  destory_iringbuf();
 
   /*run test*/
   // bool *success=false;
