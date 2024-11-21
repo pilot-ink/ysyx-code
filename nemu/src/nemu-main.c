@@ -32,6 +32,7 @@ int main(int argc, char *argv[]) {
   init_iringbuf();
   /* Start engine. */
   engine_start();
+  print_iringbuf();
 
   destory_iringbuf();
 
