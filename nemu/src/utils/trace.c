@@ -14,6 +14,7 @@ void destory_iringbuf(){
     free(rbuf);
 }
 void push_iringbuf(char *str){
+    printf("test:%s\n",str);
     if(RingBuffer_full(rbuf)){
         rbuf->start = 0;
         rbuf->end = 0;
