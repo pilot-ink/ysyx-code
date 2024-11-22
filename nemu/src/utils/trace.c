@@ -36,8 +36,9 @@ void print_iringbuf()
      printf("inst:%s\n",rbuf->buffer[i]);
 }
 
-void read_elf(){
+void read_elf(char *file){
     int value;
+    r_elf_file = file;
     FILE *fp = fopen(r_elf_file, "r");
     if(!fp) panic("can not open %s file",r_elf_file);
     Elf32_Ehdr *ef = malloc(sizeof(Elf32_Ehdr));
@@ -46,8 +47,7 @@ void read_elf(){
 
     free(ef);
 }
-void init_fringbuf(char *file){
-    r_elf_file = file;
+void init_fringbuf(){
     fbuf = malloc(sizeof(fringbuf));
     for(int i = 0; i < fRingbuffer_max;i++)
         fbuf->buffer[i] = malloc(sizeof(char) * 128);
