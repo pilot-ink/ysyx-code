@@ -120,7 +120,7 @@ void init_monitor(int argc, char *argv[]) {
   //init_iringbuf();
   //init_fringbuf();
 
-  /* Load the image to memory. This will overwrite theoutput log to FILE
+  /* Load the image to memory. This will overwrite theoutput log to FILE*/
   init_sdb();
 
   IFDEF(CONFIG_ITRACE, init_disasm());
