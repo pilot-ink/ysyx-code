@@ -73,38 +73,5 @@ uint64_t get_time();
     log_write(__VA_ARGS__); \
   } while (0)
 
-// ----------- trace -----------
-#define RingBuffer_available_data(B) (((B)->end + 1) % Ringbuffer_max - (B)->start - 1)
-#define RingBuffer_full(B) (RingBuffer_available_data(B) - Ringbuffer_max == 0)
-#define Ringbuffer_max 10
-#define fRingbuffer_max 100
-
-typedef struct{
-  char *buffer[Ringbuffer_max];
-  int start;
-  int end;
-}iringbuf;
-
-
-typedef struct{
-  char *buffer[fRingbuffer_max];
-  int start;
-  int end;
-  //int n;        //reminder of numbers of calling func
-}fringbuf;
-
-
-
-#ifdef CONFIG_mtrace
-#define mRingbuffer_max 50
-typedef struct{
-  char  wrbuffer[mRingbuffer_max];
-  paddr_t pbuffer[mRingbuffer_max];
-  word_t  dbuffer[mRingbuffer_max];
-  int start;
-  int end;
-}mringbuf;
-mringbuf *mbuf;
-#endif
 
 #endif

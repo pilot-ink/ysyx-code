@@ -49,68 +49,11 @@ static int cmd_c(char *args) {
 
 
 static int cmd_q(char *args) {
-  nemu_state.state = NEMU_QUIT;
-  cpu_exec(-1);
   return -1;
 }
 
 static int cmd_help(char *args);
 
-static int cmd_si(char *args){
-  if(args == NULL) cpu_exec(1);
-  else cpu_exec(atoi(args));
-  return 0;
-}
-
-static int cmd_info(char *args){
-  if(!strcmp(args, "r"))
-    isa_reg_display();
-  else if(!strcmp(args, "w"))
-    watchpoint_print();
-  return 0;
-}
-
-static int cmd_scan_mem(char *args){
-  if(args == NULL) return -1;
-  char *data = strtok(args, " ");
-  char *address = strtok(NULL, " ");
-  address += 2;
-  uint32_t addr = 0;//用来保存字符串转换成数字
-  uint32_t y = 0;//用来保存十进制地址的值
-  uint32_t x = 16, product = 1;
-  addr = (uint32_t)atoi(address);
-  
-  //转换为10进制
-  while(addr!=0){
-		y=y+(addr%10)*product;
-		addr=addr/10;
-		product=product*x;
-	}
-
-  for(int i = 0; i < atoi(data); i++,y+=4)
-  {
-
-    printf("0x%x\t0x%08x\n",y,paddr_read(y, 4));
-  }
-
-}
-
-static int cmd_p(char *args)
-{
-  bool *success=false;
-  printf("%d\n",expr(args,success));     //should return value
-  return 0;
-}
-
-static int cmd_w(char *args){
-  new_up(args);
-  return 0;
-}
-
-static int cmd_d(char *args){
-  free_wp(args);
-  return 0;
-}
 static struct {
   const char *name;
   const char *description;
@@ -119,12 +62,6 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  { "si" , "continue the execution N instruction of the program", cmd_si},
-  { "info" , "print program's state" ,cmd_info},
-  { "x" , "print value in the address of mem" , cmd_scan_mem},
-  { "p", "compute expr" , cmd_p},
-  { "w", "set watchpoint", cmd_w},
-  { "d", "delete watchpoint" ,cmd_d},
 
   /* TODO: Add more commands */
 
@@ -204,5 +141,3 @@ void init_sdb() {
   /* Initialize the watchpoint pool. */
   init_wp_pool();
 }
-
-

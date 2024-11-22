@@ -32,6 +32,8 @@ static void welcome() {
   Log("Build time: %s, %s", __TIME__, __DATE__);
   printf("Welcome to %s-NEMU!\n", ANSI_FMT(str(__GUEST_ISA__), ANSI_FG_YELLOW ANSI_BG_RED));
   printf("For help, type \"help\"\n");
+  Log("Exercise: Please remove me in the source code and compile NEMU again.");
+  assert(0);
 }
 
 #ifndef CONFIG_TARGET_AM
@@ -42,7 +44,6 @@ void sdb_set_batch_mode();
 static char *log_file = NULL;
 static char *diff_so_file = NULL;
 static char *img_file = NULL;
-static char *elf_file = NULL;
 static int difftest_port = 1234;
 
 static long load_img() {
@@ -77,7 +78,7 @@ static int parse_args(int argc, char *argv[]) {
     {0          , 0                , NULL,  0 },
   };
   int o;
-  while ( (o = getopt_long(argc, argv, "-bhl:e:d:p:", table, NULL)) != -1) {
+  while ( (o = getopt_long(argc, argv, "-bhl:d:p:", table, NULL)) != -1) {
     switch (o) {
       case 'b': sdb_set_batch_mode(); break;
       case 'p': sscanf(optarg, "%d", &difftest_port); break;
@@ -105,7 +106,7 @@ void init_monitor(int argc, char *argv[]) {
 
   /* Set random seed. */
   init_rand();
-  //printf("img_file:%s\n",img_file);
+
   /* Open the log file. */
   init_log(log_file);
 
@@ -117,10 +118,14 @@ void init_monitor(int argc, char *argv[]) {
 
   /* Perform ISA dependent initialization. */
   init_isa();
-  //init_iringbuf();
-  //init_fringbuf();
 
-  /* Load the image to memory. This will overwrite theoutput log to FILE
+  /* Load the image to memory. This will overwrite the built-in image. */
+  long img_size = load_img();
+
+  /* Initialize differential testing. */
+  init_difftest(diff_so_file, img_size, difftest_port);
+
+  /* Initialize the simple debugger. */
   init_sdb();
 
   IFDEF(CONFIG_ITRACE, init_disasm());
