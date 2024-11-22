@@ -107,7 +107,7 @@ void init_monitor(int argc, char *argv[]) {
 
   /* Set random seed. */
   init_rand();
-  printf("img_file:%s\n",img_file);
+  //printf("img_file:%s\n",img_file);
   /* Open the log file. */
   init_log(log_file);
 
