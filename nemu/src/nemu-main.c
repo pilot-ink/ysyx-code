@@ -29,7 +29,6 @@ int main(int argc, char *argv[]) {
   
 #endif
   init_sdb();
-  init_iringbuf();
   /* Start engine. */
   engine_start();
   print_iringbuf();
