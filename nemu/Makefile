@@ -39,7 +39,7 @@ SRCS-BLACKLIST-y += $(SRCS-BLACKLIST) $(shell find -L $(DIRS-BLACKLIST-y) -name 
 SRCS-y += $(shell find -L $(DIRS-y) -name "*.c")
 SRCS = $(filter-out $(SRCS-BLACKLIST-y),$(SRCS-y))
 
-# Extract compiler and options from menuconfig 
+# Extract compiler and options from menuconfig
 ifneq ($(CONFIG_CC),)
 CC = $(call remove_quote,$(CONFIG_CC))
 endif

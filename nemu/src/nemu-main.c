@@ -26,14 +26,10 @@ int main(int argc, char *argv[]) {
   am_init_monitor();
 #else
   init_monitor(argc, argv);
-  
 #endif
   init_sdb();
   /* Start engine. */
   engine_start();
-  //print_iringbuf();
-
-  //destory_iringbuf();
 
   /*run test*/
   // bool *success=false;
