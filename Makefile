@@ -1,5 +1,5 @@
-STUID = ysyx_20240911
-STUNAME = Tom
+STUID = ysyx_24100027
+STUNAME = dhb
 
 # DO NOT modify the following code!!!
 

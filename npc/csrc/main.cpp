@@ -1,13 +1,25 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
-#include<nvboard.h>
+#//include<nvboard.h>
 #include"Vtop.h"  // 从top.v生成
 #include"verilated.h"
 #include"verilated_vcd_c.h"
 
-void nvboard_bind_all_pins(Vtop* top);
 
+static const uint32_t pmem[] = {
+    0b00000000010100000000000010010011, //addi x1 x0 5
+    0b00000000000100000000000100010011, //addi x2 x0 1
+    0b00000000001000000000000100010011, //addi x2 x0 5
+    0b00000000010100001000000100010011  //addi x2 x1 5
+};
+uint32_t pmem_read(uint32_t pc)
+{
+    pc -= 0x80000000;
+    return pmem[pc];
+}
+
+//void nvboard_bind_all_pins(Vtop* top);
 int main(int argc, char** argv) {
     VerilatedContext* contextp = new VerilatedContext;
     contextp->traceEverOn(true); // 开启波形 
@@ -15,8 +27,8 @@ int main(int argc, char** argv) {
 
     Vtop* top = new Vtop{contextp};
 
-    nvboard_bind_all_pins(top);  // 引脚绑定
-    nvboard_init();
+    // nvboard_bind_all_pins(top);  // 引脚绑定
+    // nvboard_init();
     VerilatedVcdC* m_trace = new VerilatedVcdC; // trace_object
     top->trace(m_trace, 99);  // 99表示记录最详细的信号信息
     m_trace->open("wave.vcd");  // 波形文件
@@ -24,17 +36,31 @@ int main(int argc, char** argv) {
     top->clk = 0;  // clk初始化
     // ----原reset函数----start
     int n = 10;
-    top->rst = 0;
-    while (n-- > 0){top->clk = !top->clk;top->eval();}
     top->rst = 1;
-    m_trace->dump(contextp->time()); // 记录波形
-    // ----原reset函数----end
-    while (!contextp->gotFinish()) {
-		nvboard_update();
-        contextp->timeInc(1);  // 推进仿真时间
+    while (n-- > 0){top->clk = !top->clk;top->eval();top->clk = !top->clk;top->eval();}
+    top->rst = 0;
+    //m_trace->dump(contextp->time()); // 记录波形
+   // ----原reset函数----end
+    // while (!contextp->gotFinish()) {
+	// 	//nvboard_update();
+    //     contextp->timeInc(1);  // 推进仿真时间
+    //     top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
+    //     m_trace->dump(contextp->time()); // 记录波形
+    //     top->inst = pmem_read(top->pc);
+    //     top->eval();
+    //     top->pc += 4;
+
+    // }
+    top->pc = 0x80000000;
+    for(int i = 0; i < 5; i++){
+        top->inst = pmem_read(top->pc);
+        top->pc += 1;
         top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
-        m_trace->dump(contextp->time()); // 记录波形
+        top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
+        m_trace->dump(contextp->time());
+        contextp->timeInc(1);  
     }
+
     m_trace->close();
     delete top;
     delete contextp;
