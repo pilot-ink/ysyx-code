@@ -71,7 +71,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
-  push_iringbuf(s->logbuf);
+  //push_iringbuf(s->logbuf);
   //print_iringbuf();
 #endif
 #ifdef CONFIG_WATCHPOINT
@@ -118,7 +118,7 @@ void cpu_exec(uint64_t n) {
       return;
     case NEMU_ABORT:
       printf("something is wrong.\n");
-      print_iringbuf();
+      //print_iringbuf();
       return;
     default: nemu_state.state = NEMU_RUNNING;
   }
