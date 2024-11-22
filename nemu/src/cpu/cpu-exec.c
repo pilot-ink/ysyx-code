@@ -17,6 +17,7 @@
 #include <cpu/decode.h>
 #include <cpu/difftest.h>
 #include <locale.h>
+#include <utils.h>
 
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
@@ -39,9 +40,6 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #endif
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
-  bool change = false;
-  change = watchpoint_check();
-  if(change == true) nemu_state.state = NEMU_STOP;
 }
 
 static void exec_once(Decode *s, vaddr_t pc) {
@@ -50,14 +48,18 @@ static void exec_once(Decode *s, vaddr_t pc) {
   isa_exec_once(s);
   cpu.pc = s->dnpc;
 #ifdef CONFIG_ITRACE
+  //用来保存这样的反汇编(0x80000000: 00 00 04 13 mv	s0, zero)
   char *p = s->logbuf;
+  //输出"0x80000000:" "pc:"
   p += snprintf(p, sizeof(s->logbuf), FMT_WORD ":", s->pc);
+  //输出指令的机器码
   int ilen = s->snpc - s->pc;
   int i;
   uint8_t *inst = (uint8_t *)&s->isa.inst.val;
   for (i = ilen - 1; i >= 0; i --) {
     p += snprintf(p, 4, " %02x", inst[i]);
   }
+  //00 00 04 13 mv，用来输出在机器码与汇编指令的空格
   int ilen_max = MUXDEF(CONFIG_ISA_x86, 8, 4);
   int space_len = ilen_max - ilen;
   if (space_len < 0) space_len = 0;
@@ -65,9 +67,17 @@ static void exec_once(Decode *s, vaddr_t pc) {
   memset(p, ' ', space_len);
   p += space_len;
 
+  //输出反汇编到s->logbuf
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
+  //push_iringbuf(s->logbuf);
+  //print_iringbuf();
+#endif
+#ifdef CONFIG_WATCHPOINT
+  bool change = false;
+  change = watchpoint_check();
+  if(change == true) nemu_state.state = NEMU_STOP;
 #endif
 }
 
@@ -100,8 +110,15 @@ void assert_fail_msg() {
 void cpu_exec(uint64_t n) {
   g_print_step = (n < MAX_INST_TO_PRINT);
   switch (nemu_state.state) {
-    case NEMU_END: case NEMU_ABORT:case NEMU_QUIT:
+    case NEMU_END:
       printf("Program execution has ended. To restart the program, exit NEMU and run again.\n");
+      return;
+    case NEMU_QUIT:
+      printf("exit NEMU succeeded.\n");
+      return;
+    case NEMU_ABORT:
+      printf("something is wrong.\n");
+      //print_iringbuf();
       return;
     default: nemu_state.state = NEMU_RUNNING;
   }
