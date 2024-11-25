@@ -117,8 +117,8 @@ void init_monitor(int argc, char *argv[]) {
 
   /* Perform ISA dependent initialization. */
   init_isa();
-  //init_iringbuf();
-  //init_fringbuf();
+  init_iringbuf();
+  init_fringbuf();
 
   /* Load the image to memory. This will overwrite theoutput log to FILE*/
   init_sdb();
