@@ -84,7 +84,7 @@ static int parse_args(int argc, char *argv[]) {
       case 'l': log_file = optarg; break;
       case 'd': diff_so_file = optarg; break;
       case 'e': elf_file = optarg; break;
-      case '0': img_file = optarg; return 0;
+      case 0: img_file = optarg; return 0;
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
         printf("\t-b,--batch              run with batch mode\n");
@@ -105,6 +105,7 @@ void init_monitor(int argc, char *argv[]) {
     printf("%s\n",argv[i]);
   /* Parse arguments. */
   parse_args(argc, argv);
+
   printf("elf_file:%s\n",elf_file);
 
   /* Set random seed. */
