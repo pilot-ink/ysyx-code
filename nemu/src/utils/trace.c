@@ -9,6 +9,7 @@ struct linked_list *ptr_list_tail;
 static char *r_elf_file = NULL;
 long get_file_size(FILE *stream);
 void outputsyminfo(const Elf32_Sym *psym, const char *pbuffstr, int ncount);
+
 void init_iringbuf(){
     rbuf = malloc(sizeof(iringbuf));
     for(int i = 0; i < Ringbuffer_max;i++)
@@ -49,6 +50,10 @@ void read_elf(char *file){
     char *pbuff = malloc(get_file_size(fp));
     char *buffer = pbuff;
     fread(pbuff, sizeof(char), get_file_size(fp), fp);
+
+    head_st = malloc(sizeof(struct linked_list));
+    ptr_list_tail = malloc(sizeof(struct linked_list));;
+    ptr_list_tail->next = head_st;
     //Magic
     strncpy(read_elf_file->e_ident,pbuff,EI_NIDENT);
     pbuff += EI_NIDENT;
@@ -109,6 +114,7 @@ void read_elf(char *file){
             continue;
         }
     }
+   print_linked_list(); 
 }
 void init_fringbuf(){
     fbuf = malloc(sizeof(fringbuf));
@@ -177,6 +183,17 @@ void outputsyminfo(const Elf32_Sym *psym, const char *pbuffstr, int ncount)
                 break;
         }
     }
+}
+void print_linked_list(){
+    struct linked_list *ptr = head_st;
+    ptr = ptr->next;
+    while(ptr= NULL){
+        printf("func:%s\taddr:%X\tsize:%d\t\n",ptr->func_name,ptr->addr,ptr->size);
+        ptr = ptr->next;
+    }
+}
+void destory_linked_list(){
+
 }
 #ifdef CONFIG_mtrace
 void init_mringbuf(){
