@@ -157,6 +157,7 @@ long get_file_size(FILE *stream)
 }
 void outputsyminfo(const Elf32_Sym *psym, const char *pbuffstr, int ncount)
 {
+    printf("1111\n");
     for(int i = 0;i<ncount;++i)
     {
         char typelow = ELF32_ST_TYPE(psym[i].st_info);
