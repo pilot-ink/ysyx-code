@@ -188,7 +188,7 @@ void print_linked_list(){
     struct linked_list *ptr = head_st;
     ptr = ptr->next;
 
-    while(ptr == NULL){
+    while(ptr != NULL){
         printf("func:%s\taddr:%X\tsize:%d\t\n",ptr->func_name,ptr->addr,ptr->size);
         ptr = ptr->next;
     }
