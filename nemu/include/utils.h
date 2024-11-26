@@ -93,6 +93,13 @@ typedef struct{
   //int n;        //reminder of numbers of calling func
 }fringbuf;
 
+struct linked_list{
+  char  func_name[40];
+  int   addr;
+  int   size;
+  struct linked_list * next;
+};
+
 
 
 #ifdef CONFIG_mtrace
