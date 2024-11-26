@@ -95,7 +95,7 @@ typedef struct{
 
 struct linked_list{
   char  func_name[40];
-  int   addr;
+  uint32_t   addr;
   int   size;
   struct linked_list * next;
 };
