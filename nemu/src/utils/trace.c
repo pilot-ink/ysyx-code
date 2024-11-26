@@ -157,7 +157,6 @@ long get_file_size(FILE *stream)
 }
 void outputsyminfo(const Elf32_Sym *psym, const char *pbuffstr, int ncount)
 {
-    printf("1111\n");
     for(int i = 0;i<ncount;++i)
     {
         char typelow = ELF32_ST_TYPE(psym[i].st_info);
@@ -188,7 +187,8 @@ void outputsyminfo(const Elf32_Sym *psym, const char *pbuffstr, int ncount)
 void print_linked_list(){
     struct linked_list *ptr = head_st;
     ptr = ptr->next;
-    while(ptr= NULL){
+
+    while(ptr == NULL){
         printf("func:%s\taddr:%X\tsize:%d\t\n",ptr->func_name,ptr->addr,ptr->size);
         ptr = ptr->next;
     }
