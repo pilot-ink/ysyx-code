@@ -76,18 +76,30 @@ uint64_t get_time();
 // ----------- trace -----------
 #define RingBuffer_available_data(B) (((B)->end + 1) % Ringbuffer_max - (B)->start - 1)
 #define RingBuffer_full(B) (RingBuffer_available_data(B) - Ringbuffer_max == 0)
-#define Ringbuffer_max 10
-#define fRingbuffer_max 100
 
+#ifdef CONFIG_ITRACE
+#define Ringbuffer_max 10
 typedef struct{
   char *buffer[Ringbuffer_max];
   int start;
   int end;
 }iringbuf;
+#endif
 
+#ifdef CONFIG_FTRACE
+void push_fringbuf(vaddr_t pc, vaddr_t snpc,int a);
+char *find_linked_list(vaddr_t pc);
+#define fRingbuffer_max 100
+typedef struct{
+  vaddr_t pc;
+  vaddr_t snpc;
+  int type;
+  char src_func[30];
+  char dst_func[30];
+}func_info;
 
 typedef struct{
-  char *buffer[fRingbuffer_max];
+  func_info *buffer[fRingbuffer_max];
   int start;
   int end;
   //int n;        //reminder of numbers of calling func
@@ -99,10 +111,11 @@ struct linked_list{
   int   size;
   struct linked_list * next;
 };
+#endif
 
 
-
-#ifdef CONFIG_mtrace
+#ifdef CONFIG_MTRACE
+void push_mringbuf(char wr,paddr_t addr, word_t data);
 #define mRingbuffer_max 50
 typedef struct{
   char  wrbuffer[mRingbuffer_max];
@@ -111,7 +124,6 @@ typedef struct{
   int start;
   int end;
 }mringbuf;
-mringbuf *mbuf;
 #endif
 
 #endif

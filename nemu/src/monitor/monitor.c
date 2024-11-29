@@ -122,12 +122,16 @@ void init_monitor(int argc, char *argv[]) {
 
   /* Perform ISA dependent initialization. */
   init_isa();
-  init_iringbuf();
+
+  /*基础设施（itrace、mtrace、ftrace）初始化*/
+  IFDEF(CONFIG_ITRACE,init_iringbuf());
+  IFDEF(CONFIG_MTRACE,init_iringbuf());
+  #ifdef CONFIG_FTRACE
   if(elf_file != NULL){
     init_fringbuf();
     read_elf(elf_file);
   }
-
+  #endif
   /* Load the image to memory. This will overwrite theoutput log to FILE*/
   init_sdb();
 

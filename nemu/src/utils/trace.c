@@ -2,13 +2,8 @@
 #include <cpu/decode.h>
 #include <elf.h>
 
+#ifdef CONFIG_ITRACE
 iringbuf *rbuf;
-fringbuf *fbuf;
-struct linked_list *head_st;
-struct linked_list *ptr_list_tail;
-static char *r_elf_file = NULL;
-long get_file_size(FILE *stream);
-void outputsyminfo(const Elf32_Sym *psym, const char *pbuffstr, int ncount);
 
 void init_iringbuf(){
     rbuf = malloc(sizeof(iringbuf));
@@ -40,20 +35,31 @@ void print_iringbuf()
     for(int i = rbuf->end;(i%Ringbuffer_max)+1 != rbuf->start;i=(i+1)%Ringbuffer_max)
      printf("inst:%s\n",rbuf->buffer[i]);
 }
+#endif
+
+#ifdef CONFIG_FTRACE
+fringbuf *fbuf;
+/*单链表的尾指针和头指针，采用尾插法*/
+struct linked_list *head_st;
+struct linked_list *ptr_list_tail;
+static char *r_elf_file = NULL;
+long get_file_size(FILE *stream);
+void outputsyminfo(const Elf32_Sym *psym, const char *pbuffstr, int ncount);
 
 void read_elf(char *file){
-    int value;
     r_elf_file = file;
     FILE *fp = fopen(r_elf_file, "r");
     if(!fp) panic("can not open %s file",r_elf_file);
+    //elf header and 读取文件
     Elf32_Ehdr *read_elf_file = malloc(sizeof(Elf32_Ehdr));
     char *pbuff = malloc(get_file_size(fp));
     char *buffer = pbuff;
     fread(pbuff, sizeof(char), get_file_size(fp), fp);
-
+    //链表，用于保存ftrace需要遍历的函数信息
     head_st = malloc(sizeof(struct linked_list));
     ptr_list_tail = malloc(sizeof(struct linked_list));;
     ptr_list_tail->next = head_st;
+
     //Magic
     strncpy(read_elf_file->e_ident,pbuff,EI_NIDENT);
     pbuff += EI_NIDENT;
@@ -114,8 +120,13 @@ void read_elf(char *file){
             continue;
         }
     }
-   print_linked_list(); 
+    //打印得到的函数
+    //print_linked_list(); 
+    free(read_elf_file);
+    free(buffer);
+    fclose(fp);
 }
+
 void init_fringbuf(){
     fbuf = malloc(sizeof(fringbuf));
     for(int i = 0; i < fRingbuffer_max;i++)
@@ -126,25 +137,79 @@ void destory_fringbuf(){
         free(fbuf->buffer[i]);
     free(fbuf);
 }
-/*
-void push_iringbuf(char *str){
-    if(RingBuffer_full(rbuf)){
-        rbuf->start = 0;
-        rbuf->end = 0;
-        strcpy(rbuf->buffer[rbuf->start],str);
-        rbuf->start++;
-        return;
-    }
-    else{
-        strcpy(rbuf->buffer[rbuf->start],str);
-        rbuf->start++;
+char *find_linked_list(vaddr_t pc){
+    struct linked_list *ptr = head_st;
+    ptr = ptr->next;
+    while(ptr !=NULL){
+        if(pc <= (ptr->addr+ptr->size) && pc >= ptr->addr)
+            return ptr->func_name;
+        ptr = ptr->next;
     }
 }
-*/
+//a indicate whether it's ret,1 true,0 false
+void push_fringbuf(vaddr_t pc, vaddr_t snpc,int a){
+    char *ptr;
+    if(a == 1){
+         if(RingBuffer_full(fbuf)){
+            fbuf->start = 0;
+            fbuf->end = 0;
+            fbuf->buffer[fbuf->start]->pc = pc;
+            fbuf->buffer[fbuf->start]->snpc = snpc;
+            fbuf->buffer[fbuf->start]->type = 1;
+            ptr = find_linked_list(pc);
+            strcpy(fbuf->buffer[fbuf->start]->src_func,ptr);
+            ptr = find_linked_list(snpc);
+            strcpy(fbuf->buffer[fbuf->start]->dst_func,ptr);
+            fbuf->start++;
+            return;
+        }
+        else{
+            fbuf->buffer[fbuf->start]->pc = pc;
+            fbuf->buffer[fbuf->start]->snpc = snpc;
+            fbuf->buffer[fbuf->start]->type = 1;
+            ptr = find_linked_list(pc);
+            strcpy(fbuf->buffer[fbuf->start]->src_func,ptr);
+            ptr = find_linked_list(snpc);
+            strcpy(fbuf->buffer[fbuf->start]->dst_func,ptr);
+            fbuf->start++;
+        }
+    }
+    else{
+        if(RingBuffer_full(fbuf)){
+            fbuf->start = 0;
+            fbuf->end = 0;
+            fbuf->buffer[fbuf->start]->pc = pc;
+            fbuf->buffer[fbuf->start]->snpc = snpc;
+            fbuf->buffer[fbuf->start]->type = 0;
+            ptr = find_linked_list(pc);
+            strcpy(fbuf->buffer[fbuf->start]->src_func,ptr);
+            ptr = find_linked_list(snpc);
+            strcpy(fbuf->buffer[fbuf->start]->dst_func,ptr);
+            fbuf->start++;
+            return;
+        }
+        else{
+            fbuf->buffer[fbuf->start]->pc = pc;
+            fbuf->buffer[fbuf->start]->snpc = snpc;
+            fbuf->buffer[fbuf->start]->type = 0;
+            ptr = find_linked_list(pc);
+            strcpy(fbuf->buffer[fbuf->start]->src_func,ptr);
+            ptr = find_linked_list(snpc);
+            strcpy(fbuf->buffer[fbuf->start]->dst_func,ptr);
+            fbuf->start++;
+        }
+    }
+}
+
 void print_fringbuf()
 {
+    printf("src\t\tdst\t\ttype\t\tsrc_func-->dst_func\n");
     for(int i = fbuf->end;(i%fRingbuffer_max)+1 != fbuf->start;i=(i+1)%fRingbuffer_max)
-     printf("%s\n",fbuf->buffer[i]);
+     printf("0x%08x\t\t0x%08x\t\t%d\t\t%s-->%s\n",fbuf->buffer[i]->pc
+                                                ,fbuf->buffer[i]->snpc
+                                                ,fbuf->buffer[i]->type
+                                                ,fbuf->buffer[i]->src_func
+                                                ,fbuf->buffer[i]->dst_func);
 }
 long get_file_size(FILE *stream)
 {
@@ -160,7 +225,6 @@ void outputsyminfo(const Elf32_Sym *psym, const char *pbuffstr, int ncount)
     for(int i = 0;i<ncount;++i)
     {
         char typelow = ELF32_ST_TYPE(psym[i].st_info);
-        char bindhig = ELF32_ST_BIND(psym[i].st_info);
         switch(typelow)
         {
             case STT_NOTYPE:
@@ -187,7 +251,6 @@ void outputsyminfo(const Elf32_Sym *psym, const char *pbuffstr, int ncount)
 void print_linked_list(){
     struct linked_list *ptr = head_st;
     ptr = ptr->next;
-
     while(ptr != NULL){
         printf("func:%s\taddr:%X\tsize:%d\t\n",ptr->func_name,ptr->addr,ptr->size);
         ptr = ptr->next;
@@ -196,7 +259,10 @@ void print_linked_list(){
 void destory_linked_list(){
 
 }
-#ifdef CONFIG_mtrace
+#endif
+
+#ifdef CONFIG_MTRACE
+mringbuf *mbuf;
 void init_mringbuf(){
     mbuf = malloc(sizeof(mringbuf)); 
 }
@@ -220,7 +286,7 @@ void push_mringbuf(char wr,paddr_t addr, word_t data){
     }
 }
 void print_mringbuf(){
-    for(int i = mbuf->end;(i%mRingbuffer_max)+1 != mbuf->start;i=(i+1)%Rmingbuffer_max)
+    for(int i = mbuf->end;(i%mRingbuffer_max)+1 != mbuf->start;i=(i+1)%mRingbuffer_max)
      printf("%c\taddr:%08X\tdata:%X\n",mbuf->wrbuffer[i],mbuf->pbuffer[i],mbuf->dbuffer[i]);
 }
 #endif

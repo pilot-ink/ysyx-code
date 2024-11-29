@@ -1,9 +1,5 @@
 mainmenu "NEMU Configuration Menu"
 
-config WATCHPOINT
-  bool "watchpoint"
-  default n
-
 choice
   prompt "Base ISA"
   default ISA_riscv
@@ -67,7 +63,7 @@ choice
 config TARGET_NATIVE_ELF
   bool "Executable on Linux Native"
 config TARGET_SHARE
-  bool "Shared object (used as REF for differential testing)"
+  bool "Shared SA_risobject (used as REF for differential testing)"
 config TARGET_AM
   bool "Application on Abstract-Machine (DON'T CHOOSE)"
 endchoice
@@ -218,4 +214,20 @@ config RT_CHECK
   bool "Enable runtime checking"
   default y
 
+endmenu
+
+menu "others"
+
+config WATCHPOINT
+  bool "watchpoint"
+  default n
+
+config MTRACE
+  bool "mtrace"
+  default n
+
+config FTRACE
+  bool "ftrace"
+  default n
+  
 endmenu
