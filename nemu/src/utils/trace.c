@@ -270,7 +270,7 @@ void destory_mringbuf(){
     free(mbuf);
 }
 void push_mringbuf(char wr,paddr_t addr, word_t data){
-    if(RingBuffer_full(mbuf)){
+    if((mbuf->end+1) == mbuf->start){
         mbuf->start = 0;
         mbuf->end   = 0;
         mbuf->wrbuffer[mbuf->start] = wr;
