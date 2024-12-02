@@ -83,17 +83,17 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? ??? ????? 11011 11", jal    , J, R(rd) = s->pc + 4; s->dnpc = s->pc + imm;
   IFDEF(CONFIG_FTRACE, {
     if(rd == 1){
-      push_fringbuf(s->pc,s->snpc,0);
+      push_fringbuf(s->pc,s->dnpc,0);
     }
   })
   );
   INSTPAT("??????? ????? ????? ??? ????? 11001 11", jalr   , I, R(rd) = s->pc + 4; s->dnpc = (( src1 + imm) & ~1);
   IFDEF(CONFIG_FTRACE,{
     if(s->isa.inst.val ==0x00008067){
-      push_fringbuf(s->pc,s->snpc,1);
+      push_fringbuf(s->pc,s->dnpc,1);
     }
     else if(rd == 1){
-      push_fringbuf(s->pc,s->snpc,0);
+      push_fringbuf(s->pc,s->dnpc,0);
     }
   })
   );
