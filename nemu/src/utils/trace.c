@@ -151,7 +151,7 @@ char *find_linked_list(vaddr_t pc){
 void push_fringbuf(vaddr_t pc, vaddr_t snpc,int a){
     char *ptr;
     if(a == 1){
-         if(RingBuffer_full(fbuf)){
+         if((fbuf->start+1)%fRingbuffer_max == fbuf->end){
             fbuf->start = 0;
             fbuf->end = 0;
             fbuf->buffer[fbuf->start]->pc = pc;
@@ -176,7 +176,7 @@ void push_fringbuf(vaddr_t pc, vaddr_t snpc,int a){
         }
     }
     else{
-        if(RingBuffer_full(fbuf)){
+        if((fbuf->start+1)%fRingbuffer_max == fbuf->end){
             fbuf->start = 0;
             fbuf->end = 0;
             fbuf->buffer[fbuf->start]->pc = pc;
@@ -205,7 +205,7 @@ void push_fringbuf(vaddr_t pc, vaddr_t snpc,int a){
 void print_fringbuf()
 {
     printf("src\t\tdst\t\ttype\t\tsrc_func-->dst_func\n");
-    for(int i = fbuf->end;(i%fRingbuffer_max)+1 != fbuf->start;i=(i+1)%fRingbuffer_max)
+    for(int i = fbuf->end;(i%fRingbuffer_max) != fbuf->start;i=(i+1)%fRingbuffer_max)
      printf("0x%08x\t\t0x%08x\t\t%d\t\t%s-->%s\n",fbuf->buffer[i]->pc
                                                 ,fbuf->buffer[i]->snpc
                                                 ,fbuf->buffer[i]->type
