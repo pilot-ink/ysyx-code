@@ -12,8 +12,9 @@ size_t strlen(const char *s) {
 
 char *strcpy(char *dst, const char *src) {
   int i;
-  for(i = 0; src[i] != '\0'; i++)
+  for(i = 0; src[i] != '\0'; i++){
     dst[i] = src[i];
+  }
   dst[i] = src[i];
   return dst;
 }
@@ -64,14 +65,15 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 }
 
 void *memset(void *s, int c, size_t n) {
-  int *ptr = (int *)s;
+  char *ptr = (char *)s;
   for(int i = 0;i < n;i++)
     ptr[i] = c;
   return s;
 }
 
 void *memmove(void *dst, const void *src, size_t n) {
-  char *ptr = (char *)malloc(n*sizeof(char));
+  char str[n];
+  char *ptr = str;
   char *ptr_dst = (char *)dst;
   char *ptr_src = (char *)src;
   for(int i = 0;i < n;i++)
