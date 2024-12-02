@@ -113,7 +113,7 @@ struct linked_list{
 
 #ifdef CONFIG_MTRACE
 void push_mringbuf(char wr,paddr_t addr, word_t data);
-#define mRingbuffer_max 10
+#define mRingbuffer_max 20
 typedef struct{
   char  wrbuffer[mRingbuffer_max];
   paddr_t pbuffer[mRingbuffer_max];
