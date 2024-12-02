@@ -9,6 +9,8 @@ void init_iringbuf(){
     rbuf = malloc(sizeof(iringbuf));
     for(int i = 0; i < Ringbuffer_max;i++)
         rbuf->buffer[i] = malloc(sizeof(char) * 128);
+    rbuf->end = 0;
+    rbuf->start = 0;
 }
 
 void destory_iringbuf(){
