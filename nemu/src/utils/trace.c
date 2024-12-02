@@ -23,7 +23,6 @@ void push_iringbuf(char *str){
         rbuf->end = 0;
         strcpy(rbuf->buffer[rbuf->start],str);
         rbuf->start++;
-        return;
     }
     else{
         strcpy(rbuf->buffer[rbuf->start],str);
