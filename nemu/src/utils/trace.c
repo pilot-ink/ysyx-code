@@ -18,7 +18,7 @@ void destory_iringbuf(){
 }
 //workable
 void push_iringbuf(char *str){
-    if(RingBuffer_full(rbuf)){
+    if((rbuf->end+1)%Ringbuffer_max == rbuf->start){
         rbuf->start = 0;
         rbuf->end = 0;
         strcpy(rbuf->buffer[rbuf->start],str);
