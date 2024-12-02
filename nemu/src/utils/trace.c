@@ -11,6 +11,7 @@ void init_iringbuf(){
         rbuf->buffer[i] = malloc(sizeof(char) * 128);
     rbuf->end = 0;
     rbuf->start = 0;
+    printf("asd\n");
 }
 
 void destory_iringbuf(){
