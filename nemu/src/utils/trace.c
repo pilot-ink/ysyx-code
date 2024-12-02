@@ -11,7 +11,6 @@ void init_iringbuf(){
         rbuf->buffer[i] = malloc(sizeof(char) * 128);
     rbuf->end = 0;
     rbuf->start = 0;
-    printf("asd\n");
 }
 
 void destory_iringbuf(){
@@ -21,7 +20,8 @@ void destory_iringbuf(){
 }
 //workable
 void push_iringbuf(char *str){
-    if((rbuf->end+1)%Ringbuffer_max == rbuf->start){
+        printf("asd\n");
+    if((rbuf->start+1)%Ringbuffer_max == rbuf->end){
         rbuf->start = 0;
         rbuf->end = 0;
         strcpy(rbuf->buffer[rbuf->start],str);
