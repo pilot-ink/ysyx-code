@@ -33,7 +33,7 @@ void push_iringbuf(char *str){
 }
 void print_iringbuf()
 {
-    for(int i = rbuf->end;(i%Ringbuffer_max)+1 != rbuf->start;i=(i+1)%Ringbuffer_max)
+    for(int i = rbuf->end;((i+1)%Ringbuffer_max) != rbuf->start;i=(i+1)%Ringbuffer_max)
      printf("inst:%s\n",rbuf->buffer[i]);
 }
 #endif
