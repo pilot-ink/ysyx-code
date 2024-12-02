@@ -19,7 +19,7 @@
 
 
 bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
-  printf("%x\n",pc);
+  //不确定对部队
   if(ref_r->pc != pc+4)
     return false;
    for(int i = 0; i < 32; i++)
