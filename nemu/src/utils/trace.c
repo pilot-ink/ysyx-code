@@ -20,7 +20,6 @@ void destory_iringbuf(){
 }
 //workable
 void push_iringbuf(char *str){
-        printf("asd\n");
     if((rbuf->start+1)%Ringbuffer_max == rbuf->end){
         rbuf->start = 0;
         rbuf->end = 0;
