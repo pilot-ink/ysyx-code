@@ -125,7 +125,7 @@ void init_monitor(int argc, char *argv[]) {
 
   /*基础设施（itrace、mtrace、ftrace）初始化*/
   IFDEF(CONFIG_ITRACE,init_iringbuf());
-  IFDEF(CONFIG_MTRACE,init_iringbuf());
+  IFDEF(CONFIG_MTRACE,init_mringbuf());
   #ifdef CONFIG_FTRACE
   if(elf_file != NULL){
     init_fringbuf();

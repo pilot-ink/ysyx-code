@@ -266,6 +266,8 @@ void destory_linked_list(){
 mringbuf *mbuf;
 void init_mringbuf(){
     mbuf = malloc(sizeof(mringbuf)); 
+    mbuf->start = 0;
+    mbuf->end = 0;
 }
 void destory_mringbuf(){
     free(mbuf);
@@ -287,7 +289,7 @@ void push_mringbuf(char wr,paddr_t addr, word_t data){
     }
 }
 void print_mringbuf(){
-    for(int i = mbuf->end;(i%mRingbuffer_max)+1 != mbuf->start;i=(i+1)%mRingbuffer_max)
+    for(int i = mbuf->end;(i%mRingbuffer_max) != mbuf->start;i=(i+1)%mRingbuffer_max)
      printf("%c\taddr:%08X\tdata:%X\n",mbuf->wrbuffer[i],mbuf->pbuffer[i],mbuf->dbuffer[i]);
 }
 #endif
