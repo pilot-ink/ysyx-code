@@ -90,7 +90,7 @@ static void execute(uint64_t n) {
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
     //print_mringbuf();
-    //print_fringbuf();
+    print_fringbuf();
   }
 }
 
