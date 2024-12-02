@@ -71,7 +71,7 @@ static void exec_once(Decode *s, vaddr_t pc) {
   void disassemble(char *str, int size, uint64_t pc, uint8_t *code, int nbyte);
   disassemble(p, s->logbuf + sizeof(s->logbuf) - p,
       MUXDEF(CONFIG_ISA_x86, s->snpc, s->pc), (uint8_t *)&s->isa.inst.val, ilen);
-  IFDEF(CONFIG_ITRACE,push_iringbuf(s->logbuf));
+  push_iringbuf(s->logbuf);
   //IFDEF(CONFIG_ITRACE,print_iringbuf());
 #endif
 #ifdef CONFIG_WATCHPOINT
