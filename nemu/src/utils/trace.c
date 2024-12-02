@@ -122,7 +122,7 @@ void read_elf(char *file){
         }
     }
     //打印得到的函数
-    //print_linked_list(); 
+    print_linked_list(); 
     free(read_elf_file);
     free(buffer);
     fclose(fp);
