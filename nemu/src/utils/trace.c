@@ -142,7 +142,7 @@ char *find_linked_list(vaddr_t pc){
     struct linked_list *ptr = head_st;
     ptr = ptr->next;
     while(ptr !=NULL){
-        if(pc <= (ptr->addr+ptr->size) && pc >= ptr->addr)
+        if(pc < (ptr->addr+ptr->size) && pc >= ptr->addr)
             return ptr->func_name;
         ptr = ptr->next;
     }
