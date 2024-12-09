@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
     // }
     top->pc = 0x80000000;
     for(int i = 0; ; i++){
-        if(flag == 1) break;
+        //if(flag == 1) break;
         top->inst = pmem_read(top->pc);
         top->pc = top->npc;
         top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
