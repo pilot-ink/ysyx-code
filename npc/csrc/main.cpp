@@ -19,7 +19,7 @@ uint32_t pmem_read(uint32_t pc)
     return pmem[pc];
 }
 
-void npc_trap(){
+extern "C" void npc_trap(){
     flag = 1;
 }
 
