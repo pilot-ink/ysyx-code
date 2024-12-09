@@ -1,5 +1,5 @@
 module ysyx_24100027_IMM(
-    input [24:0] inst,
+    input [31:0] inst,
     input [2:0] extop,
     output [31:0] imm
 );
