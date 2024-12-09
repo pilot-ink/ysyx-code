@@ -13,8 +13,8 @@ module ysyx_24100027_BRANCHCTR(
         3'b011, 5'b01100,
         3'b100, {3'b100,zero,1'b0},
         3'b101, {3'b101,zero,1'b0},
-        3'b110, {3'b110,0,less},
-        3'b111, {3'b111,0,less}
+        3'b110, {3'b110,1'b0,less},
+        3'b111, {3'b111,1'b0,less}
     });
     MuxKey #(11, 5, 1) branchPCA(PCActr, branchctr, {
         5'b00000,1'b0,
