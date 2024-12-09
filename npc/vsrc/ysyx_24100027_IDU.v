@@ -24,8 +24,8 @@ module ysyx_24100027_IDU(
         5'b01101,{4'b0000},          //lui
         5'b00101,{4'b0000},           //auipc
         5'b11011,{4'b0000},           //jal
-        5'b11001,{func3[2:0],0},      //jalr
-        5'b00100,{func3[2:0],0}        //addi
+        5'b11001,{funct3[2:0],0},      //jalr
+        5'b00100,{funct3[2:0],0}        //addi
     });
     //000-I 001-U 010-S 011-B 100-J
     MuxKey #(INSTR_NUM, 9, 3) ExtopMux(Extop,instr_type[8:0],{

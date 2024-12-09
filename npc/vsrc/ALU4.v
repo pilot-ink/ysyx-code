@@ -13,7 +13,7 @@ module ALU4(
   wire       a_cin;
   reg  [3:0] B;
   //补码模块
-  complement  complement_inst(
+  complement4  complement_inst(
     .b      (b),
     .option (option),
     .B      (B));
@@ -73,7 +73,7 @@ endmodule
 
 
 
-module complement(
+module complement4(
   input  wire [3:0] b,
   input  wire [2:0] option,
   output reg  [3:0] B

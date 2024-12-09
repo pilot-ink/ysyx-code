@@ -6,7 +6,7 @@ module ysyx_24100027_CPU(
     output [31:0] npc
 );
     wire regwr;
-    wire [31:0] busA,busB,imm,busW,rs1,rs2;
+    wire [31:0] busA,busB,imm,busW,rs1,rs2,PCA_out,PCB_out;
     wire [2:0] extop;
     wire [3:0] ALUCTR;
     wire ALUActr;
