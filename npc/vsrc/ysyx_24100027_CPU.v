@@ -42,7 +42,7 @@ module ysyx_24100027_CPU(
     );
     //good to go
     ysyx_24100027_IMM i1(
-        .inst(inst),
+        .inst(inst[31:7]),
         .extop(extop),
         .imm(imm)
     );
