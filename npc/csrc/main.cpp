@@ -21,7 +21,6 @@ uint32_t pmem_read(uint32_t pc)
 
 void npc_trap(){
     flag = 1;
-    return 0;
 }
 
 
