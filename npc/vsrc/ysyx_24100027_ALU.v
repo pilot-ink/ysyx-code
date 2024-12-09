@@ -47,7 +47,7 @@ module ysyx_24100027_ALU(
     assign ab_or    = a | b;
     assign ab_and   = a & b;
     //add sub
-    assign {carry, adder} = a + B + SubAdd;
+    assign {carry, adder} = a + B + {31'b0,SubAdd};
     assign zero = ~(|adder);
     assign overflow = (a[31]==B[31]) && (a[31]!=adder[31]);
 endmodule

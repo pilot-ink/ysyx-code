@@ -6,7 +6,7 @@ module ysyx_24100027_BRANCHCTR(
     output PCBctr 
 );
     wire [4:0] branchctr;
-    MuxKey #(8, 5, 5) branch1(branchctr, branch, {
+    MuxKey #(8, 3, 5) branch1(branchctr, branch, {
         3'b000, 5'b00000,
         3'b001, 5'b00100,
         3'b010, 5'b01000,

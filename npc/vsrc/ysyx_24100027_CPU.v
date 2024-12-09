@@ -64,13 +64,13 @@ module ysyx_24100027_CPU(
         .PCActr(PCActr),
         .PCBctr(PCBctr)
     );
-    MuxKeyWithDefault #(4, 2, 32) ALUBmux(ALUB, AluBctr, 32'h0,{
+    MuxKeyWithDefault #(4, 2, 32) ALUBmux(ALUB, ALUBctr, 32'h0,{
         2'b00, rs2,
         2'b01, imm,
         2'b10, 32'h4,
         2'b11, 32'h0
     });
-    MuxKeyWithDefault #(2, 1, 32) ALUAmux(ALUA, AluActr, 32'h0,{
+    MuxKeyWithDefault #(2, 1, 32) ALUAmux(ALUA, ALUActr, 32'h0,{
         2'b00, rs1,
         2'b01, pc
     });
