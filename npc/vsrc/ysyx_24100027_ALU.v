@@ -64,29 +64,29 @@ module ALUCTR(
     assign Aluctr_out = Aluctr_in[2:0];
     //1-sub 0-add 
     MuxKeyWithDefault #(4, 4, 1) SubAddmux(SubAdd, Aluctr_in, 1'b0,{
-        4'b0000, 0,
-        4'b1000, 1,
-        4'b0010, 1,
-        4'b1010, 1
+        4'b0000, 1'b0,
+        4'b1000, 1'b1,
+        4'b0010, 1'b1,
+        4'b1010, 1'b1
     });
     //1-left shift   0-right shift
     //1-        0-LOGIC
     MuxKeyWithDefault #(4, 4, 1) ALmux(AL, Aluctr_in,1'b0,{
-        4'b0001, 0,
-        4'b1001, 0,
-        4'b0101, 1,
-        4'b1101, 1
+        4'b0001, 1'b0,
+        4'b1001, 1'b0,
+        4'b0101, 1'b1,
+        4'b1101, 1'b1
     });
     MuxKeyWithDefault #(4, 4, 1) LRmux(LR, Aluctr_in,1'b0,{
-        4'b0001, 1,
-        4'b1001, 1,
-        4'b0101, 0,
-        4'b1101, 0
+        4'b0001, 1'b1,
+        4'b1001, 1'b1,
+        4'b0101, 1'b0,
+        4'b1101, 1'b0
     });
     //1-usigned 0-signed
     MuxKeyWithDefault #(2, 4, 1) USmux(US, Aluctr_in,1'b0,{
-        4'b0010, 0,
-        4'b1010, 1
+        4'b0010, 1'b0,
+        4'b1010, 1'b1
     });
 endmodule
 
