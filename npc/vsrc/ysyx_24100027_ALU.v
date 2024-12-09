@@ -27,7 +27,7 @@ module ysyx_24100027_ALU(
 
     ALUCTR a1(.Aluctr_in(Aluctr_in), .Aluctr_out(Aluctr_out), .AL(AL), .LR(LR), .US(US),.SubAdd(SubAdd));
     complement com(.b(b), .option(SubAdd), .B(B));
-    barrel shifter(.Din(a), .Shanmt(b[4:0]), .LR(LR), .AL(AL), .shift(shift));
+    barrel_shifter(.Din(a), .Shanmt(b[4:0]), .LR(LR), .AL(AL), .shift(shift));
     MuxKey #(8,3,32) resultmux(ALUout, Aluctr_out,{
         3'b000, adder,
         3'b001, shift,
@@ -98,7 +98,7 @@ module complement(
     assign B = {32{option}} ^ b;
 endmodule
 
-module barrel shifter(
+module barrel_shifter(
     input Din,
     input [4:0] Shanmt,
     input LR,
