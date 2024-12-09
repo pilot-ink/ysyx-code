@@ -61,11 +61,11 @@ int main(int argc, char** argv) {
     for(int i = 0; ; i++){
         if(flag == 1) break;
         top->inst = pmem_read(top->pc);
-        top->pc = top->npc;
         top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
         top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
         m_trace->dump(contextp->time());
         contextp->timeInc(1);  
+        top->pc = top->npc;
     }
 
     m_trace->close();
