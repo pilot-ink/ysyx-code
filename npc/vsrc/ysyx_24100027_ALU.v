@@ -99,7 +99,7 @@ module complement(
 endmodule
 
 module barrel_shifter(
-    input Din,
+    input [31:0] Din,
     input [4:0] Shanmt,
     input LR,
     input AL,
