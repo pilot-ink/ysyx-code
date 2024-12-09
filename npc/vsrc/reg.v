@@ -15,17 +15,17 @@ endmodule
 
 module RegisterFile #(ADDR_WIDTH = 1, DATA_WIDTH = 1) (
   input clk,
-  input [DATA_WIDTH-1:0] wdata,
-  input [ADDR_WIDTH-1:0] waddr,
+  input [DATA_WIDTH-1:0] busW,
+  input [ADDR_WIDTH-1:0] RD,
   input wen,
-  input [ADDR_WIDTH-1:0] raddr_1,raddr_2,
-  output [DATA_WIDTH-1:0] rdata_1,rdata_2
+  input [ADDR_WIDTH-1:0] RS1,RS2,
+  output [DATA_WIDTH-1:0] busA,busB
 );
   reg [DATA_WIDTH-1:0] rf [2**ADDR_WIDTH-1:0];
-  assign rdata_1 = rf[raddr_1];
-  assign rdata_2 = rf[raddr_2];
+  assign busA = rf[RS1];
+  assign busB = rf[RS2];
   always @(posedge clk) begin
-    if (wen) rf[waddr] <= wdata;
+    if (wen) rf[RD] <= busW;
     rf[0] = rf[0] & 0;
   end
 endmodule

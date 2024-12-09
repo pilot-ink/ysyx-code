@@ -6,7 +6,7 @@
 #include"verilated.h"
 #include"verilated_vcd_c.h"
 
-
+int flag = 0;
 static const uint32_t pmem[] = {
     0b00000000010100000000000010010011, //addi x1 x0 5
     0b00000000000100000000000100010011, //addi x2 x0 1
@@ -18,6 +18,12 @@ uint32_t pmem_read(uint32_t pc)
     pc -= 0x80000000;
     return pmem[pc];
 }
+
+void npc_trap(){
+    flag = 1;
+    return 0;
+}
+
 
 //void nvboard_bind_all_pins(Vtop* top);
 int main(int argc, char** argv) {
@@ -33,6 +39,7 @@ int main(int argc, char** argv) {
     top->trace(m_trace, 99);  // 99表示记录最详细的信号信息
     m_trace->open("wave.vcd");  // 波形文件
     
+    flag = 0;
     top->clk = 0;  // clk初始化
     // ----原reset函数----start
     int n = 10;
@@ -52,9 +59,10 @@ int main(int argc, char** argv) {
 
     // }
     top->pc = 0x80000000;
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; ; i++){
+        if(flag == 1) break;
         top->inst = pmem_read(top->pc);
-        top->pc += 1;
+        top->pc = top->npc;
         top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
         top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
         m_trace->dump(contextp->time());
