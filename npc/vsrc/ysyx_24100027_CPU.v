@@ -79,7 +79,7 @@ module ysyx_24100027_CPU(
         1'b1, imm
     });
     MuxKeyWithDefault #(2, 1, 32) PCBmux(PCB_out, PCBctr, 32'h0,{
-        1'b0, rs1,
-        1'b1, pc
+        1'b0, pc,
+        1'b1, rs1
     });
 endmodule
