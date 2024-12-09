@@ -40,7 +40,7 @@ module ysyx_24100027_ALU(
     });
     MuxKey #(2,1,1) lessmux(less, US,{
         1'b0, overflow ^ result[31],
-        1'b1, carry ^ SubAdd,
+        1'b1, carry ^ SubAdd
     });
     //xor or and
     assign ab_xor   = a ^ b;
