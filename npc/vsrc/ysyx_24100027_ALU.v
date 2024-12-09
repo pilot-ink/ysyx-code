@@ -36,7 +36,7 @@ module ysyx_24100027_ALU(
         3'b100, ab_xor,
         3'b101, shift,
         3'b110, ab_or,
-        3'b111, ab_and,
+        3'b111, ab_and
     });
     MuxKey #(2,1,1) lessmux(less, US,{
         1'b0, overflow ^ result[31],
@@ -67,7 +67,7 @@ module ALUCTR(
         4'b0000, 0,
         4'b1000, 1,
         4'b0010, 1,
-        4'b1010, 1,
+        4'b1010, 1
     });
     //1-left shift   0-right shift
     //1-        0-LOGIC
@@ -75,18 +75,18 @@ module ALUCTR(
         4'b0001, 0,
         4'b1001, 0,
         4'b0101, 1,
-        4'b1101, 1,
+        4'b1101, 1
     });
     MuxKeyWithDefault #(4, 4, 1) LRmux(LR, Aluctr_in,1'b0,{
         4'b0001, 1,
         4'b1001, 1,
         4'b0101, 0,
-        4'b1101, 0,
+        4'b1101, 0
     });
     //1-usigned 0-signed
     MuxKeyWithDefault #(2, 4, 1) USmux(US, Aluctr_in,1'b0,{
         4'b0010, 0,
-        4'b1010, 1,
+        4'b1010, 1
     });
 endmodule
 

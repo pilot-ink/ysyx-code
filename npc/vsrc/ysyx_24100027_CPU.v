@@ -68,18 +68,18 @@ module ysyx_24100027_CPU(
         2'b00, rs2,
         2'b01, imm,
         2'b10, 32'h4,
-        2'b11, 32'h0,
+        2'b11, 32'h0
     });
     MuxKeyWithDefault #(2, 1, 32) ALUAmux(ALUA, AluActr, 32'h0,{
         2'b00, rs1,
-        2'b01, pc,
+        2'b01, pc
     });
     MuxKeyWithDefault #(2, 1, 32) PCAmux(PCA_out, PCActr, 32'h0,{
         1'b0, 32'h4,
-        1'b1, imm,
+        1'b1, imm
     });
     MuxKeyWithDefault #(2, 1, 32) PCBmux(PCB_out, PCBctr, 32'h0,{
         1'b0, rs1,
-        1'b1, pc,
+        1'b1, pc
     });
 endmodule

@@ -14,7 +14,7 @@ module ysyx_24100027_BRANCHCTR(
         3'b100, {100,zero,0},
         3'b101, {101,zero,0},
         3'b110, {110,0,less},
-        3'b111, {111,0,less},
+        3'b111, {111,0,less}
     });
     MuxKey #(11, 5, 1) branchPCA(PCActr, branchctr, {
         5'b00000,0,
@@ -27,7 +27,7 @@ module ysyx_24100027_BRANCHCTR(
         5'b11000,0,
         5'b11001,1,
         5'b11100,1,
-        5'b11101,0,
+        5'b11101,0
     });
     MuxKey #(11, 5, 1) branchPCB(PCBctr, branchctr, {
         5'b00000,0,
@@ -40,6 +40,6 @@ module ysyx_24100027_BRANCHCTR(
         5'b11000,0,
         5'b11001,0,
         5'b11100,0,
-        5'b11101,0,
+        5'b11101,0
     });
 endmodule
