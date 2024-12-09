@@ -21,7 +21,7 @@ module ysyx_24100027_CPU(
     assign npc=PCA_out+PCB_out;
 
     //good to go
-    ysyx_24100027_GPR g1(
+    ysyx_24100027_GPR gpr1(
         .clk(clk),
         .regwr(regwr),
         .rs1(inst[19:15]),
@@ -32,7 +32,7 @@ module ysyx_24100027_CPU(
         .busB(busB)
         );
     
-    ysyx_24100027_ALU a1(
+    ysyx_24100027_ALU alu1(
         .a(ALUA),
         .b(ALUB),
         .Aluctr(ALUCTR),
@@ -41,12 +41,12 @@ module ysyx_24100027_CPU(
         .zero(zero)
     );
     //good to go
-    ysyx_24100027_IMM i1(
+    ysyx_24100027_IMM imm1(
         .inst(inst),
         .extop(extop),
         .imm(imm)
     );
-    ysyx_24100027_IDU i2(
+    ysyx_24100027_IDU idu2(
         .opcode(inst[6:0]),
         .funct3(inst[14:12]),
         .funct7(inst[31:25]),
@@ -57,7 +57,7 @@ module ysyx_24100027_CPU(
         .AluBctr(ALUBctr),
         .Branch(branch)
     );
-    ysyx_24100027_BRANCHCTR b1(
+    ysyx_24100027_BRANCHCTR branch1(
         .less(less),
         .zero(zero),
         .branch(branch),
