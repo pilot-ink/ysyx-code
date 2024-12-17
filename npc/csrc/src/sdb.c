@@ -10,15 +10,7 @@ const char *regs[] = {
   "a6", "a7", "s2", "s3", "s4", "s5", "s6", "s7",
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
-uint32_t pmem_read(uint32_t pc)
-{
-    pc -= 0x80000000;
-    uint8_t *ptr = pmem;
-    ptr += pc;
-    uint32_t *value = (uint32_t *)ptr;
-    //printf("value:%x\n",*value);
-    return *value;
-}
+
 
 int cmd_info(char *args){
     for(int i = 0; i < 32; i++)

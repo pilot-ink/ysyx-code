@@ -29,13 +29,14 @@ void init_disasm() {
   assert(dl_handle);
 
   cs_err (*cs_open_dl)(cs_arch arch, cs_mode mode, csh *handle) = NULL;
-  cs_open_dl = dlsym(dl_handle, "cs_open");
+  cs_open_dl = (cs_err (*)(cs_arch arch, cs_mode mode, csh *handle))dlsym(dl_handle, "cs_open");
   assert(cs_open_dl);
 
-  cs_disasm_dl = dlsym(dl_handle, "cs_disasm");
+  cs_disasm_dl = (size_t (*)(csh handle, const uint8_t *code,
+    size_t code_size, uint64_t address, size_t count, cs_insn **insn))dlsym(dl_handle, "cs_disasm");
   assert(cs_disasm_dl);
 
-  cs_free_dl = dlsym(dl_handle, "cs_free");
+  cs_free_dl = (void (*)(cs_insn *insn, size_t count))dlsym(dl_handle, "cs_free");
   assert(cs_free_dl);
 
   cs_arch arch =  CS_ARCH_RISCV;
