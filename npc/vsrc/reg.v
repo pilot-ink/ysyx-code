@@ -26,6 +26,6 @@ module RegisterFile #(ADDR_WIDTH = 1, DATA_WIDTH = 1) (
   assign busB = rf[RS2];
   always @(posedge clk) begin
     if (wen) rf[RD] <= busW;
-    rf[0] = rf[0] & 0;
+    rf[0] <= 32'h0;
   end
 endmodule

@@ -100,7 +100,7 @@ static int parse_args(int argc, char *argv[]) {
 
 void init_monitor(int argc, char *argv[]) {
   /* Perform some global initialization. */
-  printf("arguments\n");
+  //printf("arguments\n");
   for(int i = 0; i < argc;i++)
     printf("%s\n",argv[i]);
   /* Parse arguments. */

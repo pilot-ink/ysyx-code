@@ -15,7 +15,8 @@ void putch(char ch) {
 }
 
 void halt(int code) {
-  while (1);
+  __asm__("ebreak");
+  while(1);
 }
 
 void _trm_init() {
