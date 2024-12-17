@@ -75,6 +75,7 @@ uint64_t get_time();
 
 // ----------- trace -----------
 #ifdef CONFIG_ITRACE
+void init_iringbuf();
 #define Ringbuffer_max 10
 typedef struct{
   char *buffer[Ringbuffer_max];
@@ -84,6 +85,7 @@ typedef struct{
 #endif
 
 #ifdef CONFIG_FTRACE
+void init_fringbuf();
 void push_fringbuf(vaddr_t pc, vaddr_t snpc,int a);
 char *find_linked_list(vaddr_t pc);
 #define fRingbuffer_max 100
@@ -112,6 +114,7 @@ struct linked_list{
 
 
 #ifdef CONFIG_MTRACE
+void init_mringbuf();
 void push_mringbuf(char wr,paddr_t addr, word_t data);
 #define mRingbuffer_max 20
 typedef struct{

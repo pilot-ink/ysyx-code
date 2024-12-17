@@ -46,7 +46,14 @@ struct linked_list *ptr_list_tail;
 static char *r_elf_file = NULL;
 long get_file_size(FILE *stream);
 void outputsyminfo(const Elf32_Sym *psym, const char *pbuffstr, int ncount);
-
+void print_linked_list(){
+    struct linked_list *ptr = head_st;
+    ptr = ptr->next;
+    while(ptr != NULL){
+        printf("func:%s\taddr:%X\tsize:%d\t\n",ptr->func_name,ptr->addr,ptr->size);
+        ptr = ptr->next;
+    }
+}
 void read_elf(char *file){
     r_elf_file = file;
     FILE *fp = fopen(r_elf_file, "r");
@@ -249,14 +256,7 @@ void outputsyminfo(const Elf32_Sym *psym, const char *pbuffstr, int ncount)
         }
     }
 }
-void print_linked_list(){
-    struct linked_list *ptr = head_st;
-    ptr = ptr->next;
-    while(ptr != NULL){
-        printf("func:%s\taddr:%X\tsize:%d\t\n",ptr->func_name,ptr->addr,ptr->size);
-        ptr = ptr->next;
-    }
-}
+
 void destory_linked_list(){
 
 }
