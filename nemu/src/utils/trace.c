@@ -46,6 +46,7 @@ struct linked_list *ptr_list_tail;
 static char *r_elf_file = NULL;
 long get_file_size(FILE *stream);
 void outputsyminfo(const Elf32_Sym *psym, const char *pbuffstr, int ncount);
+
 void print_linked_list(){
     struct linked_list *ptr = head_st;
     ptr = ptr->next;
@@ -153,6 +154,7 @@ char *find_linked_list(vaddr_t pc){
             return ptr->func_name;
         ptr = ptr->next;
     }
+    return NULL;
 }
 //a indicate whether it's ret,1 true,0 false
 void push_fringbuf(vaddr_t pc, vaddr_t snpc,int a){
