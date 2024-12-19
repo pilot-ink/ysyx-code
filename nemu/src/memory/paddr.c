@@ -40,6 +40,7 @@ static void pmem_write(paddr_t addr, int len, word_t data) {
   #ifdef CONFIG_MTRACE
   push_mringbuf('w', addr, data);
   #endif
+  printf("asasdasfsd\n");
   host_write(guest_to_host(addr), len, data);
 }
 
@@ -65,7 +66,6 @@ word_t paddr_read(paddr_t addr, int len) {
 }
 
 void paddr_write(paddr_t addr, int len, word_t data) {
-  printf("asdasd\n");
   if (likely(in_pmem(addr))) { pmem_write(addr, len, data); return; }
   IFDEF(CONFIG_DEVICE, mmio_write(addr, len, data); return);
   out_of_bound(addr);
