@@ -40,7 +40,6 @@ static void pmem_write(paddr_t addr, int len, word_t data) {
   #ifdef CONFIG_MTRACE
   push_mringbuf('w', addr, data);
   #endif
-  printf("asasdasfsd\n");
   host_write(guest_to_host(addr), len, data);
 }
 
