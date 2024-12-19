@@ -22,6 +22,7 @@ __EXPORT void difftest_memcpy(paddr_t addr, void *buf, size_t n, bool direction)
   uint8_t *ptr = (uint8_t *)buf;
   if(direction == DIFFTEST_TO_DUT){ //to npc
     *ptr = paddr_read(addr,n);
+    printf("asd");
   }
   else { //to nemu
     for(int i = 0; i < n; i++)
