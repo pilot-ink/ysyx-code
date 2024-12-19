@@ -1,4 +1,7 @@
 #include <common.h>
+#include "reg.h"
+#include "cpu_exec.h"
+#include "difftest.h"
 //#include"Vtop.h"  // 从top.v生成
 
 // calculate the length of an array
@@ -13,8 +16,7 @@ const char *regs[] = {
 
 
 int cmd_info(char *args){
-    for(int i = 0; i < 32; i++)
-        printf("%d\t%s:\t0x%08x\n",i,regs[i],top->rootp->top__DOT__c1__DOT__gpr1__DOT__gr__DOT__rf[i]);
+    isa_regs_display();
     return 0;
 }
 

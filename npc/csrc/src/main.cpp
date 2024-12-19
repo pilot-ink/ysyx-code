@@ -1,6 +1,10 @@
-#include<stdio.h>
-#include<assert.h>
-#include<common.h>
+#include <stdio.h>
+#include <assert.h>
+#include "common.h"
+#include "sdb.h"
+#include "parse.h"
+#include "difftest.h"
+
 //include<nvboard.h>
 
 
@@ -15,6 +19,8 @@ VerilatedVcdC* m_trace ; // trace_object
 Vtop* top ;
 int flag = 0;
 uint8_t * pmem;
+char *bin_file;
+char *diff_so_file;
 
 /*static uint8_t pmem[] = {
    0x00, 0x50, 0x00, 0x93,//addi x1 x0 5
@@ -26,10 +32,9 @@ uint8_t * pmem;
 
 //void nvboard_bind_all_pins(Vtop* top);s
 int main(int argc, char** argv) {
-    char *ptr = argv[1];
-    printf("here:");
-    printf("%s\n",argv[1]);
-    FILE *fp = fopen(ptr,"r");
+    parse_args(argc, argv);
+    printf("binfile:%s\tdiff:%s\n",bin_file, diff_so_file);
+    FILE *fp = fopen(bin_file,"r");
     if(fp == NULL) printf("wrong!\n");
     pmem = (uint8_t *)malloc(get_file_size(fp)*sizeof(char));
     if(fread(pmem, sizeof(char), get_file_size(fp), fp) != get_file_size(fp))
@@ -67,6 +72,7 @@ int main(int argc, char** argv) {
     //     top->pc += 4;
 
     // }
+    init_difftest(diff_so_file, get_file_size(fp), 123);
     top->pc = 0x80000000;
     sdb_mainloop();
     m_trace->dump(contextp->time());

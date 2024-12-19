@@ -5,8 +5,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-#include "sdb.h"
-#include "cpu_exec.h"
+
 
 #include"Vtop.h"  // 从top.v生成
 #include"Vtop___024root.h"
@@ -15,10 +14,22 @@
 
 #define CONFIG_ISA_riscv 1
 #define CONFIG_ISA "riscv32"
+#define CONFIG_MBASE 0x80000000
+
 extern VerilatedContext* contextp ;
 extern VerilatedVcdC* m_trace ; // trace_object
 extern Vtop* top ;
 extern int flag ;
 extern uint8_t * pmem;
+
+extern const char *regs[];
+
+typedef uint32_t word_t;
+typedef uint32_t vaddr_t;
+typedef uint32_t paddr_t;
+
+
+
+
 
 #endif
