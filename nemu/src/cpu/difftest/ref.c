@@ -19,8 +19,8 @@
 #include <memory/paddr.h>
 
 __EXPORT void difftest_memcpy(paddr_t addr, void *buf, size_t n, bool direction) {
-  printf("herediff\n");
   uint8_t *ptr = (uint8_t *)buf;
+  printf("herebuf\n");
   if(direction == DIFFTEST_TO_DUT){ //to npc
     *ptr = paddr_read(addr,n);
     printf("asd");
