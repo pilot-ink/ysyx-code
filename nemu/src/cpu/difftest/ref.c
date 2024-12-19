@@ -25,7 +25,11 @@ __EXPORT void difftest_memcpy(paddr_t addr, void *buf, size_t n, bool direction)
   }
   else { //to nemu
     for(int i = 0; i < n; i++)
+    {
       paddr_write(addr+i, 1, (word_t)ptr[i]);
+      printf("addr:%08x\tdata%08x\n",addr+i,ptr[i]);
+    }
+    
   }
 }
 
