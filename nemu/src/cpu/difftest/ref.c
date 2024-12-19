@@ -19,16 +19,16 @@
 #include <memory/paddr.h>
 
 __EXPORT void difftest_memcpy(paddr_t addr, void *buf, size_t n, bool direction) {
-  uint8_t *ptr = (uint8_t *)buf;
+  word_t *ptr = (word_t *)buf;
   if(direction == DIFFTEST_TO_DUT){ //to npc
     *ptr = paddr_read(addr,n);
     printf("asd");
   }
   else { //to nemu
-    for(int i = 0; i < n; i++)
+    for(int i = 0; i < n/4; i++)
     {
       printf("data:%08x\n",ptr[0]);
-      paddr_write(addr+i, 1, (word_t)ptr[i]);
+      paddr_write(addr+(i*4), 4, (word_t)ptr[i]);
       printf("addr:%08x\tdata%08x\n",addr+i,ptr[i]);
     }
     
