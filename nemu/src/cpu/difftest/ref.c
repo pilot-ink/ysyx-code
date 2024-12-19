@@ -28,7 +28,7 @@ __EXPORT void difftest_memcpy(paddr_t addr, void *buf, size_t n, bool direction)
     for(int i = 0; i < n/4; i++)
     {
       paddr_write(addr+i, 4, (word_t)ptr[i]);
-      //printf("addr:%08x\tdata%08x\n",addr+i,ptr[i]);
+      printf("addr:%08x\tdata%08x\n",addr+i,ptr[i]);
     }
     
   }
@@ -45,7 +45,7 @@ __EXPORT void difftest_regcpy(void *dut, bool direction) {
     for(int i = 0; i < 32;i++)
       cpu.gpr[i] = ptr[i];
     cpu.pc = ptr[32];
-    printf("pc:%08x\n",cpu.pc);
+    //printf("pc:%08x\n",cpu.pc);
   }
   
 }
