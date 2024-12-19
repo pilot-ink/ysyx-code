@@ -75,9 +75,10 @@ int main(int argc, char** argv) {
     //     top->pc += 4;
 
     // }
-    init_difftest(diff_so_file, get_file_size(fp), 123);
     top->pc = 0x80000000;
     cpu.pc = 0x80000000;
+    init_difftest(diff_so_file, get_file_size(fp), 123);
+    
     sdb_mainloop();
     m_trace->dump(contextp->time());
 
