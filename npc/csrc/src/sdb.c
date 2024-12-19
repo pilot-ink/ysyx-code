@@ -39,7 +39,8 @@ static char* rl_gets() {
 
 
 int cmd_si(char *args){
-    cpu_exec(atoi(args));
+    if(args == NULL) cpu_exec(1);
+    else cpu_exec(atoi(args));
     return 0;
 }
 static struct {

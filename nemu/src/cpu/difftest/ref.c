@@ -44,7 +44,8 @@ __EXPORT void difftest_regcpy(void *dut, bool direction) {
   else { //to nemu
     for(int i = 0; i < 32;i++)
       cpu.gpr[i] = ptr[i];
-      cpu.pc = ptr[32];
+    cpu.pc = ptr[32];
+    printf("pc:%d\n",cpu.pc);
   }
   
 }

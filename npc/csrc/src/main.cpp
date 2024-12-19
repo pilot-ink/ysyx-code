@@ -4,6 +4,7 @@
 #include "sdb.h"
 #include "parse.h"
 #include "difftest.h"
+#include "reg.h"
 
 //include<nvboard.h>
 
@@ -21,6 +22,8 @@ int flag = 0;
 uint8_t * pmem;
 char *bin_file;
 char *diff_so_file;
+extern CPU_state cpu;
+
 
 /*static uint8_t pmem[] = {
    0x00, 0x50, 0x00, 0x93,//addi x1 x0 5
@@ -74,6 +77,7 @@ int main(int argc, char** argv) {
     // }
     init_difftest(diff_so_file, get_file_size(fp), 123);
     top->pc = 0x80000000;
+    cpu.pc = 0x80000000;
     sdb_mainloop();
     m_trace->dump(contextp->time());
 
