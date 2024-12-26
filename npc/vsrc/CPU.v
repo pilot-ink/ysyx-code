@@ -1,24 +1,49 @@
 module ysyx_24100027_CPU(
     input rst,
-    input clk,
-    input [31:0] pc,
-    input [31:0] inst,
-    output [31:0] npc
+    input clk
 );
+
+    wire [31:0] inst;
+    wire [31:0] pc;
+    wire [31:0] npc;
+
     wire regwr;
-    wire [31:0] busA,busB,imm,busW,rs1,rs2,PCA_out,PCB_out;
+    wire [31:0] busA,busB,imm,busW,rs1,rs2,PCA_out,PCB_out,result,DataOut;
     wire [2:0] extop;
     wire [3:0] ALUCTR;
     wire ALUActr;
     wire [1:0] ALUBctr;
     wire less,zero,PCActr,PCBctr;
     wire [2:0] branch;
+    wire Mem_wen;
+
+    wire MemtoReg,MemWr;
+    wire [2:0] MemOP;
 
     wire [31:0] ALUA,ALUB;
 
     assign rs1=busA;
     assign rs2=busB;
+    
     assign npc=PCA_out+PCB_out;
+
+
+    ysyx_24100027_MEM mem1(
+        .clk(clk),
+        .Addr(result),
+        .MemOP(MemOP),
+        .DataIn(busB),
+        .WrEn(MemWr),
+        .wen(Mem_wen),
+        .DataOut(DataOut)
+    );
+
+    ysyx_24100027_PC p1(
+        .clk(clk),
+        .pc(npc),
+        .npc(pc),
+        .inst(inst)
+    );
 
     //good to go
     ysyx_24100027_GPR gpr1(
@@ -36,7 +61,7 @@ module ysyx_24100027_CPU(
         .a(ALUA),
         .b(ALUB),
         .Aluctr(ALUCTR),
-        .ALUout(busW),
+        .ALUout(result),
         .less(less),
         .zero(zero)
     );
@@ -46,13 +71,18 @@ module ysyx_24100027_CPU(
         .extop(extop),
         .imm(imm)
     );
-    ysyx_24100027_IDU idu2(
+    ysyx_24100027_IDU idu1(
+        .clk(clk),
         .opcode(inst[6:0]),
         .funct3(inst[14:12]),
         .funct7(inst[31:25]),
         .Regwr(regwr),
         .Aluctr(ALUCTR),
         .Extop(extop),
+        .MemtoReg(MemtoReg),
+        .MemWr(MemWr),
+        .MemOP(MemOP),
+        .Mem_wen(Mem_wen),
         .AluActr(ALUActr),
         .AluBctr(ALUBctr),
         .Branch(branch)
@@ -81,5 +111,9 @@ module ysyx_24100027_CPU(
     MuxKeyWithDefault #(2, 1, 32) PCBmux(PCB_out, PCBctr, 32'h0,{
         1'b0, pc,
         1'b1, rs1
+    });
+    MuxKeyWithDefault #(2, 1, 32) endmux(busW, MemtoReg, 32'h0,{
+        1'b0, result,
+        1'b1, DataOut
     });
 endmodule

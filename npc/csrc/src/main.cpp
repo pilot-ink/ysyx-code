@@ -5,6 +5,7 @@
 #include "parse.h"
 #include "difftest.h"
 #include "reg.h"
+#include "paddr.h"
 
 //include<nvboard.h>
 
@@ -12,6 +13,7 @@
 /*func */
 long get_file_size(FILE *stream);
 extern "C" void npc_trap();
+FILE * npc_init(int argc, char** argv);
 
 
 /*global value*/
@@ -35,52 +37,16 @@ extern CPU_state cpu;
 
 //void nvboard_bind_all_pins(Vtop* top);s
 int main(int argc, char** argv) {
-    parse_args(argc, argv);
-    printf("binfile:%s\tdiff:%s\n",bin_file, diff_so_file);
-    FILE *fp = fopen(bin_file,"r");
-    if(fp == NULL) printf("wrong!\n");
-    pmem = (uint8_t *)malloc(get_file_size(fp)*sizeof(char));
-    if(fread(pmem, sizeof(char), get_file_size(fp), fp) != get_file_size(fp))
-        printf("wrong!\n");
-    printf("--------------\n");
-    contextp = new VerilatedContext;
-    m_trace = new VerilatedVcdC; // trace_object
-    top = new Vtop{contextp};
-    contextp->traceEverOn(true); // 开启波形 
-    contextp->commandArgs(argc, argv);
-
-
-    // nvboard_bind_all_pins(top);  // 引脚绑定
-    // nvboard_init();
     
-    top->trace(m_trace, 99);  // 99表示记录最详细的信号信息
-    m_trace->open("wave.vcd");  // 波形文件
-    
-    flag = 0;
-    top->clk = 0;  // clk初始化
-    // ----原reset函数----start
-    int n = 10;
-    top->rst = 1;
-    while (n-- > 0){top->clk = !top->clk;top->eval();top->clk = !top->clk;top->eval();}
-    top->rst = 0;
-    //m_trace->dump(contextp->time()); // 记录波形
-   // ----原reset函数----end
-    // while (!contextp->gotFinish()) {
-	// 	//nvboard_update();
-    //     contextp->timeInc(1);  // 推进仿真时间
-    //     top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
-    //     m_trace->dump(contextp->time()); // 记录波形
-    //     top->inst = pmem_read(top->pc);
-    //     top->eval();
-    //     top->pc += 4;
+    FILE *fp = npc_init(argc, argv);
 
-    // }
-    top->pc = 0x80000000;
-    cpu.pc = 0x80000000;
+    
+    //difftest
     init_difftest(diff_so_file, get_file_size(fp), 123);
     
+    //
     sdb_mainloop();
-    m_trace->dump(contextp->time());
+    //m_trace->dump(contextp->time());
 
     m_trace->close();
     fclose(fp);
@@ -104,6 +70,36 @@ long get_file_size(FILE *stream)
 extern "C" void npc_trap(){
     flag = 1;
     printf("HIT GOOD\n");
+}
+
+
+FILE * npc_init(int argc, char** argv)
+{
+    parse_args(argc, argv);
+    init_mem();
+    printf("binfile:%s\tdiff:%s\n",bin_file, diff_so_file);
+    FILE *fp = fopen(bin_file,"r");
+    if(fp == NULL) printf("wrong!\n");
+    if(fread(pmem, sizeof(char), get_file_size(fp), fp) != get_file_size(fp))
+        printf("wrong!\n");
+    printf("--------------\n");
+
+    contextp = new VerilatedContext;
+    m_trace = new VerilatedVcdC; // trace_object
+    top = new Vtop{contextp};
+
+    contextp->traceEverOn(true); // 开启波形 
+    contextp->commandArgs(argc, argv);
+    top->trace(m_trace, 99);  // 99表示记录最详细的信号信息
+    m_trace->open("wave.vcd");  // 波形文件
+
+    top->clk = 1;  
+    top->rst = 0;
+
+    cpu.pc = 0x80000000;
+
+    flag = 0;
+    return fp;
 }
 
 

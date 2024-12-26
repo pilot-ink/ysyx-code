@@ -10,7 +10,7 @@ typedef struct
 }CPU_state;
 
 bool isa_difftest_checkregs(CPU_state *ref, vaddr_t pc);
-void isa_regs_display();
+void isa_regs_display(CPU_state *ref);
 void isa_regs_sync();
 
 #endif

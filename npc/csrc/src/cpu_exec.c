@@ -2,27 +2,32 @@
 #include "reg.h"
 #include "difftest.h"
 
+Decode s = {};
 CPU_state cpu = {};
-uint32_t pmem_read(uint32_t pc)
-{
-    pc -= 0x80000000;
-    uint8_t *ptr = pmem;
-    ptr += pc;
-    uint32_t *value = (uint32_t *)ptr;
-    //printf("value:%x\n",*value);
-    return *value;
+
+void pc_npc_inst_sync(){
+    s.pc = top->rootp->top__DOT__c1__DOT__pc;
+    //uint32_t A=top__DOT__c1__DOT__PCA_out,B;
+    s.npc = (top->rootp->top__DOT__c1__DOT__PCA_out + top->rootp->top__DOT__c1__DOT__PCB_out);
+    s.inst = top->rootp->top__DOT__c1__DOT__inst;
+    //printf("pc:%08x,npc%08x,inst:%08x\n",s.pc, s.npc, s.inst);
 }
 
-void cpu_exec(int n){
-    if(flag == 1) return ;
+void cpu_exec(uint32_t n){
     for(int i = 0;i < n; i++){
-        top->inst = pmem_read(top->pc);
-        top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
+        
+        
         top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
         m_trace->dump(contextp->time());
-        contextp->timeInc(1);  
+        contextp->timeInc(1);
+        top->clk = !top->clk; top->eval(); // eval()模型更新 可以理解为执行一次.v文件
+        m_trace->dump(contextp->time());
+        contextp->timeInc(1); 
         isa_regs_sync();
-        difftest_step(top->pc, top->npc);
-        top->pc = top->npc;
+        pc_npc_inst_sync();
+        difftest_step(s.pc, s.npc); 
+        
+        
+        if(flag == 1) break;
     }
 }

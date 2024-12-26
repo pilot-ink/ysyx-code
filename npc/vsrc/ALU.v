@@ -20,7 +20,6 @@ module ysyx_24100027_ALU(
     wire US;
     wire SubAdd;
 
-    wire [31:0] result;
     wire overflow;
 
     wire [31:0] shift;
@@ -39,15 +38,17 @@ module ysyx_24100027_ALU(
         3'b111, ab_and
     });
     MuxKey #(2,1,1) lessmux(less, US,{
-        1'b0, overflow ^ result[31],
-        1'b1, carry ^ SubAdd
+        1'b0, (overflow ^ adder[31]),
+        1'b1, (carry ^ SubAdd)
     });
     //xor or and
     assign ab_xor   = a ^ b;
     assign ab_or    = a | b;
     assign ab_and   = a & b;
     //add sub
-    assign {carry, adder} = a + B + {31'b0,SubAdd};
+    /* verilator lint_off WIDTHEXPAND */
+    assign {carry, adder} = a + B +SubAdd;
+    /* verilator lint_on WIDTHEXPAND */
     assign zero = ~(|adder);
     assign overflow = (a[31]==B[31]) && (a[31]!=adder[31]);
 endmodule
@@ -74,7 +75,7 @@ module ALUCTR(
     MuxKeyWithDefault #(4, 4, 1) ALmux(AL, Aluctr_in,1'b0,{
         4'b0001, 1'b0,
         4'b1001, 1'b0,
-        4'b0101, 1'b1,
+        4'b0101, 1'b0,
         4'b1101, 1'b1
     });
     MuxKeyWithDefault #(4, 4, 1) LRmux(LR, Aluctr_in,1'b0,{
@@ -103,8 +104,48 @@ module barrel_shifter(
     input [4:0] Shanmt,
     input LR,
     input AL,
-    output [31:0] shift
+    output reg [31:0] shift
 );
-    assign shift = 32'h0;
+    always @(*)
+	case(AL)
+		1'b0:  // logic shifter
+			begin
+				if(!LR)
+					begin  // right
+						shift = Shanmt[0] ? {1'b0, Din[31:1]} : Din;
+						shift = Shanmt[1] ? {2'b0, shift[31:2]} : shift;
+						shift = Shanmt[2] ? {4'b0, shift[31:4]} : shift;
+						shift = Shanmt[3] ? {8'b0, shift[31:8]} : shift;
+						shift = Shanmt[4] ? {16'b0, shift[31:16]} : shift;
+					end
+				else
+					begin  // left
+						shift = Shanmt[0] ? {Din[30:0], 1'b0} : Din;
+						shift = Shanmt[1] ? {shift[29:0], 2'b0} : shift;
+						shift = Shanmt[2] ? {shift[27:0], 4'b0} : shift;
+						shift = Shanmt[3] ? {shift[23:0], 8'b0} : shift;
+						shift = Shanmt[4] ? {shift[15:0], 16'b0} : shift;
+					end
+			end
+		1'b1:  // arithmetic shifter
+			begin 
+				if(!LR)
+					begin  // right
+						shift = Shanmt[0] ? {Din[31], Din[31:1]} : Din;
+						shift = Shanmt[1] ? {{2{shift[31]}}, shift[31:2]} : shift;
+						shift = Shanmt[2] ? {{4{shift[31]}}, shift[31:4]} : shift;
+						shift = Shanmt[3] ? {{8{shift[31]}}, shift[31:8]} : shift;
+						shift = Shanmt[4] ? {{16{shift[31]}}, shift[31:16]} : shift;
+					end
+				else
+					begin  // left
+						shift = Shanmt[0] ? {Din[30:0], 1'b0} : Din;
+						shift = Shanmt[1] ? {shift[29:0], 2'b0} : shift;
+						shift = Shanmt[2] ? {shift[27:0], 4'b0} : shift;
+						shift = Shanmt[3] ? {shift[23:0], 8'b0} : shift;
+						shift = Shanmt[4] ? {shift[15:0], 16'b0} : shift;
+					end
+			end
+	endcase
 
 endmodule

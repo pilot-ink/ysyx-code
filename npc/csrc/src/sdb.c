@@ -16,7 +16,7 @@ const char *regs[] = {
 
 
 int cmd_info(char *args){
-    isa_regs_display();
+    //isa_regs_display(CPU_state *ref);
     return 0;
 }
 
@@ -43,13 +43,18 @@ int cmd_si(char *args){
     else cpu_exec(atoi(args));
     return 0;
 }
+int cmd_c(char *args){
+    cpu_exec(-1);
+    return 0;
+}
 static struct {
     const char *name;
     const char *description;
     int (*handler) (char *);
 } cmd_table[] = {
-    {"si", "continue the execution N instruction of the program", cmd_si},
-    {"info", "print value of reg", cmd_info},
+    {"si"   , "continue the execution N instruction of the program", cmd_si},
+    {"info" , "print value of reg", cmd_info},
+    {"c"    , "exec instr", cmd_c},
 };
 
 void sdb_mainloop(){
