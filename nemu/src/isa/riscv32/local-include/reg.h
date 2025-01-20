@@ -24,8 +24,20 @@ static inline int check_reg_idx(int idx) {
   return idx;
 }
 
-
 #define gpr(idx) (cpu.gpr[check_reg_idx(idx)])
+//返回CSR寄存器的索引
+#define csrs(i) ({                    \
+  int idx;                            \
+  switch(i){                          \
+    case 0x300:  idx = CSR_MATATUS; break;       \
+    case 0x305:  idx = CSR_MTVEC;   break;       \
+    case 0x341:  idx = CSR_MEPC;    break;       \
+    case 0x342:  idx = CSR_MCAUSE;  break;       \
+    default:printf("CSR wrong!\n");   \
+  }                                   \
+  idx;                                \
+})
+#define csr_get(i) (cpu.csr[csrs(i)])
 
 static inline const char* reg_name(int idx) {
   extern const char* regs[];

@@ -22,6 +22,7 @@
 #define R(i) gpr(i)
 #define Mr vaddr_read
 #define Mw vaddr_write
+#define CSRs(i) csr_get(i)
 
 enum {
   TYPE_I, TYPE_U, TYPE_S,
@@ -36,12 +37,14 @@ enum {
 #define immJ() do { *imm = (SEXT(BITS(i, 31, 31) << 20, 21)) | (BITS(i, 20, 20) << 11) | (BITS(i, 19, 12) << 12) | (BITS(i, 30, 21) << 1); } while(0)
 #define immB() do { *imm = (SEXT((BITS(i, 31, 31) << 12), 13)) | (BITS(i, 30, 25) << 5) | (BITS(i, 7, 7) << 11) | (BITS(i, 11, 8) << 1); } while(0)
 
-static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_t *imm,  word_t *shamt, int type) {
+static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_t *imm, word_t *shamt, int *csr, word_t *zimm, int type) {
   uint32_t i = s->isa.inst.val;
   int rs1 = BITS(i, 19, 15);
   int rs2 = BITS(i, 24, 20);
   *shamt  = BITS(i, 25, 20);
   *rd     = BITS(i, 11, 7);
+  *csr    = BITS(i ,31, 20);
+  *zimm   = BITS(i, 19, 15);
   switch (type) {
     case TYPE_I: src1R();          immI(); break;
     case TYPE_U:                   immU(); break;
@@ -55,11 +58,13 @@ static void decode_operand(Decode *s, int *rd, word_t *src1, word_t *src2, word_
 static int decode_exec(Decode *s) {
   int rd = 0;
   word_t src1 = 0, src2 = 0, imm = 0, shamt = 0;
+  int csr = 0;        //用于CSR
+  word_t zimm = 0;    //用于CSR
   s->dnpc = s->snpc;
 
 #define INSTPAT_INST(s) ((s)->isa.inst.val)
 #define INSTPAT_MATCH(s, name, type, ... /* execute body */ ) { \
-  decode_operand(s, &rd, &src1, &src2, &imm, &shamt,concat(TYPE_, type)); \
+  decode_operand(s, &rd, &src1, &src2, &imm, &shamt, &csr, &zimm,concat(TYPE_, type)); \
   __VA_ARGS__ ; \
 }
 
@@ -67,6 +72,16 @@ static int decode_exec(Decode *s) {
   INSTPAT("??????? ????? ????? ??? ????? 01101 11", lui    , U, R(rd) = imm);
   INSTPAT("??????? ????? ????? ??? ????? 00101 11", auipc  , U, R(rd) = s->pc + imm);
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
+
+  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , I, s->dnpc = isa_raise_intr(17, s->pc)); 
+
+  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, uint32_t t = CSRs(csr); CSRs(csr) = src1; R(rd) = t); // 
+  INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , I, uint32_t t = CSRs(csr); CSRs(csr) = t | src1; R(rd) = t); // 
+  INSTPAT("??????? ????? ????? 011 ????? 11100 11", csrrc  , I, uint32_t t = CSRs(csr); CSRs(csr) = t & ~src1; R(rd) = t); //  
+  INSTPAT("??????? ????? ????? 101 ????? 11100 11", csrrwi , I, R(rd) = CSRs(csr); CSRs(csr) = zimm); // 
+  INSTPAT("??????? ????? ????? 110 ????? 11100 11", csrrsi , I, uint32_t t = CSRs(csr); CSRs(csr) = t | zimm; R(rd) = t); // 
+  INSTPAT("??????? ????? ????? 111 ????? 11100 11", csrrci , I, uint32_t t = CSRs(csr); CSRs(csr) = t & ~zimm; R(rd) = t); // 
+  INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , N, s->dnpc = cpu.csr[CSR_MEPC]);
 
   /*good*/
   INSTPAT("??????? ????? ????? 000 ????? 00100 11", addi   , I, R(rd) = src1 + imm);  //mv li

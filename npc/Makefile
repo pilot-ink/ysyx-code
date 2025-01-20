@@ -15,6 +15,9 @@ default: $(BIN)
 
 $(shell mkdir -p $(BUILD_DIR))
 
+FILELIST_MK = $(shell find -L ./csrc -name "filelist.mk")
+include $(FILELIST_MK)
+
 # constraint file
 SRC_AUTO_BIND = $(abspath $(BUILD_DIR)/auto_bind.cpp)
 $(SRC_AUTO_BIND): $(NXDC_FILES)

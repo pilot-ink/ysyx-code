@@ -102,12 +102,12 @@ static int parse_args(int argc, char *argv[]) {
 void init_monitor(int argc, char *argv[]) {
   /* Perform some global initialization. */
   //printf("arguments\n");
-  for(int i = 0; i < argc;i++)
-    printf("%s\n",argv[i]);
+  //for(int i = 0; i < argc;i++)
+   // printf("%s\n",argv[i]);
   /* Parse arguments. */
   parse_args(argc, argv);
 
-  printf("elf_file:%s\n",elf_file);
+  //printf("elf_file:%s\n",elf_file);
 
   /* Set random seed. */
   init_rand();
