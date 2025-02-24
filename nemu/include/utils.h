@@ -117,8 +117,12 @@ struct linked_list{
 void init_mringbuf();
 void push_mringbuf(char wr,paddr_t addr, word_t data);
 #define mRingbuffer_max 20
+/*
+*     数据都是32位的，读和写只用一个字符
+*
+*/
 typedef struct{
-  char  wrbuffer[mRingbuffer_max];
+  char  wrbuffer[mRingbuffer_max];     
   paddr_t pbuffer[mRingbuffer_max];
   word_t  dbuffer[mRingbuffer_max];
   int start;
