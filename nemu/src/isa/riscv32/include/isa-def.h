@@ -18,10 +18,18 @@
 
 #include <common.h>
 
+enum {
+  CSR_MTVEC = 0, CSR_MEPC, CSR_MATATUS, CSR_MCAUSE
+};
+
 typedef struct {
   word_t gpr[MUXDEF(CONFIG_RVE, 16, 32)];
   vaddr_t pc;
+  //word_t mtvec; vaddr_t mepc; word_t mstatus; word_t mcause;
+  word_t csr[4];
 } MUXDEF(CONFIG_RV64, riscv64_CPU_state, riscv32_CPU_state);
+
+
 
 // decode
 typedef struct {

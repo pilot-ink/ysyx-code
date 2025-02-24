@@ -20,6 +20,7 @@
 
 #define NR_GPR MUXDEF(CONFIG_RVE, 16, 32)
 
+
 static std::vector<std::pair<reg_t, abstract_device_t*>> difftest_plugin_devices;
 static std::vector<std::string> difftest_htif_args;
 static std::vector<std::pair<reg_t, mem_t*>> difftest_mem(
@@ -39,6 +40,8 @@ static debug_module_config_t difftest_dm_config = {
 struct diff_context_t {
   word_t gpr[MUXDEF(CONFIG_RVE, 16, 32)];
   word_t pc;
+  //word_t mtvec; vaddr_t mepc; word_t mstatus; word_t mcause;
+  word_t csr[4];
 };
 
 static sim_t* s = NULL;
@@ -60,6 +63,10 @@ void sim_t::diff_get_regs(void* diff_context) {
     ctx->gpr[i] = state->XPR[i];
   }
   ctx->pc = state->pc;
+  ctx->csr[0] = state->mtvec->read();
+  ctx->csr[1] = state->mepc->read();
+  ctx->csr[2] = state->mstatus->read();
+  ctx->csr[3] = state->mcause->read();
 }
 
 void sim_t::diff_set_regs(void* diff_context) {
@@ -68,6 +75,10 @@ void sim_t::diff_set_regs(void* diff_context) {
     state->XPR.write(i, (sword_t)ctx->gpr[i]);
   }
   state->pc = ctx->pc;
+  state->mtvec->write(ctx->csr[0]);
+  state->mepc->write(ctx->csr[1]);
+  state->mstatus->write(ctx->csr[2]);
+  state->mcause->write(ctx->csr[3]);
 }
 
 void sim_t::diff_memcpy(reg_t dest, void* src, size_t n) {

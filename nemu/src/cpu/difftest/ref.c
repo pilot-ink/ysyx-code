@@ -19,15 +19,39 @@
 #include <memory/paddr.h>
 
 __EXPORT void difftest_memcpy(paddr_t addr, void *buf, size_t n, bool direction) {
-  assert(0);
+  word_t *ptr = (word_t *)buf;
+  if(direction == DIFFTEST_TO_DUT){ //to npc
+    *ptr = paddr_read(addr,n);
+    printf("asd");
+  }
+  else { //to nemu
+    for(int i = 0; i < n/4; i++)
+    {
+      paddr_write(addr+(i*4), 4, (word_t)ptr[i]);
+      //printf("addr:%08x\tdata%08x\n",addr+i*4,ptr[i]);
+    }
+    
+  }
 }
 
 __EXPORT void difftest_regcpy(void *dut, bool direction) {
-  assert(0);
+  word_t *ptr = (word_t *)dut;
+  if(direction == DIFFTEST_TO_DUT){ //to npc
+    for(int i = 0; i < 32;i++)
+      ptr[i] = cpu.gpr[i];
+      ptr[32] = cpu.pc;
+  }
+  else { //to nemu
+    for(int i = 0; i < 32;i++)
+      cpu.gpr[i] = ptr[i];
+    cpu.pc = ptr[32];
+    //printf("pc:%08x\n",cpu.pc);
+  }
+  
 }
 
 __EXPORT void difftest_exec(uint64_t n) {
-  assert(0);
+  cpu_exec(n);
 }
 
 __EXPORT void difftest_raise_intr(word_t NO) {

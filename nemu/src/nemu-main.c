@@ -27,9 +27,23 @@ int main(int argc, char *argv[]) {
 #else
   init_monitor(argc, argv);
 #endif
-
+  
   /* Start engine. */
   engine_start();
+  //print_iringbuf();
+
+  //destory_iringbuf();
+  //destory_fringbuf();
+
+  /*run test*/
+  // bool *success=false;
+  // char str[1000];
+  // FILE *fd = fopen("/home/dhb/ysyx-workbench/nemu/tools/gen-expr/input","r");
+  
+  // while(fgets(str,1000,fd) != NULL){
+  //   expr(str,success);     //should return value
+  // }
+  // fclose(fd);
 
   return is_exit_status_bad();
 }

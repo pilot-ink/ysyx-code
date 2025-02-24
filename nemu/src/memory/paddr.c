@@ -17,6 +17,7 @@
 #include <memory/paddr.h>
 #include <device/mmio.h>
 #include <isa.h>
+#include <utils.h>
 
 #if   defined(CONFIG_PMEM_MALLOC)
 static uint8_t *pmem = NULL;
@@ -29,10 +30,16 @@ paddr_t host_to_guest(uint8_t *haddr) { return haddr - pmem + CONFIG_MBASE; }
 
 static word_t pmem_read(paddr_t addr, int len) {
   word_t ret = host_read(guest_to_host(addr), len);
+  #ifdef CONFIG_MTRACE
+  push_mringbuf('r', addr, ret);
+  #endif
   return ret;
 }
 
 static void pmem_write(paddr_t addr, int len, word_t data) {
+  #ifdef CONFIG_MTRACE
+  push_mringbuf('w', addr, data);
+  #endif
   host_write(guest_to_host(addr), len, data);
 }
 
@@ -42,7 +49,7 @@ static void out_of_bound(paddr_t addr) {
 }
 
 void init_mem() {
-#if   defined(CONFIG_PMEM_MALLOC)
+#if defined(CONFIG_PMEM_MALLOC)
   pmem = malloc(CONFIG_MSIZE);
   assert(pmem);
 #endif
